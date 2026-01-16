@@ -3,7 +3,7 @@
     "total_unique_tiles": 404189,
     "total_proteins_covered": 94958,
     "total_tile_protein_mappings": 404189,
-    "unique_viruses": 1473
+    "unique_viruses": 792
   },
   "tile_statistics": {
     "shared_tiles": 136648,
@@ -26,6 +26,16 @@
     "min_length": 50,
     "max_length": 7241
   },
+  "pipeline_breakdown": {
+    "fetched": 1470025,
+    "after_filter": 735366,
+    "filtered_ambiguous": 304844,
+    "filtered_short": 23154,
+    "after_99_clustering": 456681,
+    "after_100_clustering": 94958,
+    "with_100_coverage": 93841,
+    "with_partial_coverage": 1117
+  },
   "generation_info": {
     "pipeline": "PhIP-seq Library Generator",
     "tile_length": 49,
@@ -36,7 +46,7 @@
     "source_database": "UniProt + VirusHostDB",
     "host_filter": "Human (taxid 9606)",
     "min_protein_length": 49,
-    "clustering": "CD-HIT 99% identity",
-    "notes": "Library covers 94,958 of 735,366 proteins in metadata (12.9%)"
+    "clustering": "CD-HIT 99% \u2192 100% identity",
+    "notes": "Sequential clustering removes redundant sequences from viral isolates"
   }
 }
