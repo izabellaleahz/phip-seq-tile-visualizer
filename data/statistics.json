@@ -8,7 +8,7 @@
   "tile_statistics": {
     "shared_tiles": 136648,
     "single_protein_tiles": 267541,
-    "mean_proteins_per_shared_tile": 6.175009710803609
+    "mean_proteins_per_shared_tile": 6.175
   },
   "sharing_details": {
     "cross_virus_tiles": 31406,
@@ -17,12 +17,12 @@
   },
   "coverage": {
     "proteins_with_100_pct": 93841,
-    "proteins_with_gaps": 641525,
-    "mean_coverage_depth": 0.2538154071524542
+    "proteins_with_gaps": 1117,
+    "mean_coverage_depth": 4.26
   },
   "protein_statistics": {
-    "mean_length": 675.8082035985966,
-    "median_length": 333.0,
+    "mean_length": 676,
+    "median_length": 333,
     "min_length": 50,
     "max_length": 7241
   },
@@ -37,6 +37,6 @@
     "host_filter": "Human (taxid 9606)",
     "min_protein_length": 49,
     "clustering": "CD-HIT 99% identity",
-    "notes": "Human-infecting viruses from VirusHostDB, proteins clustered at 99% identity"
+    "notes": "Library covers 94,958 of 735,366 proteins in metadata (12.9%)"
   }
 }
