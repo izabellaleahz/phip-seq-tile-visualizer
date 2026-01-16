@@ -60,6 +60,25 @@ export interface SearchIndex {
   proteins: { id: string; name: string; virusId: string; virusName: string }[];
 }
 
+export interface TaxonomyEntry {
+  name: string;
+  lineage: string;
+  rank: string;
+}
+
+export interface FamilyStats {
+  count: number;
+  proteins: number;
+  tiles: number;
+  unique_tiles: number;
+}
+
+export interface TaxonomyData {
+  taxid_to_family: Record<string, string>;
+  taxonomy_data: Record<string, TaxonomyEntry>;
+  family_stats: Record<string, FamilyStats>;
+}
+
 export interface LibraryStatistics {
   library_summary: {
     total_unique_tiles: number;
@@ -87,5 +106,18 @@ export interface LibraryStatistics {
     median_length: number;
     min_length: number;
     max_length: number;
+  };
+  generation_info?: {
+    pipeline: string;
+    tile_length: number;
+    tile_overlap: number;
+    similarity_threshold: number;
+    max_cluster_size: number;
+    no_gaps_mode: boolean;
+    source_database: string;
+    host_filter: string;
+    min_protein_length: number;
+    clustering: string;
+    notes?: string;
   };
 }

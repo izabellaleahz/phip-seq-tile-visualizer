@@ -1,4 +1,4 @@
-import type { Virus, Protein, SharedTilesIndex, SearchIndex, LibraryStatistics, ProteinIndex } from '../types';
+import type { Virus, Protein, SharedTilesIndex, SearchIndex, LibraryStatistics, ProteinIndex, TaxonomyData } from '../types';
 
 const BASE_URL = import.meta.env.BASE_URL + 'data';
 
@@ -42,6 +42,10 @@ export async function fetchSearchIndex(): Promise<SearchIndex> {
 
 export async function fetchStatistics(): Promise<LibraryStatistics> {
   return fetchJson<LibraryStatistics>('statistics.json');
+}
+
+export async function fetchTaxonomy(): Promise<TaxonomyData> {
+  return fetchJson<TaxonomyData>('taxonomy.json');
 }
 
 // Helper to find a protein by ID (needs to load the virus file)

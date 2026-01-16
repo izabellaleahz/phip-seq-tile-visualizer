@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { Virus, Protein, SharedTilesIndex, SearchIndex, LibraryStatistics, ProteinIndex } from '../types';
+import type { Virus, Protein, SharedTilesIndex, SearchIndex, LibraryStatistics, ProteinIndex, TaxonomyData } from '../types';
 import * as api from '../utils/api';
 
 export function useViruses() {
@@ -123,4 +123,19 @@ export function useProtein(proteinId: string | undefined) {
   }, [proteinId]);
 
   return { protein, virusId, loading, error };
+}
+
+export function useTaxonomy() {
+  const [taxonomy, setTaxonomy] = useState<TaxonomyData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    api.fetchTaxonomy()
+      .then(setTaxonomy)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, []);
+
+  return { taxonomy, loading, error };
 }
