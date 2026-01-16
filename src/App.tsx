@@ -4,6 +4,7 @@ import VirusBrowser from './pages/VirusBrowser';
 import VirusDetail from './pages/VirusDetail';
 import ProteinDetail from './pages/ProteinDetail';
 import Statistics from './pages/Statistics';
+import ViralTree from './pages/ViralTree';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="virus/:virusId" element={<VirusDetail />} />
           <Route path="protein/:proteinId" element={<ProteinDetail />} />
           <Route path="stats" element={<Statistics />} />
+          <Route path="taxonomy" element={<ViralTree />} />
         </Route>
       </Routes>
     </HashRouter>

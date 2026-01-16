@@ -57,6 +57,16 @@ export default function Layout() {
                   Viruses
                 </Link>
                 <Link
+                  to="/taxonomy"
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    location.pathname === '/taxonomy'
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  Taxonomy
+                </Link>
+                <Link
                   to="/stats"
                   className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                     location.pathname === '/stats'

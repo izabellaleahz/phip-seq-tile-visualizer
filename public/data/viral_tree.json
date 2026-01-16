@@ -1,0 +1,4884 @@
+{
+  "families": {
+    "Pneumoviridae": {
+      "viruses": [
+        {
+          "id": "HRS",
+          "name": "Human respiratory syncytial virus",
+          "proteins": 8558,
+          "tiles": 26210
+        },
+        {
+          "id": "HRS_2",
+          "name": "Human respiratory syncytial virus A",
+          "proteins": 30,
+          "tiles": 345
+        },
+        {
+          "id": "HRS_3",
+          "name": "Human respiratory syncytial virus B",
+          "proteins": 17,
+          "tiles": 213
+        },
+        {
+          "id": "HM",
+          "name": "human metapneumovirus",
+          "proteins": 9,
+          "tiles": 144
+        },
+        {
+          "id": "HM_2",
+          "name": "Human metapneumovirus",
+          "proteins": 9,
+          "tiles": 144
+        }
+      ]
+    },
+    "Orthoherpesviridae": {
+      "viruses": [
+        {
+          "id": "HC(",
+          "name": "Human cytomegalovirus (HHV-5) (Human herpesvirus 5)",
+          "proteins": 9509,
+          "tiles": 22486
+        },
+        {
+          "id": "HH1",
+          "name": "Human herpesvirus 1 (HHV-1) (Human herpes simplex virus 1)",
+          "proteins": 4984,
+          "tiles": 11470
+        },
+        {
+          "id": "HH8",
+          "name": "Human herpesvirus 8 (HHV-8) (Kaposi's sarcoma-associated herpesvirus)",
+          "proteins": 2347,
+          "tiles": 8768
+        },
+        {
+          "id": "HH2",
+          "name": "Human herpesvirus 2 (HHV-2) (Human herpes simplex virus 2)",
+          "proteins": 2916,
+          "tiles": 7496
+        },
+        {
+          "id": "CH1",
+          "name": "Cercopithecine herpesvirus 16 (CeHV-16) (Herpesvirus papio 2)",
+          "proteins": 399,
+          "tiles": 3109
+        },
+        {
+          "id": "HH3",
+          "name": "Human herpesvirus 3 (HHV-3) (Varicella-zoster virus)",
+          "proteins": 1144,
+          "tiles": 3092
+        },
+        {
+          "id": "HH6",
+          "name": "Human herpesvirus 6B (HHV-6 variant B) (Human B lymphotropic virus)",
+          "proteins": 620,
+          "tiles": 4200
+        },
+        {
+          "id": "CB5",
+          "name": "Cercopithecine betaherpesvirus 5",
+          "proteins": 176,
+          "tiles": 2207
+        },
+        {
+          "id": "CH1_2",
+          "name": "Cercopithecine herpesvirus 1 (CeHV-1) (Simian herpes B virus)",
+          "proteins": 188,
+          "tiles": 2123
+        },
+        {
+          "id": "HH7",
+          "name": "Human herpesvirus 7 (HHV-7) (Human T lymphotropic virus)",
+          "proteins": 134,
+          "tiles": 1787
+        },
+        {
+          "id": "EV(",
+          "name": "Epstein-Barr virus (HHV-4) (Human herpesvirus 4)",
+          "proteins": 101,
+          "tiles": 2063
+        },
+        {
+          "id": "HH6_2",
+          "name": "Human herpesvirus 6A (HHV-6 variant A) (Human B lymphotropic virus)",
+          "proteins": 111,
+          "tiles": 1499
+        },
+        {
+          "id": "MG8",
+          "name": "Myotis gammaherpesvirus 8",
+          "proteins": 76,
+          "tiles": 1483
+        },
+        {
+          "id": "VV(_2",
+          "name": "Varicella-zoster virus (HHV-3) (Human herpesvirus 3)",
+          "proteins": 86,
+          "tiles": 1375
+        },
+        {
+          "id": "HH8_2",
+          "name": "Human herpesvirus 8 type P (HHV-8) (Kaposi's sarcoma-associated herpesvirus)",
+          "proteins": 71,
+          "tiles": 1325
+        },
+        {
+          "id": "PUC",
+          "name": "Papio ursinus cytomegalovirus",
+          "proteins": 83,
+          "tiles": 1208
+        },
+        {
+          "id": "EV(_2",
+          "name": "Epstein-Barr virus (HHV-4) (Human gammaherpesvirus 4)",
+          "proteins": 37,
+          "tiles": 894
+        },
+        {
+          "id": "HB6",
+          "name": "Human betaherpesvirus 6A",
+          "proteins": 4,
+          "tiles": 112
+        },
+        {
+          "id": "HH4",
+          "name": "Human herpesvirus 4 type 2",
+          "proteins": 1,
+          "tiles": 42
+        },
+        {
+          "id": "HSV",
+          "name": "Herpes simplex virus type 2 (Simian agent 8)",
+          "proteins": 2,
+          "tiles": 26
+        }
+      ]
+    },
+    "Hepeviridae": {
+      "viruses": [
+        {
+          "id": "HEV",
+          "name": "Hepatitis E virus",
+          "proteins": 4685,
+          "tiles": 21829
+        },
+        {
+          "id": "HEV_2",
+          "name": "Hepatitis E virus genotype 1",
+          "proteins": 14,
+          "tiles": 278
+        },
+        {
+          "id": "HEV_6",
+          "name": "Hepatitis E virus genotype 3 (HEV-3) (Hepatitis E virus genotype 3)",
+          "proteins": 3,
+          "tiles": 101
+        },
+        {
+          "id": "HEV_5",
+          "name": "Hepatitis E virus genotype 4 (HEV-4) (Hepatitis E virus genotype 4)",
+          "proteins": 3,
+          "tiles": 100
+        },
+        {
+          "id": "HEV_3",
+          "name": "Hepatitis E virus genotype 2",
+          "proteins": 3,
+          "tiles": 71
+        },
+        {
+          "id": "HEV_7",
+          "name": "Hepatitis E virus genotype 3",
+          "proteins": 1,
+          "tiles": 27
+        }
+      ]
+    },
+    "Arenaviridae": {
+      "viruses": [
+        {
+          "id": "ML",
+          "name": "Mammarenavirus lassaense",
+          "proteins": 2142,
+          "tiles": 17265
+        },
+        {
+          "id": "GM",
+          "name": "Guanarito mammarenavirus",
+          "proteins": 93,
+          "tiles": 755
+        },
+        {
+          "id": "MV_2",
+          "name": "Machupo virus",
+          "proteins": 67,
+          "tiles": 581
+        },
+        {
+          "id": "JM(",
+          "name": "Junin mammarenavirus (JUNV) (Junn mammarenavirus)",
+          "proteins": 115,
+          "tiles": 478
+        },
+        {
+          "id": "PM(",
+          "name": "Pichinde mammarenavirus (PICV) (Pichind mammarenavirus)",
+          "proteins": 24,
+          "tiles": 259
+        },
+        {
+          "id": "LCV",
+          "name": "Lymphocytic choriomeningitis virus",
+          "proteins": 37,
+          "tiles": 243
+        },
+        {
+          "id": "LV_2",
+          "name": "Lassa virus",
+          "proteins": 6,
+          "tiles": 172
+        },
+        {
+          "id": "SM(",
+          "name": "Sabia mammarenavirus (SABV) (Sabi mammarenavirus)",
+          "proteins": 9,
+          "tiles": 156
+        },
+        {
+          "id": "ML_2",
+          "name": "Mammarenavirus lujoense",
+          "proteins": 4,
+          "tiles": 137
+        },
+        {
+          "id": "CM",
+          "name": "Chapare mammarenavirus",
+          "proteins": 4,
+          "tiles": 128
+        },
+        {
+          "id": "MC",
+          "name": "Mammarenavirus choriomeningitidis",
+          "proteins": 1,
+          "tiles": 20
+        }
+      ]
+    },
+    "Orthomyxoviridae": {
+      "viruses": [
+        {
+          "id": "IBV",
+          "name": "Influenza B virus",
+          "proteins": 7426,
+          "tiles": 15597
+        },
+        {
+          "id": "IAV",
+          "name": "Influenza A virus",
+          "proteins": 1376,
+          "tiles": 5799
+        },
+        {
+          "id": "ICV",
+          "name": "Influenza C virus",
+          "proteins": 197,
+          "tiles": 639
+        },
+        {
+          "id": "IAV_2",
+          "name": "Influenza A virus (Influenza A virus)",
+          "proteins": 46,
+          "tiles": 446
+        },
+        {
+          "id": "IAV_3",
+          "name": "Influenza A virus (A/Shanghai/02/2013(H7N9))",
+          "proteins": 12,
+          "tiles": 161
+        },
+        {
+          "id": "IAV_5",
+          "name": "Influenza A virus (A/New York/392/2004(H3N2))",
+          "proteins": 9,
+          "tiles": 161
+        },
+        {
+          "id": "IAV_4",
+          "name": "Influenza A virus (A/Hong Kong/1073/99(H9N2))",
+          "proteins": 9,
+          "tiles": 152
+        },
+        {
+          "id": "QQ",
+          "name": "Quaranjavirus quaranfilense",
+          "proteins": 6,
+          "tiles": 146
+        },
+        {
+          "id": "IAV_6",
+          "name": "Influenza A virus (Influenza A virus) (Influenza A virus)",
+          "proteins": 6,
+          "tiles": 144
+        },
+        {
+          "id": "UV_3",
+          "name": "Upolu virus",
+          "proteins": 6,
+          "tiles": 142
+        },
+        {
+          "id": "TD",
+          "name": "Thogotovirus dhoriense",
+          "proteins": 5,
+          "tiles": 107
+        },
+        {
+          "id": "DV_3",
+          "name": "Dhori virus",
+          "proteins": 5,
+          "tiles": 87
+        }
+      ]
+    },
+    "Poxviridae": {
+      "viruses": [
+        {
+          "id": "CV",
+          "name": "Cowpox virus",
+          "proteins": 4802,
+          "tiles": 15168
+        },
+        {
+          "id": "OV",
+          "name": "Orf virus",
+          "proteins": 2004,
+          "tiles": 8518
+        },
+        {
+          "id": "VV",
+          "name": "Vaccinia virus",
+          "proteins": 890,
+          "tiles": 4026
+        },
+        {
+          "id": "VV_2",
+          "name": "Variola virus",
+          "proteins": 823,
+          "tiles": 3395
+        },
+        {
+          "id": "MV",
+          "name": "Monkeypox virus",
+          "proteins": 765,
+          "tiles": 3228
+        },
+        {
+          "id": "MCV_2",
+          "name": "Molluscum contagiosum virus subtype 1 (MOCV)",
+          "proteins": 202,
+          "tiles": 2177
+        },
+        {
+          "id": "NP",
+          "name": "NY_014 poxvirus",
+          "proteins": 192,
+          "tiles": 2168
+        },
+        {
+          "id": "CVS",
+          "name": "Cotia virus SPAn232",
+          "proteins": 160,
+          "tiles": 2159
+        },
+        {
+          "id": "MCV",
+          "name": "Molluscum contagiosum virus subtype 2 (MOCV)",
+          "proteins": 210,
+          "tiles": 3568
+        },
+        {
+          "id": "OA",
+          "name": "Orthopoxvirus akhmetapox",
+          "proteins": 191,
+          "tiles": 2011
+        },
+        {
+          "id": "HV",
+          "name": "Horsepox virus",
+          "proteins": 177,
+          "tiles": 1913
+        },
+        {
+          "id": "VV(",
+          "name": "Variola virus (VARV) (Smallpox virus)",
+          "proteins": 153,
+          "tiles": 6479
+        },
+        {
+          "id": "YMT",
+          "name": "Yaba monkey tumor virus",
+          "proteins": 141,
+          "tiles": 1381
+        },
+        {
+          "id": "OV_2",
+          "name": "Orthopoxvirus vaccinia",
+          "proteins": 96,
+          "tiles": 1222
+        },
+        {
+          "id": "OV(",
+          "name": "Orf virus (OV-SA00) (Orf virus-San Angelo 2000)",
+          "proteins": 27,
+          "tiles": 8806
+        },
+        {
+          "id": "YDV",
+          "name": "Yaba-like disease virus",
+          "proteins": 11,
+          "tiles": 78
+        }
+      ]
+    },
+    "Flaviviridae": {
+      "viruses": [
+        {
+          "id": "WNV",
+          "name": "West Nile virus",
+          "proteins": 2685,
+          "tiles": 11848
+        },
+        {
+          "id": "ZV",
+          "name": "Zika virus",
+          "proteins": 528,
+          "tiles": 3249
+        },
+        {
+          "id": "UV",
+          "name": "Usutu virus",
+          "proteins": 297,
+          "tiles": 1934
+        },
+        {
+          "id": "TV_2",
+          "name": "Tembusu virus",
+          "proteins": 128,
+          "tiles": 969
+        },
+        {
+          "id": "LIV",
+          "name": "Louping ill virus",
+          "proteins": 45,
+          "tiles": 599
+        },
+        {
+          "id": "HCV_2",
+          "name": "Hepatitis C virus genotype 1b",
+          "proteins": 8,
+          "tiles": 454
+        },
+        {
+          "id": "OHF",
+          "name": "Omsk hemorrhagic fever virus",
+          "proteins": 27,
+          "tiles": 440
+        },
+        {
+          "id": "YFV",
+          "name": "Yellow fever virus",
+          "proteins": 10,
+          "tiles": 440
+        },
+        {
+          "id": "DVT",
+          "name": "Dengue virus type 2",
+          "proteins": 13,
+          "tiles": 1120
+        },
+        {
+          "id": "KFD",
+          "name": "Kyasanur forest disease virus",
+          "proteins": 54,
+          "tiles": 386
+        },
+        {
+          "id": "JEV",
+          "name": "Japanese encephalitis virus",
+          "proteins": 10,
+          "tiles": 379
+        },
+        {
+          "id": "AHF",
+          "name": "Alkhumra hemorrhagic fever virus (ALKV) (Alkhurma hemorrhagic fever virus)",
+          "proteins": 26,
+          "tiles": 276
+        },
+        {
+          "id": "DVT_2",
+          "name": "Dengue virus type 4",
+          "proteins": 5,
+          "tiles": 241
+        },
+        {
+          "id": "DVT_3",
+          "name": "Dengue virus type 1",
+          "proteins": 5,
+          "tiles": 227
+        },
+        {
+          "id": "DVT_4",
+          "name": "Dengue virus type 3",
+          "proteins": 5,
+          "tiles": 223
+        },
+        {
+          "id": "IV",
+          "name": "Ilheus virus",
+          "proteins": 14,
+          "tiles": 220
+        },
+        {
+          "id": "HCV",
+          "name": "Hepatitis C virus",
+          "proteins": 12,
+          "tiles": 2184
+        },
+        {
+          "id": "HCV_11",
+          "name": "Hepatitis C virus genotype 6a",
+          "proteins": 2,
+          "tiles": 188
+        },
+        {
+          "id": "WV",
+          "name": "Wesselsbron virus",
+          "proteins": 12,
+          "tiles": 182
+        },
+        {
+          "id": "JEV_2",
+          "name": "Japanese encephalitis virus)",
+          "proteins": 2,
+          "tiles": 177
+        },
+        {
+          "id": "HCV_3",
+          "name": "Hepatitis C virus genotype 1a",
+          "proteins": 4,
+          "tiles": 161
+        },
+        {
+          "id": "RV_3",
+          "name": "Rocio virus",
+          "proteins": 6,
+          "tiles": 159
+        },
+        {
+          "id": "HCV_6",
+          "name": "Hepatitis C virus genotype 2a",
+          "proteins": 2,
+          "tiles": 154
+        },
+        {
+          "id": "LV_3",
+          "name": "Langat virus",
+          "proteins": 2,
+          "tiles": 134
+        },
+        {
+          "id": "MV_16",
+          "name": "Meaban virus",
+          "proteins": 1,
+          "tiles": 138
+        },
+        {
+          "id": "KV_5",
+          "name": "Kunjin virus",
+          "proteins": 1,
+          "tiles": 138
+        },
+        {
+          "id": "MVE",
+          "name": "Murray valley encephalitis virus",
+          "proteins": 1,
+          "tiles": 138
+        },
+        {
+          "id": "TPV",
+          "name": "Tick-borne powassan virus (POWV) (Powassan virus)",
+          "proteins": 1,
+          "tiles": 138
+        },
+        {
+          "id": "GGV",
+          "name": "Gadgets Gully virus",
+          "proteins": 1,
+          "tiles": 138
+        },
+        {
+          "id": "SRV",
+          "name": "Saumarez Reef virus",
+          "proteins": 1,
+          "tiles": 138
+        },
+        {
+          "id": "KV_4",
+          "name": "Kadam virus",
+          "proteins": 1,
+          "tiles": 137
+        },
+        {
+          "id": "BV_9",
+          "name": "Bamaga virus",
+          "proteins": 1,
+          "tiles": 137
+        },
+        {
+          "id": "MV_17",
+          "name": "Modoc virus",
+          "proteins": 1,
+          "tiles": 136
+        },
+        {
+          "id": "RBV",
+          "name": "Rio Bravo virus",
+          "proteins": 1,
+          "tiles": 136
+        },
+        {
+          "id": "SLE_2",
+          "name": "St. Louis encephalitis virus",
+          "proteins": 1,
+          "tiles": 136
+        },
+        {
+          "id": "KV",
+          "name": "Kokobera virus",
+          "proteins": 13,
+          "tiles": 135
+        },
+        {
+          "id": "SLE",
+          "name": "St. louis encephalitis virus",
+          "proteins": 1,
+          "tiles": 135
+        },
+        {
+          "id": "HCV_5",
+          "name": "Hepatitis C virus genotype 4a",
+          "proteins": 4,
+          "tiles": 130
+        },
+        {
+          "id": "HCV_7",
+          "name": "Hepatitis C virus genotype 3a",
+          "proteins": 2,
+          "tiles": 128
+        },
+        {
+          "id": "HCV_8",
+          "name": "Hepatitis C virus genotype 2b",
+          "proteins": 2,
+          "tiles": 125
+        },
+        {
+          "id": "HCV_13",
+          "name": "Hepatitis C virus genotype 5a",
+          "proteins": 2,
+          "tiles": 125
+        },
+        {
+          "id": "HCV_12",
+          "name": "Hepatitis C virus genotype 1c",
+          "proteins": 2,
+          "tiles": 124
+        },
+        {
+          "id": "DVT_5",
+          "name": "dengue virus type 1",
+          "proteins": 1,
+          "tiles": 122
+        },
+        {
+          "id": "HCV_28",
+          "name": "Hepatitis C virus genotype 7",
+          "proteins": 1,
+          "tiles": 122
+        },
+        {
+          "id": "GVC",
+          "name": "GB virus C",
+          "proteins": 1,
+          "tiles": 116
+        },
+        {
+          "id": "DVT_6",
+          "name": "dengue virus type 4",
+          "proteins": 1,
+          "tiles": 115
+        },
+        {
+          "id": "TEV_2",
+          "name": "Tick-borne encephalitis virus",
+          "proteins": 1,
+          "tiles": 111
+        },
+        {
+          "id": "GV_5",
+          "name": "GB virus-B",
+          "proteins": 1,
+          "tiles": 110
+        },
+        {
+          "id": "TEV_3",
+          "name": "Tick-borne encephalitis virus European subtype (NEUV) (Neudoerfl virus)",
+          "proteins": 1,
+          "tiles": 110
+        },
+        {
+          "id": "HP_3",
+          "name": "Hepacivirus platyrrhini",
+          "proteins": 1,
+          "tiles": 110
+        },
+        {
+          "id": "HCV_26",
+          "name": "Hepatitis C virus genotype 1",
+          "proteins": 1,
+          "tiles": 104
+        },
+        {
+          "id": "HCV_9",
+          "name": "Hepatitis C virus genotype 2",
+          "proteins": 2,
+          "tiles": 100
+        },
+        {
+          "id": "CV_10",
+          "name": "Cacipacore virus",
+          "proteins": 2,
+          "tiles": 94
+        },
+        {
+          "id": "BV_8",
+          "name": "Banzi virus",
+          "proteins": 2,
+          "tiles": 91
+        },
+        {
+          "id": "BV_7",
+          "name": "Bussuquara virus",
+          "proteins": 3,
+          "tiles": 84
+        },
+        {
+          "id": "TEV",
+          "name": "Tick-borne encephalitis virus Far Eastern subtype (SOFV) (Sofjin virus)",
+          "proteins": 1,
+          "tiles": 211
+        },
+        {
+          "id": "HP2_13",
+          "name": "Human pegivirus 2",
+          "proteins": 1,
+          "tiles": 76
+        },
+        {
+          "id": "HH",
+          "name": "Human hepegivirus",
+          "proteins": 1,
+          "tiles": 76
+        },
+        {
+          "id": "RFV",
+          "name": "Royal Farm virus",
+          "proteins": 1,
+          "tiles": 71
+        },
+        {
+          "id": "NV_3",
+          "name": "Ntaya virus",
+          "proteins": 1,
+          "tiles": 71
+        },
+        {
+          "id": "HCV_16",
+          "name": "Hepatitis C virus genotype 2k",
+          "proteins": 1,
+          "tiles": 67
+        },
+        {
+          "id": "HCV_22",
+          "name": "Hepatitis C virus genotype 2c",
+          "proteins": 1,
+          "tiles": 67
+        },
+        {
+          "id": "HCV_15",
+          "name": "Hepatitis C virus genotype 6d",
+          "proteins": 1,
+          "tiles": 66
+        },
+        {
+          "id": "HCV_17",
+          "name": "Hepatitis C virus genotype 6k",
+          "proteins": 1,
+          "tiles": 66
+        },
+        {
+          "id": "HCV_21",
+          "name": "Hepatitis C virus genotype 6b",
+          "proteins": 1,
+          "tiles": 66
+        },
+        {
+          "id": "HCV_20",
+          "name": "Hepatitis C virus genotype 6g",
+          "proteins": 1,
+          "tiles": 65
+        },
+        {
+          "id": "HCV_23",
+          "name": "Hepatitis C virus genotype 3b",
+          "proteins": 1,
+          "tiles": 65
+        },
+        {
+          "id": "HCV_25",
+          "name": "Hepatitis C virus genotype 3k",
+          "proteins": 1,
+          "tiles": 65
+        },
+        {
+          "id": "HCV_24",
+          "name": "Hepatitis C virus genotype 6h",
+          "proteins": 1,
+          "tiles": 64
+        },
+        {
+          "id": "MVE_2",
+          "name": "Murray Valley encephalitis virus",
+          "proteins": 1,
+          "tiles": 49
+        },
+        {
+          "id": "HCV_14",
+          "name": "Hepatitis C virus genotype 6",
+          "proteins": 1,
+          "tiles": 6
+        },
+        {
+          "id": "HCV_18",
+          "name": "Hepatitis C virus genotype 3",
+          "proteins": 1,
+          "tiles": 6
+        },
+        {
+          "id": "HCV_19",
+          "name": "Hepatitis C virus genotype 5",
+          "proteins": 1,
+          "tiles": 6
+        },
+        {
+          "id": "HCV_27",
+          "name": "Hepatitis C virus genotype 4",
+          "proteins": 1,
+          "tiles": 6
+        }
+      ]
+    },
+    "Picornaviridae": {
+      "viruses": [
+        {
+          "id": "HE7",
+          "name": "Human enterovirus 71 (EV71)",
+          "proteins": 3451,
+          "tiles": 11367
+        },
+        {
+          "id": "SV(",
+          "name": "Saffold virus (SafV) (Human TMEV-like virus-Saffold)",
+          "proteins": 332,
+          "tiles": 4075
+        },
+        {
+          "id": "E9V",
+          "name": "Echo 9 virus (EV-9) (Coxsackievirus A23)",
+          "proteins": 370,
+          "tiles": 1641
+        },
+        {
+          "id": "AV",
+          "name": "Aichi virus",
+          "proteins": 124,
+          "tiles": 1216
+        },
+        {
+          "id": "EV",
+          "name": "Encephalomyocarditis virus",
+          "proteins": 82,
+          "tiles": 846
+        },
+        {
+          "id": "PT1",
+          "name": "Poliovirus type 1",
+          "proteins": 31,
+          "tiles": 239
+        },
+        {
+          "id": "MEV",
+          "name": "Mengo encephalomyocarditis virus",
+          "proteins": 6,
+          "tiles": 206
+        },
+        {
+          "id": "HK1",
+          "name": "Human klassevirus 1",
+          "proteins": 41,
+          "tiles": 204
+        },
+        {
+          "id": "HR1",
+          "name": "Human rhinovirus 1B",
+          "proteins": 12,
+          "tiles": 461
+        },
+        {
+          "id": "HHA",
+          "name": "Human hepatitis A virus genotype IA (HHAV) (Human hepatitis A virus)",
+          "proteins": 6,
+          "tiles": 310
+        },
+        {
+          "id": "CA_2",
+          "name": "Coxsackievirus A16",
+          "proteins": 2,
+          "tiles": 160
+        },
+        {
+          "id": "HR2",
+          "name": "Human rhinovirus 2",
+          "proteins": 7,
+          "tiles": 221
+        },
+        {
+          "id": "HR3_2",
+          "name": "Human rhinovirus 3",
+          "proteins": 11,
+          "tiles": 147
+        },
+        {
+          "id": "HRC",
+          "name": "Human rhinovirus C",
+          "proteins": 11,
+          "tiles": 145
+        },
+        {
+          "id": "AV(",
+          "name": "Aichi virus (AiV) (Aichi virus)",
+          "proteins": 2,
+          "tiles": 1277
+        },
+        {
+          "id": "CB",
+          "name": "Coxsackievirus B3",
+          "proteins": 4,
+          "tiles": 79
+        },
+        {
+          "id": "E9",
+          "name": "Echovirus 9",
+          "proteins": 2,
+          "tiles": 116
+        },
+        {
+          "id": "HR1_4",
+          "name": "Human rhinovirus 14",
+          "proteins": 6,
+          "tiles": 109
+        },
+        {
+          "id": "HR1_3",
+          "name": "Human rhinovirus 1A",
+          "proteins": 7,
+          "tiles": 105
+        },
+        {
+          "id": "HR1_5",
+          "name": "Human rhinovirus 16",
+          "proteins": 6,
+          "tiles": 105
+        },
+        {
+          "id": "KB",
+          "name": "Kobuvirus bejaponia",
+          "proteins": 1,
+          "tiles": 100
+        },
+        {
+          "id": "PT3",
+          "name": "Poliovirus type 3",
+          "proteins": 2,
+          "tiles": 99
+        },
+        {
+          "id": "CB_2",
+          "name": "Coxsackievirus B4",
+          "proteins": 2,
+          "tiles": 98
+        },
+        {
+          "id": "AA",
+          "name": "aichivirus A1",
+          "proteins": 1,
+          "tiles": 98
+        },
+        {
+          "id": "PT2",
+          "name": "Poliovirus type 2",
+          "proteins": 2,
+          "tiles": 95
+        },
+        {
+          "id": "HR8",
+          "name": "Human rhinovirus 89",
+          "proteins": 4,
+          "tiles": 94
+        },
+        {
+          "id": "HHA_2",
+          "name": "Human hepatitis A virus genotype IB (HHAV) (Human hepatitis A virus)",
+          "proteins": 2,
+          "tiles": 92
+        },
+        {
+          "id": "L1(",
+          "name": "Ljunganvirus 1 (LV) (Ljungan virus 1)",
+          "proteins": 1,
+          "tiles": 91
+        },
+        {
+          "id": "HR2_2",
+          "name": "Human rhinovirus 23",
+          "proteins": 5,
+          "tiles": 89
+        },
+        {
+          "id": "E1_3",
+          "name": "Echovirus 11",
+          "proteins": 1,
+          "tiles": 89
+        },
+        {
+          "id": "E3",
+          "name": "Echovirus 30",
+          "proteins": 1,
+          "tiles": 89
+        },
+        {
+          "id": "E6",
+          "name": "Echovirus 6",
+          "proteins": 1,
+          "tiles": 89
+        },
+        {
+          "id": "E1_2",
+          "name": "Echovirus 1",
+          "proteins": 1,
+          "tiles": 88
+        },
+        {
+          "id": "CB_3",
+          "name": "Coxsackievirus B6",
+          "proteins": 1,
+          "tiles": 88
+        },
+        {
+          "id": "CB_5",
+          "name": "Coxsackievirus B2",
+          "proteins": 1,
+          "tiles": 88
+        },
+        {
+          "id": "CB_6",
+          "name": "Coxsackievirus B5",
+          "proteins": 1,
+          "tiles": 88
+        },
+        {
+          "id": "RC_2",
+          "name": "Rhinovirus C",
+          "proteins": 1,
+          "tiles": 87
+        },
+        {
+          "id": "HRN",
+          "name": "Human rhinovirus NAT001",
+          "proteins": 1,
+          "tiles": 87
+        },
+        {
+          "id": "CE",
+          "name": "Cosavirus E",
+          "proteins": 1,
+          "tiles": 86
+        },
+        {
+          "id": "HCB",
+          "name": "Human cosavirus B",
+          "proteins": 1,
+          "tiles": 86
+        },
+        {
+          "id": "CJ",
+          "name": "Cosavirus JMY-2014",
+          "proteins": 1,
+          "tiles": 86
+        },
+        {
+          "id": "CF",
+          "name": "Cosavirus F",
+          "proteins": 1,
+          "tiles": 86
+        },
+        {
+          "id": "CA_6",
+          "name": "Cosavirus A",
+          "proteins": 1,
+          "tiles": 86
+        },
+        {
+          "id": "HHA_3",
+          "name": "Human hepatitis A virus genotype IIIA (HHAV) (Human hepatitis A virus)",
+          "proteins": 2,
+          "tiles": 79
+        },
+        {
+          "id": "SV2",
+          "name": "Saffold virus 2",
+          "proteins": 1,
+          "tiles": 78
+        },
+        {
+          "id": "HRA",
+          "name": "Human rhinovirus A serotype 89",
+          "proteins": 1,
+          "tiles": 75
+        },
+        {
+          "id": "RB",
+          "name": "rhinovirus B14",
+          "proteins": 1,
+          "tiles": 72
+        },
+        {
+          "id": "HHA_5",
+          "name": "Human hepatitis A virus genotype IIB (HHAV) (Human hepatitis A virus)",
+          "proteins": 1,
+          "tiles": 70
+        },
+        {
+          "id": "HHA_6",
+          "name": "Human hepatitis A virus genotype IIIB (HHAV) (Human hepatitis A virus)",
+          "proteins": 1,
+          "tiles": 70
+        },
+        {
+          "id": "HHA_4",
+          "name": "Human hepatitis A virus genotype IIA (HHAV) (Human hepatitis A virus)",
+          "proteins": 1,
+          "tiles": 67
+        },
+        {
+          "id": "SA",
+          "name": "Salivirus A",
+          "proteins": 1,
+          "tiles": 67
+        },
+        {
+          "id": "EA",
+          "name": "enterovirus A114",
+          "proteins": 6,
+          "tiles": 64
+        },
+        {
+          "id": "CA",
+          "name": "Coxsackievirus A2",
+          "proteins": 6,
+          "tiles": 61
+        },
+        {
+          "id": "CB_4",
+          "name": "Coxsackievirus B1",
+          "proteins": 1,
+          "tiles": 58
+        },
+        {
+          "id": "SES",
+          "name": "Simian enterovirus SV4",
+          "proteins": 1,
+          "tiles": 56
+        },
+        {
+          "id": "EH",
+          "name": "Enterovirus H",
+          "proteins": 1,
+          "tiles": 56
+        },
+        {
+          "id": "SF",
+          "name": "Salivirus FHB",
+          "proteins": 1,
+          "tiles": 56
+        },
+        {
+          "id": "HP1_40",
+          "name": "Human parechovirus 1 (HPeV-1) (Echovirus 22)",
+          "proteins": 1,
+          "tiles": 55
+        },
+        {
+          "id": "HP5_8",
+          "name": "Human parechovirus 5 (HPeV-5) (Echovirus 23)",
+          "proteins": 1,
+          "tiles": 54
+        },
+        {
+          "id": "CA_3",
+          "name": "Coxsackievirus A21",
+          "proteins": 1,
+          "tiles": 52
+        },
+        {
+          "id": "CA_5",
+          "name": "Coxsackievirus A24",
+          "proteins": 1,
+          "tiles": 52
+        },
+        {
+          "id": "ED",
+          "name": "Enterovirus D",
+          "proteins": 7,
+          "tiles": 51
+        },
+        {
+          "id": "HC",
+          "name": "Human cosavirus",
+          "proteins": 1,
+          "tiles": 51
+        },
+        {
+          "id": "CD",
+          "name": "Cosavirus D",
+          "proteins": 1,
+          "tiles": 51
+        },
+        {
+          "id": "HP2_14",
+          "name": "Human parechovirus 2 (HPeV-2) (Echovirus 23)",
+          "proteins": 1,
+          "tiles": 51
+        },
+        {
+          "id": "CA_4",
+          "name": "Coxsackievirus A9",
+          "proteins": 1,
+          "tiles": 47
+        },
+        {
+          "id": "E5",
+          "name": "Echovirus 5",
+          "proteins": 1,
+          "tiles": 47
+        },
+        {
+          "id": "ED_2",
+          "name": "enterovirus D68",
+          "proteins": 1,
+          "tiles": 47
+        },
+        {
+          "id": "E1",
+          "name": "Echovirus 12",
+          "proteins": 1,
+          "tiles": 46
+        },
+        {
+          "id": "E1_4",
+          "name": "Echovirus 16",
+          "proteins": 1,
+          "tiles": 35
+        }
+      ]
+    },
+    "Coronaviridae": {
+      "viruses": [
+        {
+          "id": "SAR",
+          "name": "Severe acute respiratory syndrome coronavirus 2 (2019-nCoV)",
+          "proteins": 2098,
+          "tiles": 6784
+        },
+        {
+          "id": "HCO",
+          "name": "Human coronavirus OC43",
+          "proteins": 944,
+          "tiles": 4787
+        },
+        {
+          "id": "HC2",
+          "name": "Human coronavirus 229E",
+          "proteins": 313,
+          "tiles": 1205
+        },
+        {
+          "id": "SAR_2",
+          "name": "Severe acute respiratory syndrome coronavirus",
+          "proteins": 64,
+          "tiles": 1189
+        },
+        {
+          "id": "HCN",
+          "name": "Human coronavirus NL63",
+          "proteins": 297,
+          "tiles": 1141
+        },
+        {
+          "id": "HCH",
+          "name": "Human coronavirus HKU1",
+          "proteins": 230,
+          "tiles": 1045
+        },
+        {
+          "id": "MER",
+          "name": "Middle East respiratory syndrome-related coronavirus (MERS-CoV) (Betacoronavirus England 1)",
+          "proteins": 10,
+          "tiles": 390
+        },
+        {
+          "id": "MER_2",
+          "name": "Middle East respiratory syndrome-related coronavirus",
+          "proteins": 8,
+          "tiles": 370
+        },
+        {
+          "id": "BE1",
+          "name": "Betacoronavirus England 1",
+          "proteins": 1,
+          "tiles": 4
+        }
+      ]
+    },
+    "Papillomaviridae": {
+      "viruses": [
+        {
+          "id": "HPT",
+          "name": "Human papillomavirus type 16",
+          "proteins": 1936,
+          "tiles": 4857
+        },
+        {
+          "id": "GS",
+          "name": "Gammapapillomavirus sp.",
+          "proteins": 60,
+          "tiles": 788
+        },
+        {
+          "id": "HP5",
+          "name": "Human papillomavirus 58",
+          "proteins": 379,
+          "tiles": 819
+        },
+        {
+          "id": "HPT_2",
+          "name": "Human papillomavirus type 18",
+          "proteins": 319,
+          "tiles": 647
+        },
+        {
+          "id": "HP5_2",
+          "name": "Human papillomavirus 52",
+          "proteins": 257,
+          "tiles": 557
+        },
+        {
+          "id": "HP3",
+          "name": "Human papillomavirus 35",
+          "proteins": 283,
+          "tiles": 790
+        },
+        {
+          "id": "HP3_2",
+          "name": "Human papillomavirus 31",
+          "proteins": 191,
+          "tiles": 476
+        },
+        {
+          "id": "HP6",
+          "name": "Human papillomavirus 68",
+          "proteins": 124,
+          "tiles": 432
+        },
+        {
+          "id": "HP3_3",
+          "name": "Human papillomavirus 33",
+          "proteins": 138,
+          "tiles": 403
+        },
+        {
+          "id": "HPT_3",
+          "name": "Human papillomavirus type 53",
+          "proteins": 127,
+          "tiles": 377
+        },
+        {
+          "id": "HP6_2",
+          "name": "Human papillomavirus 66",
+          "proteins": 116,
+          "tiles": 342
+        },
+        {
+          "id": "HP4",
+          "name": "Human papillomavirus 45",
+          "proteins": 135,
+          "tiles": 429
+        },
+        {
+          "id": "HP8",
+          "name": "Human papillomavirus 82",
+          "proteins": 84,
+          "tiles": 318
+        },
+        {
+          "id": "HPT_4",
+          "name": "Human papillomavirus type 54",
+          "proteins": 70,
+          "tiles": 301
+        },
+        {
+          "id": "HP1",
+          "name": "Human papillomavirus 11",
+          "proteins": 118,
+          "tiles": 506
+        },
+        {
+          "id": "HP5_4",
+          "name": "Human papillomavirus 59",
+          "proteins": 105,
+          "tiles": 284
+        },
+        {
+          "id": "HP5_3",
+          "name": "Human papillomavirus 51",
+          "proteins": 130,
+          "tiles": 276
+        },
+        {
+          "id": "HPT_6",
+          "name": "Human papillomavirus type 34",
+          "proteins": 60,
+          "tiles": 266
+        },
+        {
+          "id": "HP5_5",
+          "name": "Human papillomavirus 56",
+          "proteins": 82,
+          "tiles": 251
+        },
+        {
+          "id": "HP3_4",
+          "name": "Human papillomavirus 39",
+          "proteins": 92,
+          "tiles": 233
+        },
+        {
+          "id": "HP4_2",
+          "name": "Human papillomavirus 42",
+          "proteins": 69,
+          "tiles": 231
+        },
+        {
+          "id": "HPT_7",
+          "name": "Human papillomavirus type 61",
+          "proteins": 50,
+          "tiles": 222
+        },
+        {
+          "id": "HPT_5",
+          "name": "Human papillomavirus type 70",
+          "proteins": 62,
+          "tiles": 217
+        },
+        {
+          "id": "HP5_6",
+          "name": "Human papillomavirus 5",
+          "proteins": 41,
+          "tiles": 209
+        },
+        {
+          "id": "HP3_5",
+          "name": "Human papillomavirus 30",
+          "proteins": 54,
+          "tiles": 204
+        },
+        {
+          "id": "HP4_3",
+          "name": "Human papillomavirus 44",
+          "proteins": 30,
+          "tiles": 198
+        },
+        {
+          "id": "HP7",
+          "name": "Human papillomavirus 73",
+          "proteins": 60,
+          "tiles": 195
+        },
+        {
+          "id": "HP6_3",
+          "name": "Human papillomavirus 67",
+          "proteins": 58,
+          "tiles": 192
+        },
+        {
+          "id": "HP6_5",
+          "name": "Human papillomavirus 62",
+          "proteins": 31,
+          "tiles": 179
+        },
+        {
+          "id": "HP6_4",
+          "name": "Human papillomavirus 69",
+          "proteins": 35,
+          "tiles": 164
+        },
+        {
+          "id": "HP1_2",
+          "name": "Human papillomavirus 13",
+          "proteins": 29,
+          "tiles": 155
+        },
+        {
+          "id": "HP4_5",
+          "name": "Human papillomavirus 43",
+          "proteins": 24,
+          "tiles": 153
+        },
+        {
+          "id": "HPT_8",
+          "name": "Human papillomavirus type 94",
+          "proteins": 20,
+          "tiles": 151
+        },
+        {
+          "id": "HP3_6",
+          "name": "Human papillomavirus 38",
+          "proteins": 23,
+          "tiles": 146
+        },
+        {
+          "id": "HP4_4",
+          "name": "Human papillomavirus 40",
+          "proteins": 27,
+          "tiles": 139
+        },
+        {
+          "id": "HP3_7",
+          "name": "Human papillomavirus 36",
+          "proteins": 15,
+          "tiles": 136
+        },
+        {
+          "id": "HP1_3",
+          "name": "Human papillomavirus 17",
+          "proteins": 16,
+          "tiles": 131
+        },
+        {
+          "id": "HPT_9",
+          "name": "Human papillomavirus type 32",
+          "proteins": 18,
+          "tiles": 128
+        },
+        {
+          "id": "HP5_7",
+          "name": "Human papillomavirus 57",
+          "proteins": 15,
+          "tiles": 125
+        },
+        {
+          "id": "HP2_2",
+          "name": "Human papillomavirus 23",
+          "proteins": 14,
+          "tiles": 121
+        },
+        {
+          "id": "HPT_13",
+          "name": "Human papillomavirus type 5b",
+          "proteins": 9,
+          "tiles": 112
+        },
+        {
+          "id": "HP9",
+          "name": "human papillomavirus 96",
+          "proteins": 7,
+          "tiles": 112
+        },
+        {
+          "id": "HP9_2",
+          "name": "Human papillomavirus 92",
+          "proteins": 7,
+          "tiles": 110
+        },
+        {
+          "id": "HP1_14",
+          "name": "Human papillomavirus 156",
+          "proteins": 7,
+          "tiles": 107
+        },
+        {
+          "id": "HP8_2",
+          "name": "Human papillomavirus 88",
+          "proteins": 7,
+          "tiles": 106
+        },
+        {
+          "id": "HP1_8",
+          "name": "human papillomavirus 131",
+          "proteins": 7,
+          "tiles": 106
+        },
+        {
+          "id": "HP1_11",
+          "name": "Human papillomavirus 172",
+          "proteins": 7,
+          "tiles": 106
+        },
+        {
+          "id": "HP1_15",
+          "name": "Human papillomavirus 109",
+          "proteins": 7,
+          "tiles": 106
+        },
+        {
+          "id": "HP2_10",
+          "name": "Human papillomavirus 201",
+          "proteins": 7,
+          "tiles": 106
+        },
+        {
+          "id": "HP2_3",
+          "name": "Human papillomavirus 20",
+          "proteins": 11,
+          "tiles": 105
+        },
+        {
+          "id": "HP1_12",
+          "name": "Human papillomavirus 178",
+          "proteins": 7,
+          "tiles": 105
+        },
+        {
+          "id": "HP1_16",
+          "name": "Human papillomavirus 134",
+          "proteins": 7,
+          "tiles": 105
+        },
+        {
+          "id": "HP1_25",
+          "name": "Human papillomavirus 126",
+          "proteins": 7,
+          "tiles": 105
+        },
+        {
+          "id": "HP2_6",
+          "name": "Human papillomavirus 24",
+          "proteins": 8,
+          "tiles": 104
+        },
+        {
+          "id": "HP1_6",
+          "name": "human papillomavirus 112",
+          "proteins": 7,
+          "tiles": 104
+        },
+        {
+          "id": "HP1_7",
+          "name": "Human papillomavirus 154",
+          "proteins": 7,
+          "tiles": 104
+        },
+        {
+          "id": "HP1_10",
+          "name": "Human papillomavirus 121",
+          "proteins": 7,
+          "tiles": 104
+        },
+        {
+          "id": "HP1_20",
+          "name": "human papillomavirus 129",
+          "proteins": 7,
+          "tiles": 104
+        },
+        {
+          "id": "HP1_22",
+          "name": "Human papillomavirus 136",
+          "proteins": 7,
+          "tiles": 104
+        },
+        {
+          "id": "HP1_26",
+          "name": "human papillomavirus 128",
+          "proteins": 7,
+          "tiles": 104
+        },
+        {
+          "id": "HP1_19",
+          "name": "Human papillomavirus 116",
+          "proteins": 7,
+          "tiles": 103
+        },
+        {
+          "id": "HP1_21",
+          "name": "human papillomavirus 137",
+          "proteins": 7,
+          "tiles": 103
+        },
+        {
+          "id": "HP1_23",
+          "name": "Human papillomavirus 140",
+          "proteins": 7,
+          "tiles": 103
+        },
+        {
+          "id": "HP1_24",
+          "name": "Human papillomavirus 144",
+          "proteins": 7,
+          "tiles": 103
+        },
+        {
+          "id": "HPT_14",
+          "name": "Human papillomavirus type 63",
+          "proteins": 8,
+          "tiles": 102
+        },
+        {
+          "id": "HP1_17",
+          "name": "Human papillomavirus 127",
+          "proteins": 7,
+          "tiles": 102
+        },
+        {
+          "id": "HP1_18",
+          "name": "Human papillomavirus 132",
+          "proteins": 7,
+          "tiles": 102
+        },
+        {
+          "id": "HPK",
+          "name": "Human papillomavirus KC5",
+          "proteins": 7,
+          "tiles": 102
+        },
+        {
+          "id": "HPT_19",
+          "name": "Human papillomavirus type 203",
+          "proteins": 7,
+          "tiles": 102
+        },
+        {
+          "id": "HP2_12",
+          "name": "Human papillomavirus 204",
+          "proteins": 7,
+          "tiles": 102
+        },
+        {
+          "id": "HPT_27",
+          "name": "Human papillomavirus type 49",
+          "proteins": 6,
+          "tiles": 101
+        },
+        {
+          "id": "HP_2",
+          "name": "Human papillomavirus",
+          "proteins": 6,
+          "tiles": 99
+        },
+        {
+          "id": "HP1_28",
+          "name": "human papillomavirus 101",
+          "proteins": 6,
+          "tiles": 98
+        },
+        {
+          "id": "HP1_33",
+          "name": "Human papillomavirus 184",
+          "proteins": 6,
+          "tiles": 98
+        },
+        {
+          "id": "HP1_37",
+          "name": "Human papillomavirus 187",
+          "proteins": 6,
+          "tiles": 98
+        },
+        {
+          "id": "HP1_31",
+          "name": "Human papillomavirus 167",
+          "proteins": 6,
+          "tiles": 97
+        },
+        {
+          "id": "HP1_36",
+          "name": "human papillomavirus 163",
+          "proteins": 6,
+          "tiles": 97
+        },
+        {
+          "id": "HPT_25",
+          "name": "Human papillomavirus type 60",
+          "proteins": 6,
+          "tiles": 97
+        },
+        {
+          "id": "HPT_26",
+          "name": "Human papillomavirus type 48",
+          "proteins": 6,
+          "tiles": 97
+        },
+        {
+          "id": "HPT_16",
+          "name": "Human papillomavirus type 1 (Human papillomavirus type 1a)",
+          "proteins": 8,
+          "tiles": 96
+        },
+        {
+          "id": "HP1_29",
+          "name": "human papillomavirus 103",
+          "proteins": 6,
+          "tiles": 96
+        },
+        {
+          "id": "HPT_10",
+          "name": "Human papillomavirus type 26",
+          "proteins": 12,
+          "tiles": 94
+        },
+        {
+          "id": "HP9_3",
+          "name": "Human papillomavirus 9",
+          "proteins": 7,
+          "tiles": 94
+        },
+        {
+          "id": "HP4_6",
+          "name": "Human papillomavirus 4",
+          "proteins": 11,
+          "tiles": 91
+        },
+        {
+          "id": "HP1_38",
+          "name": "human papillomavirus 108",
+          "proteins": 5,
+          "tiles": 90
+        },
+        {
+          "id": "HPT_20",
+          "name": "Human papillomavirus type 90",
+          "proteins": 7,
+          "tiles": 89
+        },
+        {
+          "id": "HPT_11",
+          "name": "Human papillomavirus type 8",
+          "proteins": 10,
+          "tiles": 88
+        },
+        {
+          "id": "HP1_5",
+          "name": "Human papillomavirus 12",
+          "proteins": 9,
+          "tiles": 88
+        },
+        {
+          "id": "HP2_4",
+          "name": "Human papillomavirus 21",
+          "proteins": 9,
+          "tiles": 88
+        },
+        {
+          "id": "HPT_12",
+          "name": "Human papillomavirus type 6b",
+          "proteins": 9,
+          "tiles": 87
+        },
+        {
+          "id": "HPT_21",
+          "name": "Human papillomavirus type 41",
+          "proteins": 7,
+          "tiles": 87
+        },
+        {
+          "id": "HP1_32",
+          "name": "human papillomavirus 166",
+          "proteins": 6,
+          "tiles": 87
+        },
+        {
+          "id": "HPT_23",
+          "name": "Human papillomavirus type 161",
+          "proteins": 6,
+          "tiles": 87
+        },
+        {
+          "id": "HP1_9",
+          "name": "Human papillomavirus 135",
+          "proteins": 7,
+          "tiles": 85
+        },
+        {
+          "id": "HP4_7",
+          "name": "Human papillomavirus 47",
+          "proteins": 8,
+          "tiles": 84
+        },
+        {
+          "id": "HP1_27",
+          "name": "Human papillomavirus 175",
+          "proteins": 6,
+          "tiles": 84
+        },
+        {
+          "id": "HPT_17",
+          "name": "Human papillomavirus type 6a",
+          "proteins": 8,
+          "tiles": 83
+        },
+        {
+          "id": "HP2_7",
+          "name": "Human papillomavirus 29",
+          "proteins": 8,
+          "tiles": 81
+        },
+        {
+          "id": "HP7_2",
+          "name": "Human papillomavirus 7",
+          "proteins": 10,
+          "tiles": 80
+        },
+        {
+          "id": "HP6_6",
+          "name": "Human papillomavirus 65",
+          "proteins": 10,
+          "tiles": 78
+        },
+        {
+          "id": "HP2_8",
+          "name": "Human papillomavirus 22",
+          "proteins": 7,
+          "tiles": 78
+        },
+        {
+          "id": "HP1_30",
+          "name": "Human papillomavirus 179",
+          "proteins": 6,
+          "tiles": 78
+        },
+        {
+          "id": "HP3_9",
+          "name": "Human papillomavirus 37",
+          "proteins": 9,
+          "tiles": 76
+        },
+        {
+          "id": "HPT_18",
+          "name": "Human papillomavirus type RTRX7",
+          "proteins": 7,
+          "tiles": 76
+        },
+        {
+          "id": "HP1_34",
+          "name": "Human papillomavirus 14",
+          "proteins": 6,
+          "tiles": 73
+        },
+        {
+          "id": "HP2_11",
+          "name": "Human papillomavirus 25",
+          "proteins": 7,
+          "tiles": 72
+        },
+        {
+          "id": "HP1_13",
+          "name": "Human papillomavirus 19",
+          "proteins": 7,
+          "tiles": 71
+        },
+        {
+          "id": "HP2_9",
+          "name": "Human papillomavirus 27",
+          "proteins": 7,
+          "tiles": 71
+        },
+        {
+          "id": "HP2_5",
+          "name": "Human papillomavirus 28",
+          "proteins": 8,
+          "tiles": 69
+        },
+        {
+          "id": "HPT_15",
+          "name": "Human papillomavirus type 55",
+          "proteins": 8,
+          "tiles": 69
+        },
+        {
+          "id": "HP7_3",
+          "name": "Human papillomavirus 72",
+          "proteins": 7,
+          "tiles": 68
+        },
+        {
+          "id": "HP1_35",
+          "name": "Human papillomavirus 15",
+          "proteins": 6,
+          "tiles": 67
+        },
+        {
+          "id": "HPT_28",
+          "name": "Human papillomavirus type 50",
+          "proteins": 4,
+          "tiles": 65
+        },
+        {
+          "id": "HPT_22",
+          "name": "Human papillomavirus type 10",
+          "proteins": 6,
+          "tiles": 64
+        },
+        {
+          "id": "HP3_10",
+          "name": "Human papillomavirus 3",
+          "proteins": 7,
+          "tiles": 63
+        },
+        {
+          "id": "HPT_24",
+          "name": "Human papillomavirus type 2a",
+          "proteins": 6,
+          "tiles": 57
+        },
+        {
+          "id": "HPT_30",
+          "name": "Human papillomavirus type ME180",
+          "proteins": 3,
+          "tiles": 40
+        },
+        {
+          "id": "A4",
+          "name": "Alphapapillomavirus 4",
+          "proteins": 3,
+          "tiles": 26
+        },
+        {
+          "id": "HPT_29",
+          "name": "Human papillomavirus type 85",
+          "proteins": 4,
+          "tiles": 20
+        },
+        {
+          "id": "HP7_5",
+          "name": "human papillomavirus 71",
+          "proteins": 1,
+          "tiles": 15
+        },
+        {
+          "id": "HPT_31",
+          "name": "Human papillomavirus type 64",
+          "proteins": 1,
+          "tiles": 6
+        },
+        {
+          "id": "HPT_32",
+          "name": "Human papillomavirus type 6c",
+          "proteins": 1,
+          "tiles": 3
+        }
+      ]
+    },
+    "Kolmioviridae": {
+      "viruses": [
+        {
+          "id": "HDV",
+          "name": "Hepatitis delta virus",
+          "proteins": 1142,
+          "tiles": 4229
+        },
+        {
+          "id": "HDV_2",
+          "name": "Hepatitis delta virus genotype I",
+          "proteins": 11,
+          "tiles": 71
+        },
+        {
+          "id": "HDV_4",
+          "name": "Hepatitis delta virus genotype II",
+          "proteins": 2,
+          "tiles": 17
+        },
+        {
+          "id": "HDV_3",
+          "name": "Hepatitis delta virus genotype III",
+          "proteins": 2,
+          "tiles": 12
+        },
+        {
+          "id": "HDV_5",
+          "name": "hepatitis D virus 1",
+          "proteins": 1,
+          "tiles": 8
+        }
+      ]
+    },
+    "Togaviridae": {
+      "viruses": [
+        {
+          "id": "CV_2",
+          "name": "Chikungunya virus",
+          "proteins": 1121,
+          "tiles": 4147
+        },
+        {
+          "id": "EEE",
+          "name": "Eastern equine encephalitis virus (EEEV) (Eastern equine encephalomyelitis virus)",
+          "proteins": 489,
+          "tiles": 1883
+        },
+        {
+          "id": "SV",
+          "name": "Sindbis virus",
+          "proteins": 326,
+          "tiles": 1652
+        },
+        {
+          "id": "GV",
+          "name": "Getah virus",
+          "proteins": 51,
+          "tiles": 343
+        },
+        {
+          "id": "WEE",
+          "name": "Western equine encephalitis virus",
+          "proteins": 56,
+          "tiles": 304
+        },
+        {
+          "id": "SFV_2",
+          "name": "Semliki forest virus",
+          "proteins": 29,
+          "tiles": 289
+        },
+        {
+          "id": "VEE",
+          "name": "Venezuelan equine encephalitis virus",
+          "proteins": 14,
+          "tiles": 253
+        },
+        {
+          "id": "OV(_2",
+          "name": "O'nyong-nyong virus (ONNV) (Igbo Ora virus)",
+          "proteins": 4,
+          "tiles": 173
+        },
+        {
+          "id": "OV_6",
+          "name": "O'nyong-nyong virus",
+          "proteins": 3,
+          "tiles": 168
+        },
+        {
+          "id": "BFV",
+          "name": "Barmah forest virus",
+          "proteins": 30,
+          "tiles": 167
+        },
+        {
+          "id": "UV_4",
+          "name": "Una virus",
+          "proteins": 2,
+          "tiles": 129
+        },
+        {
+          "id": "MV_13",
+          "name": "Mayaro virus",
+          "proteins": 3,
+          "tiles": 107
+        },
+        {
+          "id": "OV_4",
+          "name": "Onyong-nyong virus",
+          "proteins": 4,
+          "tiles": 107
+        },
+        {
+          "id": "RRV",
+          "name": "Ross River virus",
+          "proteins": 5,
+          "tiles": 116
+        },
+        {
+          "id": "MDP",
+          "name": "Mosso das Pedras virus",
+          "proteins": 4,
+          "tiles": 100
+        },
+        {
+          "id": "TV_3",
+          "name": "Tonate virus",
+          "proteins": 4,
+          "tiles": 79
+        },
+        {
+          "id": "SV_3",
+          "name": "Sagiyama virus",
+          "proteins": 5,
+          "tiles": 66
+        },
+        {
+          "id": "SVS",
+          "name": "Sindbis virus subtype Ockelbo (OCKV) (Ockelbo virus)",
+          "proteins": 1,
+          "tiles": 51
+        },
+        {
+          "id": "RRV_2",
+          "name": "Ross river virus",
+          "proteins": 1,
+          "tiles": 41
+        }
+      ]
+    },
+    "Parvoviridae": {
+      "viruses": [
+        {
+          "id": "HPB",
+          "name": "Human parvovirus B19",
+          "proteins": 877,
+          "tiles": 3306
+        },
+        {
+          "id": "PB1",
+          "name": "Primate bocaparvovirus 1 (HBoV1) (Human bocavirus type 1)",
+          "proteins": 284,
+          "tiles": 874
+        },
+        {
+          "id": "HB2",
+          "name": "Human bocavirus 2 (HBoV2) (Human bocavirus type 2)",
+          "proteins": 160,
+          "tiles": 490
+        },
+        {
+          "id": "HB3",
+          "name": "Human bocavirus 3 (HBoV3) (Adelavirus W471)",
+          "proteins": 62,
+          "tiles": 272
+        },
+        {
+          "id": "HCD",
+          "name": "Human CSF-associated densovirus",
+          "proteins": 3,
+          "tiles": 69
+        },
+        {
+          "id": "CUTAV",
+          "name": "Cutavirus",
+          "proteins": 4,
+          "tiles": 66
+        },
+        {
+          "id": "HP4_10",
+          "name": "Human parvovirus 4 G1",
+          "proteins": 2,
+          "tiles": 66
+        },
+        {
+          "id": "HEV_4",
+          "name": "Human erythrovirus V9",
+          "proteins": 3,
+          "tiles": 64
+        },
+        {
+          "id": "T1",
+          "name": "Tusavirus 1",
+          "proteins": 2,
+          "tiles": 56
+        },
+        {
+          "id": "BG",
+          "name": "Bocavirus gorilla/GBoV1/2009",
+          "proteins": 3,
+          "tiles": 55
+        },
+        {
+          "id": "HB4",
+          "name": "Human bocavirus 4 (HBoV4) (Human bocavirus type 4)",
+          "proteins": 3,
+          "tiles": 55
+        },
+        {
+          "id": "BUFAV",
+          "name": "Bufavirus-3",
+          "proteins": 3,
+          "tiles": 53
+        },
+        {
+          "id": "PP",
+          "name": "Protoparvovirus primate1",
+          "proteins": 3,
+          "tiles": 53
+        },
+        {
+          "id": "AV-_2",
+          "name": "Adeno-associated virus - 4",
+          "proteins": 2,
+          "tiles": 53
+        },
+        {
+          "id": "AV-",
+          "name": "Adeno-associated virus - 3",
+          "proteins": 2,
+          "tiles": 49
+        },
+        {
+          "id": "BAV",
+          "name": "Bovine adeno-associated virus",
+          "proteins": 2,
+          "tiles": 45
+        },
+        {
+          "id": "BP_2",
+          "name": "Bocaparvovirus primate1",
+          "proteins": 2,
+          "tiles": 38
+        },
+        {
+          "id": "AV2",
+          "name": "adeno-associated virus 2",
+          "proteins": 1,
+          "tiles": 26
+        },
+        {
+          "id": "HB3_2",
+          "name": "Human bocavirus 3",
+          "proteins": 1,
+          "tiles": 26
+        },
+        {
+          "id": "HB2_2",
+          "name": "Human bocavirus 2c PK",
+          "proteins": 1,
+          "tiles": 25
+        }
+      ]
+    },
+    "Matonaviridae": {
+      "viruses": [
+        {
+          "id": "RV",
+          "name": "Rubella virus",
+          "proteins": 473,
+          "tiles": 2348
+        }
+      ]
+    },
+    "Sedoreoviridae": {
+      "viruses": [
+        {
+          "id": "RA",
+          "name": "Rotavirus A",
+          "proteins": 190,
+          "tiles": 186
+        },
+        {
+          "id": "RB(",
+          "name": "Rotavirus B (RV-B) (Rotavirus B)",
+          "proteins": 195,
+          "tiles": 963
+        },
+        {
+          "id": "RA(",
+          "name": "Rotavirus A (RV-A) (Rotavirus A)",
+          "proteins": 48,
+          "tiles": 2049
+        },
+        {
+          "id": "RX(",
+          "name": "Rotavirus X (RV ADRV-N)",
+          "proteins": 22,
+          "tiles": 268
+        },
+        {
+          "id": "LV",
+          "name": "Lebombo virus",
+          "proteins": 11,
+          "tiles": 263
+        },
+        {
+          "id": "OV_3",
+          "name": "Orungo virus",
+          "proteins": 11,
+          "tiles": 258
+        },
+        {
+          "id": "GIV",
+          "name": "Great Island virus",
+          "proteins": 11,
+          "tiles": 243
+        },
+        {
+          "id": "RC",
+          "name": "Rotavirus C",
+          "proteins": 12,
+          "tiles": 237
+        },
+        {
+          "id": "BVS",
+          "name": "Banna virus strain JKT-6423",
+          "proteins": 6,
+          "tiles": 182
+        },
+        {
+          "id": "BV_5",
+          "name": "Banna virus",
+          "proteins": 6,
+          "tiles": 66
+        }
+      ]
+    },
+    "Adenoviridae": {
+      "viruses": [
+        {
+          "id": "HAF",
+          "name": "Human adenovirus F serotype 41 (HAdV-41) (Human adenovirus 41)",
+          "proteins": 407,
+          "tiles": 1488
+        },
+        {
+          "id": "HAB",
+          "name": "Human adenovirus B serotype 7 (HAdV-7) (Human adenovirus 7)",
+          "proteins": 401,
+          "tiles": 1975
+        },
+        {
+          "id": "HAB_2",
+          "name": "Human adenovirus B serotype 3 (HAdV-3) (Human adenovirus 3)",
+          "proteins": 387,
+          "tiles": 1356
+        },
+        {
+          "id": "HAD",
+          "name": "Human adenovirus D serotype 8 (HAdV-8) (Human adenovirus 8)",
+          "proteins": 328,
+          "tiles": 1132
+        },
+        {
+          "id": "HAE",
+          "name": "Human adenovirus E serotype 4 (HAdV-4) (Human adenovirus 4)",
+          "proteins": 255,
+          "tiles": 1132
+        },
+        {
+          "id": "HAC",
+          "name": "Human adenovirus C serotype 2 (HAdV-2) (Human adenovirus 2)",
+          "proteins": 265,
+          "tiles": 1146
+        },
+        {
+          "id": "HAC_2",
+          "name": "Human adenovirus C serotype 1 (HAdV-1) (Human adenovirus 1)",
+          "proteins": 184,
+          "tiles": 908
+        },
+        {
+          "id": "HAC_3",
+          "name": "Human adenovirus C serotype 5 (HAdV-5) (Human adenovirus 5)",
+          "proteins": 149,
+          "tiles": 779
+        },
+        {
+          "id": "HAC_4",
+          "name": "Human adenovirus C serotype 6 (HAdV-6) (Human adenovirus 6)",
+          "proteins": 116,
+          "tiles": 651
+        },
+        {
+          "id": "HAB_3",
+          "name": "Human adenovirus B serotype 16 (HAdV-16) (Human adenovirus 16)",
+          "proteins": 87,
+          "tiles": 617
+        },
+        {
+          "id": "HAA",
+          "name": "Human adenovirus A serotype 31 (HAdV-31) (Human adenovirus 31)",
+          "proteins": 82,
+          "tiles": 591
+        },
+        {
+          "id": "HAF_2",
+          "name": "Human adenovirus F serotype 40 (HAdV-40) (Human adenovirus 40)",
+          "proteins": 90,
+          "tiles": 569
+        },
+        {
+          "id": "HAA_2",
+          "name": "Human adenovirus A serotype 12 (HAdV-12) (Human adenovirus 12)",
+          "proteins": 67,
+          "tiles": 507
+        },
+        {
+          "id": "TMA",
+          "name": "Titi monkey adenovirus ECC-2011",
+          "proteins": 35,
+          "tiles": 495
+        },
+        {
+          "id": "HAD_2",
+          "name": "Human adenovirus D serotype 17 (HAdV-17) (Human adenovirus 17)",
+          "proteins": 51,
+          "tiles": 477
+        },
+        {
+          "id": "HAD_4",
+          "name": "Human adenovirus D serotype 15 (HAdV-15) (Human adenovirus 15)",
+          "proteins": 47,
+          "tiles": 477
+        },
+        {
+          "id": "BA3_2",
+          "name": "bat adenovirus 3",
+          "proteins": 30,
+          "tiles": 439
+        },
+        {
+          "id": "HAD_3",
+          "name": "Human adenovirus D serotype 9 (HAdV-9) (Human adenovirus 9)",
+          "proteins": 49,
+          "tiles": 426
+        },
+        {
+          "id": "HAB_4",
+          "name": "Human adenovirus B serotype 35 (HAdV-35) (Human adenovirus 35)",
+          "proteins": 46,
+          "tiles": 411
+        },
+        {
+          "id": "BA3",
+          "name": "Baboon adenovirus 3",
+          "proteins": 35,
+          "tiles": 400
+        },
+        {
+          "id": "SA1",
+          "name": "Simian adenovirus 19",
+          "proteins": 34,
+          "tiles": 396
+        },
+        {
+          "id": "BMW",
+          "name": "Bat mastadenovirus WIV11",
+          "proteins": 27,
+          "tiles": 396
+        },
+        {
+          "id": "HAB_5",
+          "name": "Human adenovirus B serotype 11 (HAdV-11) (Human adenovirus 11A)",
+          "proteins": 39,
+          "tiles": 393
+        },
+        {
+          "id": "SA2_2",
+          "name": "Simian adenovirus 25",
+          "proteins": 36,
+          "tiles": 387
+        },
+        {
+          "id": "BMW_3",
+          "name": "Bat mastadenovirus WIV10",
+          "proteins": 23,
+          "tiles": 381
+        },
+        {
+          "id": "HAA_3",
+          "name": "Human adenovirus A serotype 18 (HAdV-18) (Human adenovirus 18)",
+          "proteins": 40,
+          "tiles": 374
+        },
+        {
+          "id": "CAY",
+          "name": "Chimpanzee adenovirus Y25",
+          "proteins": 29,
+          "tiles": 368
+        },
+        {
+          "id": "SA2",
+          "name": "simian adenovirus 21",
+          "proteins": 38,
+          "tiles": 353
+        },
+        {
+          "id": "HA5",
+          "name": "Human adenovirus 54",
+          "proteins": 30,
+          "tiles": 352
+        },
+        {
+          "id": "BMW_2",
+          "name": "Bat mastadenovirus WIV9",
+          "proteins": 25,
+          "tiles": 342
+        },
+        {
+          "id": "HAB_6",
+          "name": "Human adenovirus B serotype 11 (HAdV-11) (Human adenovirus 11P)",
+          "proteins": 37,
+          "tiles": 330
+        },
+        {
+          "id": "HMD",
+          "name": "Human mastadenovirus D",
+          "proteins": 8,
+          "tiles": 104
+        },
+        {
+          "id": "HMB",
+          "name": "Human mastadenovirus B",
+          "proteins": 6,
+          "tiles": 92
+        },
+        {
+          "id": "HA3",
+          "name": "Human adenovirus 35",
+          "proteins": 3,
+          "tiles": 70
+        },
+        {
+          "id": "HMA",
+          "name": "Human mastadenovirus A",
+          "proteins": 6,
+          "tiles": 56
+        },
+        {
+          "id": "HA5_2",
+          "name": "Human adenovirus 5",
+          "proteins": 1,
+          "tiles": 42
+        },
+        {
+          "id": "HA1",
+          "name": "Human adenovirus 1",
+          "proteins": 3,
+          "tiles": 13
+        }
+      ]
+    },
+    "Polyomaviridae": {
+      "viruses": [
+        {
+          "id": "JP(",
+          "name": "JC polyomavirus (JCPyV)",
+          "proteins": 787,
+          "tiles": 1351
+        },
+        {
+          "id": "BP(",
+          "name": "BK polyomavirus (BKPyV) (Human polyomavirus 1)",
+          "proteins": 461,
+          "tiles": 1047
+        },
+        {
+          "id": "WP",
+          "name": "WU polyomavirus",
+          "proteins": 144,
+          "tiles": 323
+        },
+        {
+          "id": "NJP",
+          "name": "New Jersey polyomavirus-2013",
+          "proteins": 5,
+          "tiles": 74
+        },
+        {
+          "id": "KP",
+          "name": "KI polyomavirus",
+          "proteins": 9,
+          "tiles": 68
+        },
+        {
+          "id": "MCP",
+          "name": "Merkel cell polyomavirus",
+          "proteins": 4,
+          "tiles": 68
+        },
+        {
+          "id": "LP",
+          "name": "LI polyomavirus",
+          "proteins": 4,
+          "tiles": 67
+        },
+        {
+          "id": "SP",
+          "name": "STL polyomavirus",
+          "proteins": 5,
+          "tiles": 65
+        },
+        {
+          "id": "HP1_39",
+          "name": "Human polyomavirus 12",
+          "proteins": 4,
+          "tiles": 65
+        },
+        {
+          "id": "HP9_4",
+          "name": "Human polyomavirus 9",
+          "proteins": 4,
+          "tiles": 65
+        },
+        {
+          "id": "HP7_4",
+          "name": "Human polyomavirus 7",
+          "proteins": 4,
+          "tiles": 64
+        },
+        {
+          "id": "MP",
+          "name": "MW polyomavirus",
+          "proteins": 4,
+          "tiles": 64
+        },
+        {
+          "id": "TSP",
+          "name": "Trichodysplasia spinulosa-associated polyomavirus",
+          "proteins": 4,
+          "tiles": 64
+        },
+        {
+          "id": "HP6_7",
+          "name": "Human polyomavirus 6",
+          "proteins": 4,
+          "tiles": 64
+        },
+        {
+          "id": "BP",
+          "name": "BK polyomavirus",
+          "proteins": 5,
+          "tiles": 58
+        }
+      ]
+    },
+    "Phenuiviridae": {
+      "viruses": [
+        {
+          "id": "RVF",
+          "name": "Rift valley fever virus",
+          "proteins": 449,
+          "tiles": 1147
+        },
+        {
+          "id": "TV",
+          "name": "Toscana virus",
+          "proteins": 190,
+          "tiles": 915
+        },
+        {
+          "id": "PTP",
+          "name": "Punta toro phlebovirus",
+          "proteins": 44,
+          "tiles": 409
+        },
+        {
+          "id": "BV_2",
+          "name": "Bhanja virus",
+          "proteins": 19,
+          "tiles": 359
+        },
+        {
+          "id": "SFS",
+          "name": "Sandfly fever sicilian virus",
+          "proteins": 34,
+          "tiles": 308
+        },
+        {
+          "id": "UV_2",
+          "name": "Uukuniemi virus",
+          "proteins": 14,
+          "tiles": 278
+        },
+        {
+          "id": "HV_2",
+          "name": "Heartland virus",
+          "proteins": 15,
+          "tiles": 182
+        },
+        {
+          "id": "SFN",
+          "name": "Sandfly fever Naples virus",
+          "proteins": 5,
+          "tiles": 166
+        },
+        {
+          "id": "MV_8",
+          "name": "Munguba virus",
+          "proteins": 4,
+          "tiles": 166
+        },
+        {
+          "id": "CV_5",
+          "name": "Chagres virus",
+          "proteins": 4,
+          "tiles": 161
+        },
+        {
+          "id": "EV_2",
+          "name": "Echarate virus",
+          "proteins": 4,
+          "tiles": 156
+        },
+        {
+          "id": "MV_10",
+          "name": "Mukawa virus",
+          "proteins": 4,
+          "tiles": 154
+        },
+        {
+          "id": "KMV",
+          "name": "Kabuto mountain virus",
+          "proteins": 4,
+          "tiles": 150
+        },
+        {
+          "id": "LSV",
+          "name": "Lone Star virus",
+          "proteins": 4,
+          "tiles": 147
+        },
+        {
+          "id": "DES",
+          "name": "Dar es Salaam virus TZ-189",
+          "proteins": 3,
+          "tiles": 146
+        },
+        {
+          "id": "SP(",
+          "name": "SFTS phlebovirus (Severe fever with thrombocytopenia virus)",
+          "proteins": 5,
+          "tiles": 140
+        },
+        {
+          "id": "MVV",
+          "name": "Medjerda Valley virus",
+          "proteins": 4,
+          "tiles": 125
+        },
+        {
+          "id": "SFW",
+          "name": "Severe fever with thrombocytopenia syndrome virus",
+          "proteins": 3,
+          "tiles": 125
+        },
+        {
+          "id": "ZV_2",
+          "name": "Zerdali virus",
+          "proteins": 4,
+          "tiles": 121
+        },
+        {
+          "id": "CV_6",
+          "name": "Chandiru virus",
+          "proteins": 4,
+          "tiles": 116
+        },
+        {
+          "id": "MV_9",
+          "name": "Maldonado virus",
+          "proteins": 4,
+          "tiles": 116
+        },
+        {
+          "id": "TTV_15",
+          "name": "Tacheng Tick Virus 2",
+          "proteins": 2,
+          "tiles": 108
+        },
+        {
+          "id": "GV_3",
+          "name": "Guertu virus",
+          "proteins": 4,
+          "tiles": 107
+        },
+        {
+          "id": "CV_7",
+          "name": "Cocle virus",
+          "proteins": 4,
+          "tiles": 94
+        }
+      ]
+    },
+    "Retroviridae": {
+      "viruses": [
+        {
+          "id": "HIV",
+          "name": "Human immunodeficiency virus type 1 group M subtype B",
+          "proteins": 148,
+          "tiles": 3933
+        },
+        {
+          "id": "HIV_2",
+          "name": "Human immunodeficiency virus type 2 subtype A",
+          "proteins": 79,
+          "tiles": 793
+        },
+        {
+          "id": "HTL",
+          "name": "Human T-cell leukemia virus 2",
+          "proteins": 146,
+          "tiles": 931
+        },
+        {
+          "id": "SFV",
+          "name": "Simian foamy virus type 1 (SFVmac)",
+          "proteins": 34,
+          "tiles": 744
+        },
+        {
+          "id": "HIV_4",
+          "name": "Human immunodeficiency virus type 2 subtype B",
+          "proteins": 27,
+          "tiles": 333
+        },
+        {
+          "id": "HIV_3",
+          "name": "Human immunodeficiency virus type 1 group M subtype D",
+          "proteins": 33,
+          "tiles": 284
+        },
+        {
+          "id": "HTL_2",
+          "name": "Human T-cell leukemia virus 1",
+          "proteins": 30,
+          "tiles": 234
+        },
+        {
+          "id": "HS(",
+          "name": "Human spumaretrovirus (SFVcpz(hu)) (Human foamy virus)",
+          "proteins": 19,
+          "tiles": 194
+        },
+        {
+          "id": "HIV_5",
+          "name": "Human immunodeficiency virus type 1 group M subtype A",
+          "proteins": 19,
+          "tiles": 193
+        },
+        {
+          "id": "HIV_8",
+          "name": "Human immunodeficiency virus type 1 group M subtype F2",
+          "proteins": 16,
+          "tiles": 185
+        },
+        {
+          "id": "HTL_3",
+          "name": "Human T-cell leukemia virus 3 (HTLV-3) (Human T-lymphotropic virus 3)",
+          "proteins": 16,
+          "tiles": 175
+        },
+        {
+          "id": "HIV_10",
+          "name": "Human immunodeficiency virus type 1 group M subtype K",
+          "proteins": 16,
+          "tiles": 175
+        },
+        {
+          "id": "HIV_6",
+          "name": "Human immunodeficiency virus type 1 group M subtype F1",
+          "proteins": 18,
+          "tiles": 165
+        },
+        {
+          "id": "HIV_7",
+          "name": "Human immunodeficiency virus type 1 group M subtype C",
+          "proteins": 17,
+          "tiles": 163
+        },
+        {
+          "id": "HIV_12",
+          "name": "Human immunodeficiency virus type 1 group M subtype G",
+          "proteins": 15,
+          "tiles": 159
+        },
+        {
+          "id": "HTL_4",
+          "name": "Human T-cell leukemia virus 3",
+          "proteins": 12,
+          "tiles": 158
+        },
+        {
+          "id": "HIV_9",
+          "name": "Human immunodeficiency virus type 1 group O",
+          "proteins": 16,
+          "tiles": 151
+        },
+        {
+          "id": "HIV_11",
+          "name": "Human immunodeficiency virus type 1 group M subtype H",
+          "proteins": 16,
+          "tiles": 144
+        },
+        {
+          "id": "HIV_14",
+          "name": "Human immunodeficiency virus type 1 group N",
+          "proteins": 13,
+          "tiles": 118
+        },
+        {
+          "id": "ECS",
+          "name": "Eastern chimpanzee simian foamy virus",
+          "proteins": 4,
+          "tiles": 118
+        },
+        {
+          "id": "HIV_13",
+          "name": "Human immunodeficiency virus type 1 group M subtype J",
+          "proteins": 13,
+          "tiles": 103
+        },
+        {
+          "id": "JMS",
+          "name": "Japanese macaque simian foamy virus",
+          "proteins": 5,
+          "tiles": 103
+        },
+        {
+          "id": "GSF",
+          "name": "Guenon simian foamy virus",
+          "proteins": 5,
+          "tiles": 95
+        },
+        {
+          "id": "CCS",
+          "name": "Central chimpanzee simian foamy virus",
+          "proteins": 4,
+          "tiles": 91
+        },
+        {
+          "id": "WCS",
+          "name": "Western chimpanzee simian foamy virus",
+          "proteins": 5,
+          "tiles": 90
+        },
+        {
+          "id": "HTV",
+          "name": "Human T-lymphotropic virus 4",
+          "proteins": 6,
+          "tiles": 87
+        },
+        {
+          "id": "SFV_3",
+          "name": "Simian foamy virus type 3 (SFVagm)",
+          "proteins": 5,
+          "tiles": 86
+        },
+        {
+          "id": "XMV",
+          "name": "Xenotropic MuLV-related virus",
+          "proteins": 6,
+          "tiles": 58
+        },
+        {
+          "id": "HER",
+          "name": "Human endogenous retrovirus K113",
+          "proteins": 1,
+          "tiles": 29
+        },
+        {
+          "id": "HIV_15",
+          "name": "Human immunodeficiency virus type 1 group M subtype U",
+          "proteins": 2,
+          "tiles": 23
+        },
+        {
+          "id": "AGM",
+          "name": "African green monkey simian foamy virus",
+          "proteins": 1,
+          "tiles": 19
+        },
+        {
+          "id": "HTL_5",
+          "name": "Human T-cell leukemia virus type I",
+          "proteins": 1,
+          "tiles": 14
+        },
+        {
+          "id": "HIV_16",
+          "name": "Human immunodeficiency virus type 1",
+          "proteins": 1,
+          "tiles": 4
+        }
+      ]
+    },
+    "Astroviridae": {
+      "viruses": [
+        {
+          "id": "HA",
+          "name": "Human astrovirus-1",
+          "proteins": 188,
+          "tiles": 1054
+        },
+        {
+          "id": "HA_2",
+          "name": "Human astrovirus-4",
+          "proteins": 57,
+          "tiles": 441
+        },
+        {
+          "id": "HA_3",
+          "name": "Human astrovirus-8",
+          "proteins": 55,
+          "tiles": 381
+        },
+        {
+          "id": "HA_5",
+          "name": "Human astrovirus-5",
+          "proteins": 37,
+          "tiles": 316
+        },
+        {
+          "id": "HA_4",
+          "name": "Human astrovirus-2",
+          "proteins": 38,
+          "tiles": 315
+        },
+        {
+          "id": "HA_6",
+          "name": "Human astrovirus-3",
+          "proteins": 35,
+          "tiles": 280
+        },
+        {
+          "id": "HAV",
+          "name": "Human astrovirus VA1 (HAstV-VA1) (Mamastrovirus 9)",
+          "proteins": 48,
+          "tiles": 194
+        },
+        {
+          "id": "HA_7",
+          "name": "Human astrovirus-6",
+          "proteins": 18,
+          "tiles": 182
+        },
+        {
+          "id": "AV_4",
+          "name": "Astrovirus VA4",
+          "proteins": 3,
+          "tiles": 88
+        },
+        {
+          "id": "AV_5",
+          "name": "Astrovirus VA3",
+          "proteins": 3,
+          "tiles": 83
+        },
+        {
+          "id": "HAB_7",
+          "name": "Human astrovirus BF34",
+          "proteins": 3,
+          "tiles": 80
+        },
+        {
+          "id": "HAA_4",
+          "name": "HMO Astrovirus A",
+          "proteins": 3,
+          "tiles": 78
+        },
+        {
+          "id": "M1",
+          "name": "Mamastrovirus 1",
+          "proteins": 2,
+          "tiles": 70
+        },
+        {
+          "id": "AM_3",
+          "name": "Astrovirus MLB1",
+          "proteins": 3,
+          "tiles": 63
+        },
+        {
+          "id": "AM",
+          "name": "Astrovirus MLB3",
+          "proteins": 3,
+          "tiles": 56
+        },
+        {
+          "id": "AM_2",
+          "name": "Astrovirus MLB2",
+          "proteins": 3,
+          "tiles": 56
+        },
+        {
+          "id": "HA_9",
+          "name": "Human astrovirus",
+          "proteins": 1,
+          "tiles": 51
+        },
+        {
+          "id": "HA_8",
+          "name": "Human astrovirus-7",
+          "proteins": 5,
+          "tiles": 46
+        }
+      ]
+    },
+    "Hantaviridae": {
+      "viruses": [
+        {
+          "id": "DO(",
+          "name": "Dobrava-Belgrade orthohantavirus (DOBV) (Dobrava virus)",
+          "proteins": 209,
+          "tiles": 949
+        },
+        {
+          "id": "TO(",
+          "name": "Tula orthohantavirus (TULV)",
+          "proteins": 223,
+          "tiles": 922
+        },
+        {
+          "id": "SNO",
+          "name": "Sin Nombre orthohantavirus (SNV) (Sin Nombre virus)",
+          "proteins": 58,
+          "tiles": 451
+        },
+        {
+          "id": "AO(",
+          "name": "Andes orthohantavirus (ANDV) (Andes virus)",
+          "proteins": 113,
+          "tiles": 446
+        },
+        {
+          "id": "PV",
+          "name": "Puumala virus",
+          "proteins": 17,
+          "tiles": 234
+        },
+        {
+          "id": "HV(",
+          "name": "Hantaan virus (Korean hemorrhagic fever virus)",
+          "proteins": 4,
+          "tiles": 2415
+        },
+        {
+          "id": "SV_5",
+          "name": "Seoul virus",
+          "proteins": 3,
+          "tiles": 107
+        },
+        {
+          "id": "HZ",
+          "name": "Hantavirus Z10",
+          "proteins": 3,
+          "tiles": 106
+        },
+        {
+          "id": "OB_2",
+          "name": "Orthohantavirus bayoui",
+          "proteins": 3,
+          "tiles": 91
+        },
+        {
+          "id": "BCC",
+          "name": "Black Creek Canal orthohantavirus (BCCV) (Black Creek Canal virus)",
+          "proteins": 3,
+          "tiles": 88
+        },
+        {
+          "id": "SV(_7",
+          "name": "Seoul virus (Sapporo rat virus)",
+          "proteins": 2,
+          "tiles": 57
+        },
+        {
+          "id": "NYV",
+          "name": "New York virus",
+          "proteins": 1,
+          "tiles": 45
+        },
+        {
+          "id": "HV(_2",
+          "name": "Hantaan virus (Lee virus) (Korean hemorrhagic fever virus)",
+          "proteins": 1,
+          "tiles": 39
+        },
+        {
+          "id": "HV(_3",
+          "name": "Hantaan virus (Hojo virus) (Korean hemorrhagic fever virus)",
+          "proteins": 1,
+          "tiles": 37
+        }
+      ]
+    },
+    "Paramyxoviridae": {
+      "viruses": [
+        {
+          "id": "HP2",
+          "name": "Human parainfluenza 2 virus",
+          "proteins": 314,
+          "tiles": 991
+        },
+        {
+          "id": "NV",
+          "name": "Nipah virus",
+          "proteins": 196,
+          "tiles": 647
+        },
+        {
+          "id": "MV(",
+          "name": "Measles virus (MeV) (Subacute sclerose panencephalitis virus)",
+          "proteins": 72,
+          "tiles": 1826
+        },
+        {
+          "id": "MVG",
+          "name": "Mumps virus genotype A",
+          "proteins": 37,
+          "tiles": 391
+        },
+        {
+          "id": "MV_3",
+          "name": "Mumps virus",
+          "proteins": 33,
+          "tiles": 273
+        },
+        {
+          "id": "HR3",
+          "name": "Human respirovirus 3",
+          "proteins": 14,
+          "tiles": 397
+        },
+        {
+          "id": "HP3_8",
+          "name": "Human parainfluenza 3 virus (HPIV-3) (Human parainfluenza 3 virus)",
+          "proteins": 13,
+          "tiles": 242
+        },
+        {
+          "id": "BV_3",
+          "name": "Beilong virus",
+          "proteins": 11,
+          "tiles": 216
+        },
+        {
+          "id": "MV_6",
+          "name": "Menangle virus",
+          "proteins": 7,
+          "tiles": 199
+        },
+        {
+          "id": "SV_2",
+          "name": "Sosuga virus",
+          "proteins": 7,
+          "tiles": 198
+        },
+        {
+          "id": "AP2",
+          "name": "avian paramyxovirus 2",
+          "proteins": 7,
+          "tiles": 194
+        },
+        {
+          "id": "MV_4",
+          "name": "Measles virus",
+          "proteins": 11,
+          "tiles": 191
+        },
+        {
+          "id": "AP1",
+          "name": "avian paramyxovirus 13",
+          "proteins": 6,
+          "tiles": 191
+        },
+        {
+          "id": "AP8",
+          "name": "avian paramyxovirus 8",
+          "proteins": 6,
+          "tiles": 190
+        },
+        {
+          "id": "AP7",
+          "name": "avian paramyxovirus 7",
+          "proteins": 6,
+          "tiles": 190
+        },
+        {
+          "id": "HR1_2",
+          "name": "Human respirovirus 1",
+          "proteins": 8,
+          "tiles": 187
+        },
+        {
+          "id": "SA1_2",
+          "name": "Simian Agent 10",
+          "proteins": 8,
+          "tiles": 187
+        },
+        {
+          "id": "PV5",
+          "name": "Parainfluenza virus 5 (PIV5) (Simian virus 5)",
+          "proteins": 11,
+          "tiles": 182
+        },
+        {
+          "id": "MVG_2",
+          "name": "Mumps virus genotype N",
+          "proteins": 9,
+          "tiles": 177
+        },
+        {
+          "id": "MVG_3",
+          "name": "Mumps virus genotype B",
+          "proteins": 9,
+          "tiles": 167
+        },
+        {
+          "id": "HP1_4",
+          "name": "Human parainfluenza 1 virus",
+          "proteins": 15,
+          "tiles": 153
+        },
+        {
+          "id": "HV_3",
+          "name": "Hendra virus",
+          "proteins": 9,
+          "tiles": 147
+        },
+        {
+          "id": "HPV",
+          "name": "Human parainfluenza virus 4a",
+          "proteins": 3,
+          "tiles": 139
+        },
+        {
+          "id": "AV_3",
+          "name": "Alston virus",
+          "proteins": 8,
+          "tiles": 120
+        },
+        {
+          "id": "HP4_8",
+          "name": "Human parainfluenza 4a virus",
+          "proteins": 5,
+          "tiles": 64
+        },
+        {
+          "id": "HP3_11",
+          "name": "Human parainfluenza 3 virus",
+          "proteins": 6,
+          "tiles": 59
+        },
+        {
+          "id": "HP4_9",
+          "name": "Human parainfluenza 4b virus",
+          "proteins": 4,
+          "tiles": 41
+        },
+        {
+          "id": "MV(_2",
+          "name": "Measles virus (MeV) (Subacute sclerosing panencephalitis virus)",
+          "proteins": 1,
+          "tiles": 8
+        }
+      ]
+    },
+    "Peribunyaviridae": {
+      "viruses": [
+        {
+          "id": "BLC",
+          "name": "Bunyavirus La Crosse",
+          "proteins": 124,
+          "tiles": 759
+        },
+        {
+          "id": "BV",
+          "name": "Bunyamwera virus",
+          "proteins": 30,
+          "tiles": 369
+        },
+        {
+          "id": "BSH",
+          "name": "Bunyavirus snowshoe hare",
+          "proteins": 10,
+          "tiles": 209
+        },
+        {
+          "id": "OB",
+          "name": "Orthobunyavirus bwambaense",
+          "proteins": 4,
+          "tiles": 166
+        },
+        {
+          "id": "OV_5",
+          "name": "Oropouche virus",
+          "proteins": 4,
+          "tiles": 164
+        },
+        {
+          "id": "BV_6",
+          "name": "Baakal virus",
+          "proteins": 3,
+          "tiles": 163
+        },
+        {
+          "id": "GV_2",
+          "name": "Guaroa virus",
+          "proteins": 4,
+          "tiles": 162
+        },
+        {
+          "id": "TV_5",
+          "name": "Tataguine virus",
+          "proteins": 3,
+          "tiles": 161
+        },
+        {
+          "id": "CV_8",
+          "name": "Catu virus",
+          "proteins": 3,
+          "tiles": 127
+        },
+        {
+          "id": "GV_4",
+          "name": "Guama virus",
+          "proteins": 3,
+          "tiles": 127
+        },
+        {
+          "id": "IV_3",
+          "name": "Ilesha virus",
+          "proteins": 4,
+          "tiles": 121
+        },
+        {
+          "id": "MV_15",
+          "name": "Macaua virus",
+          "proteins": 3,
+          "tiles": 120
+        },
+        {
+          "id": "FSV",
+          "name": "Fort Sherman virus",
+          "proteins": 2,
+          "tiles": 109
+        },
+        {
+          "id": "CV_4",
+          "name": "Caraparu virus",
+          "proteins": 4,
+          "tiles": 98
+        },
+        {
+          "id": "MV_11",
+          "name": "Madrid virus",
+          "proteins": 4,
+          "tiles": 98
+        },
+        {
+          "id": "KV_3",
+          "name": "Keystone virus",
+          "proteins": 3,
+          "tiles": 70
+        },
+        {
+          "id": "MV_14",
+          "name": "Melao virus",
+          "proteins": 3,
+          "tiles": 63
+        }
+      ]
+    },
+    "Picobirnaviridae": {
+      "viruses": [
+        {
+          "id": "HP",
+          "name": "Human picobirnavirus",
+          "proteins": 117,
+          "tiles": 706
+        }
+      ]
+    },
+    "Rhabdoviridae": {
+      "viruses": [
+        {
+          "id": "RV_2",
+          "name": "Rabies virus",
+          "proteins": 78,
+          "tiles": 630
+        },
+        {
+          "id": "LBV",
+          "name": "Lagos bat virus",
+          "proteins": 83,
+          "tiles": 604
+        },
+        {
+          "id": "VSI",
+          "name": "Vesicular stomatitis Indiana virus",
+          "proteins": 34,
+          "tiles": 314
+        },
+        {
+          "id": "DV_2",
+          "name": "Duvenhage virus",
+          "proteins": 29,
+          "tiles": 231
+        },
+        {
+          "id": "EV1",
+          "name": "Ekpoma virus 1",
+          "proteins": 8,
+          "tiles": 173
+        },
+        {
+          "id": "EV2",
+          "name": "Ekpoma virus 2",
+          "proteins": 8,
+          "tiles": 172
+        },
+        {
+          "id": "ABL",
+          "name": "Australian bat lyssavirus",
+          "proteins": 10,
+          "tiles": 163
+        },
+        {
+          "id": "CV_3",
+          "name": "Chandipura virus",
+          "proteins": 9,
+          "tiles": 127
+        },
+        {
+          "id": "VSN",
+          "name": "Vesicular stomatitis New Jersey virus",
+          "proteins": 9,
+          "tiles": 161
+        },
+        {
+          "id": "AV_2",
+          "name": "Almpiwar virus",
+          "proteins": 8,
+          "tiles": 161
+        },
+        {
+          "id": "MV_5",
+          "name": "Mundri virus",
+          "proteins": 7,
+          "tiles": 154
+        },
+        {
+          "id": "LDV",
+          "name": "Le Dantec virus",
+          "proteins": 6,
+          "tiles": 154
+        },
+        {
+          "id": "IV_2",
+          "name": "Isfahan virus",
+          "proteins": 5,
+          "tiles": 148
+        },
+        {
+          "id": "MV_7",
+          "name": "Maraba virus",
+          "proteins": 5,
+          "tiles": 139
+        },
+        {
+          "id": "EBL",
+          "name": "European bat lyssavirus 1",
+          "proteins": 5,
+          "tiles": 107
+        },
+        {
+          "id": "LO",
+          "name": "Lyssavirus Ozernoe",
+          "proteins": 5,
+          "tiles": 102
+        },
+        {
+          "id": "LM",
+          "name": "Lyssavirus mokola",
+          "proteins": 5,
+          "tiles": 102
+        },
+        {
+          "id": "RV(",
+          "name": "Rabies virus (RABV)",
+          "proteins": 5,
+          "tiles": 3208
+        },
+        {
+          "id": "EBL_2",
+          "name": "European bat lyssavirus 2",
+          "proteins": 5,
+          "tiles": 96
+        },
+        {
+          "id": "TC",
+          "name": "Tibrovirus congo",
+          "proteins": 7,
+          "tiles": 86
+        }
+      ]
+    },
+    "Spinareoviridae": {
+      "viruses": [
+        {
+          "id": "AO",
+          "name": "Avian orthoreovirus",
+          "proteins": 21,
+          "tiles": 568
+        },
+        {
+          "id": "CTF",
+          "name": "Colorado tick fever virus",
+          "proteins": 74,
+          "tiles": 475
+        },
+        {
+          "id": "MO",
+          "name": "Melaka orthoreovirus",
+          "proteins": 12,
+          "tiles": 315
+        },
+        {
+          "id": "MO3",
+          "name": "Mammalian orthoreovirus 3 Dearing",
+          "proteins": 10,
+          "tiles": 236
+        },
+        {
+          "id": "TFR",
+          "name": "Tai Forest reovirus",
+          "proteins": 8,
+          "tiles": 195
+        }
+      ]
+    },
+    "Filoviridae": {
+      "viruses": [
+        {
+          "id": "LVM",
+          "name": "Lake Victoria marburgvirus (MARV) (Marburg virus)",
+          "proteins": 38,
+          "tiles": 502
+        },
+        {
+          "id": "RE(",
+          "name": "Reston ebolavirus (REBOV) (Reston Ebola virus)",
+          "proteins": 41,
+          "tiles": 381
+        },
+        {
+          "id": "ZE(",
+          "name": "Zaire ebolavirus (ZEBOV) (Zaire Ebola virus)",
+          "proteins": 25,
+          "tiles": 247
+        },
+        {
+          "id": "SE(",
+          "name": "Sudan ebolavirus (SEBOV) (Sudan Ebola virus)",
+          "proteins": 14,
+          "tiles": 218
+        },
+        {
+          "id": "LVM_2",
+          "name": "Lake Victoria marburgvirus",
+          "proteins": 11,
+          "tiles": 186
+        },
+        {
+          "id": "TFE",
+          "name": "Tai Forest ebolavirus",
+          "proteins": 9,
+          "tiles": 159
+        },
+        {
+          "id": "BV_4",
+          "name": "Bundibugyo virus",
+          "proteins": 9,
+          "tiles": 152
+        },
+        {
+          "id": "MV-",
+          "name": "Marburg virus - Musoke, Kenya, 1980",
+          "proteins": 4,
+          "tiles": 151
+        },
+        {
+          "id": "RE",
+          "name": "Reston ebolavirus",
+          "proteins": 3,
+          "tiles": 32
+        },
+        {
+          "id": "TFE_2",
+          "name": "Tai Forest ebolavirus (TAFV) (Cote d'Ivoire Ebola virus)",
+          "proteins": 2,
+          "tiles": 30
+        },
+        {
+          "id": "SE",
+          "name": "Sudan ebolavirus",
+          "proteins": 1,
+          "tiles": 14
+        },
+        {
+          "id": "ZE",
+          "name": "Zaire ebolavirus",
+          "proteins": 1,
+          "tiles": 12
+        }
+      ]
+    },
+    "Nairoviridae": {
+      "viruses": [
+        {
+          "id": "DV",
+          "name": "Dugbe virus",
+          "proteins": 41,
+          "tiles": 290
+        },
+        {
+          "id": "CHF",
+          "name": "Crimean-Congo hemorrhagic fever virus",
+          "proteins": 5,
+          "tiles": 257
+        },
+        {
+          "id": "NSD",
+          "name": "Nairobi sheep disease virus",
+          "proteins": 3,
+          "tiles": 247
+        },
+        {
+          "id": "KV_2",
+          "name": "Kasokero virus",
+          "proteins": 3,
+          "tiles": 240
+        },
+        {
+          "id": "YV_2",
+          "name": "Yezo virus",
+          "proteins": 3,
+          "tiles": 235
+        },
+        {
+          "id": "TTV_8",
+          "name": "Tacheng Tick Virus 1",
+          "proteins": 3,
+          "tiles": 235
+        },
+        {
+          "id": "SV_4",
+          "name": "Songling virus",
+          "proteins": 3,
+          "tiles": 234
+        },
+        {
+          "id": "TV_6",
+          "name": "Tofla virus",
+          "proteins": 3,
+          "tiles": 219
+        },
+        {
+          "id": "OH",
+          "name": "Orthonairovirus haemorrhagiae",
+          "proteins": 1,
+          "tiles": 157
+        },
+        {
+          "id": "BN",
+          "name": "Beiji nairovirus",
+          "proteins": 1,
+          "tiles": 23
+        }
+      ]
+    },
+    "Anelloviridae": {
+      "viruses": [
+        {
+          "id": "TTV",
+          "name": "Torque teno virus",
+          "proteins": 26,
+          "tiles": 399
+        },
+        {
+          "id": "TMV",
+          "name": "TTV-like mini virus",
+          "proteins": 18,
+          "tiles": 227
+        },
+        {
+          "id": "TTM",
+          "name": "Torque teno mini virus 10",
+          "proteins": 12,
+          "tiles": 188
+        },
+        {
+          "id": "TTM_2",
+          "name": "Torque teno midi virus 1",
+          "proteins": 5,
+          "tiles": 34
+        },
+        {
+          "id": "TTV_2",
+          "name": "Torque teno virus (TTV) (Torque teno virus genotype 6)",
+          "proteins": 6,
+          "tiles": 51
+        },
+        {
+          "id": "TTV_12",
+          "name": "Torque teno virus 24",
+          "proteins": 3,
+          "tiles": 51
+        },
+        {
+          "id": "TTV_3",
+          "name": "Torque teno virus 10",
+          "proteins": 3,
+          "tiles": 50
+        },
+        {
+          "id": "TTV_5",
+          "name": "Torque teno virus 8",
+          "proteins": 3,
+          "tiles": 50
+        },
+        {
+          "id": "TTV_6",
+          "name": "Torque teno virus 28",
+          "proteins": 3,
+          "tiles": 50
+        },
+        {
+          "id": "TTV_10",
+          "name": "Torque teno virus 20",
+          "proteins": 3,
+          "tiles": 50
+        },
+        {
+          "id": "SA2_3",
+          "name": "Small anellovirus 2",
+          "proteins": 5,
+          "tiles": 49
+        },
+        {
+          "id": "TTM_6",
+          "name": "Torque teno midi virus 14",
+          "proteins": 3,
+          "tiles": 48
+        },
+        {
+          "id": "TTM_15",
+          "name": "Torque teno midi virus 6",
+          "proteins": 3,
+          "tiles": 48
+        },
+        {
+          "id": "TTM_20",
+          "name": "Torque teno midi virus 11",
+          "proteins": 3,
+          "tiles": 48
+        },
+        {
+          "id": "TTM_9",
+          "name": "Torque teno midi virus 13",
+          "proteins": 3,
+          "tiles": 47
+        },
+        {
+          "id": "TTM_10",
+          "name": "Torque teno midi virus 5",
+          "proteins": 3,
+          "tiles": 47
+        },
+        {
+          "id": "TTM_17",
+          "name": "Torque teno midi virus 9",
+          "proteins": 3,
+          "tiles": 47
+        },
+        {
+          "id": "TTM_12",
+          "name": "Torque teno midi virus 8",
+          "proteins": 3,
+          "tiles": 46
+        },
+        {
+          "id": "TTM_16",
+          "name": "Torque teno midi virus 12",
+          "proteins": 3,
+          "tiles": 46
+        },
+        {
+          "id": "TTM_19",
+          "name": "Torque teno midi virus 7",
+          "proteins": 3,
+          "tiles": 46
+        },
+        {
+          "id": "TTM_22",
+          "name": "Torque teno midi virus 10",
+          "proteins": 3,
+          "tiles": 46
+        },
+        {
+          "id": "TTM_3",
+          "name": "Torque teno midi virus 2",
+          "proteins": 4,
+          "tiles": 44
+        },
+        {
+          "id": "TTV_4",
+          "name": "Torque teno virus (TTV) (Torque teno virus genotype 1a)",
+          "proteins": 3,
+          "tiles": 43
+        },
+        {
+          "id": "TTV_11",
+          "name": "Torque teno virus 29",
+          "proteins": 3,
+          "tiles": 42
+        },
+        {
+          "id": "TTM_4",
+          "name": "Torque teno mini virus 12",
+          "proteins": 4,
+          "tiles": 41
+        },
+        {
+          "id": "TTM_7",
+          "name": "Torque teno mini virus 11",
+          "proteins": 3,
+          "tiles": 41
+        },
+        {
+          "id": "TTV_7",
+          "name": "Torque teno virus 7",
+          "proteins": 3,
+          "tiles": 41
+        },
+        {
+          "id": "TTM_23",
+          "name": "Torque teno midi virus 4",
+          "proteins": 3,
+          "tiles": 41
+        },
+        {
+          "id": "TTM_24",
+          "name": "Torque teno mini virus SHA",
+          "proteins": 3,
+          "tiles": 40
+        },
+        {
+          "id": "TTM_5",
+          "name": "Torque teno mini virus 9",
+          "proteins": 3,
+          "tiles": 39
+        },
+        {
+          "id": "TTM_13",
+          "name": "Torque teno mini virus ALA22",
+          "proteins": 3,
+          "tiles": 39
+        },
+        {
+          "id": "TTM_14",
+          "name": "Torque teno mini virus 6",
+          "proteins": 3,
+          "tiles": 39
+        },
+        {
+          "id": "TTM_8",
+          "name": "Torque teno mini virus 3",
+          "proteins": 3,
+          "tiles": 38
+        },
+        {
+          "id": "TTM_18",
+          "name": "Torque teno mini virus 5",
+          "proteins": 3,
+          "tiles": 38
+        },
+        {
+          "id": "TTM_25",
+          "name": "Torque teno mini virus 1",
+          "proteins": 3,
+          "tiles": 38
+        },
+        {
+          "id": "TTV_13",
+          "name": "Torque teno virus 11",
+          "proteins": 2,
+          "tiles": 38
+        },
+        {
+          "id": "TTV_16",
+          "name": "Torque teno virus 15",
+          "proteins": 2,
+          "tiles": 38
+        },
+        {
+          "id": "TTV_17",
+          "name": "Torque teno virus 16",
+          "proteins": 2,
+          "tiles": 38
+        },
+        {
+          "id": "TTV_18",
+          "name": "Torque teno virus 21",
+          "proteins": 2,
+          "tiles": 38
+        },
+        {
+          "id": "TTM_11",
+          "name": "Torque teno mini virus 2",
+          "proteins": 3,
+          "tiles": 37
+        },
+        {
+          "id": "TTM_21",
+          "name": "Torque teno mini virus 18",
+          "proteins": 3,
+          "tiles": 37
+        },
+        {
+          "id": "GG",
+          "name": "Gyrovirus GyV3",
+          "proteins": 3,
+          "tiles": 37
+        },
+        {
+          "id": "TTV_19",
+          "name": "Torque teno virus 13",
+          "proteins": 2,
+          "tiles": 36
+        },
+        {
+          "id": "GT",
+          "name": "Gyrovirus Tu789",
+          "proteins": 3,
+          "tiles": 34
+        },
+        {
+          "id": "TTM_26",
+          "name": "Torque teno mini virus 7",
+          "proteins": 2,
+          "tiles": 33
+        },
+        {
+          "id": "TTM_27",
+          "name": "Torque teno mini virus 8",
+          "proteins": 2,
+          "tiles": 33
+        },
+        {
+          "id": "TTM_28",
+          "name": "Torque teno mini virus ALH8",
+          "proteins": 2,
+          "tiles": 32
+        },
+        {
+          "id": "TTV_20",
+          "name": "Torque teno virus 1",
+          "proteins": 2,
+          "tiles": 32
+        },
+        {
+          "id": "TTV_14",
+          "name": "Torque teno virus 5",
+          "proteins": 2,
+          "tiles": 31
+        },
+        {
+          "id": "GT_2",
+          "name": "Gyrovirus Tu243",
+          "proteins": 3,
+          "tiles": 30
+        },
+        {
+          "id": "TTV_9",
+          "name": "Torque teno virus 12",
+          "proteins": 3,
+          "tiles": 28
+        },
+        {
+          "id": "TTM_29",
+          "name": "Torque teno midi virus 3",
+          "proteins": 2,
+          "tiles": 28
+        },
+        {
+          "id": "G4",
+          "name": "Gyrovirus 4",
+          "proteins": 2,
+          "tiles": 25
+        },
+        {
+          "id": "SA1_3",
+          "name": "Small anellovirus 1",
+          "proteins": 2,
+          "tiles": 24
+        },
+        {
+          "id": "TTV_21",
+          "name": "Torque teno virus 19",
+          "proteins": 1,
+          "tiles": 8
+        },
+        {
+          "id": "TTV_22",
+          "name": "Torque teno virus 9",
+          "proteins": 1,
+          "tiles": 7
+        }
+      ]
+    },
+    "Mesoniviridae": {
+      "viruses": [
+        {
+          "id": "YV",
+          "name": "Yichang virus",
+          "proteins": 7,
+          "tiles": 278
+        }
+      ]
+    },
+    "Caliciviridae": {
+      "viruses": [
+        {
+          "id": "NG_2",
+          "name": "Norovirus GII",
+          "proteins": 9,
+          "tiles": 254
+        },
+        {
+          "id": "NG_3",
+          "name": "Norovirus GIV",
+          "proteins": 9,
+          "tiles": 245
+        },
+        {
+          "id": "NG",
+          "name": "Norovirus GI",
+          "proteins": 9,
+          "tiles": 213
+        },
+        {
+          "id": "HV_4",
+          "name": "Hom-1 vesivirus",
+          "proteins": 3,
+          "tiles": 111
+        },
+        {
+          "id": "NG_4",
+          "name": "Norovirus GV",
+          "proteins": 4,
+          "tiles": 110
+        },
+        {
+          "id": "ND",
+          "name": "Norovirus dog/GVI.1/HKU_Ca026F/2007/HKG",
+          "proteins": 3,
+          "tiles": 103
+        },
+        {
+          "id": "SH_2",
+          "name": "Sapovirus Hu/Nagoya/NGY-1/2012/JPN",
+          "proteins": 2,
+          "tiles": 101
+        },
+        {
+          "id": "LV(",
+          "name": "Lordsdale virus (Human enteric calicivirus) (Hu/NV/LD/1993/UK)",
+          "proteins": 11,
+          "tiles": 406
+        },
+        {
+          "id": "NG_7",
+          "name": "Norovirus GIII",
+          "proteins": 3,
+          "tiles": 100
+        },
+        {
+          "id": "NG_6",
+          "name": "Norovirus GII.2",
+          "proteins": 3,
+          "tiles": 97
+        },
+        {
+          "id": "SV(_6",
+          "name": "Sapporo virus (Hu/SaV/Mc10/2000/Thailand)",
+          "proteins": 2,
+          "tiles": 97
+        },
+        {
+          "id": "SV(_5",
+          "name": "Sapporo virus (Hu/SV/Man/1993/UK)",
+          "proteins": 3,
+          "tiles": 91
+        },
+        {
+          "id": "TV_4",
+          "name": "Tulane virus",
+          "proteins": 3,
+          "tiles": 91
+        },
+        {
+          "id": "SH",
+          "name": "Sapovirus Hu/GI/Sapporo/MT-2010/1982",
+          "proteins": 3,
+          "tiles": 90
+        },
+        {
+          "id": "SV(_4",
+          "name": "Sapporo virus (Hu/Dresden/pJG-Sap01/DE)",
+          "proteins": 3,
+          "tiles": 88
+        },
+        {
+          "id": "PN_2",
+          "name": "Primate norovirus",
+          "proteins": 3,
+          "tiles": 82
+        },
+        {
+          "id": "NV_2",
+          "name": "Norwalk-like virus",
+          "proteins": 3,
+          "tiles": 82
+        },
+        {
+          "id": "SV(_2",
+          "name": "Southampton virus (SHV) (Hu/NV/SHV/1991/UK)",
+          "proteins": 3,
+          "tiles": 81
+        },
+        {
+          "id": "NG_10",
+          "name": "Norovirus GI/Hu/JP/2007/GI.P3_GI.3/Shimizu/KK2866",
+          "proteins": 3,
+          "tiles": 81
+        },
+        {
+          "id": "CV(",
+          "name": "Chiba virus (Hu/NLV/Chiba 407/1987/JP)",
+          "proteins": 4,
+          "tiles": 19527
+        },
+        {
+          "id": "N(",
+          "name": "Norovirus (Hu/NLV/GII/MD145-12/1987/US)",
+          "proteins": 3,
+          "tiles": 75
+        },
+        {
+          "id": "NG_5",
+          "name": "Norovirus GII.17",
+          "proteins": 3,
+          "tiles": 74
+        },
+        {
+          "id": "N(_2",
+          "name": "Norovirus (Hu/NV/NV/1968/US)",
+          "proteins": 3,
+          "tiles": 73
+        },
+        {
+          "id": "NG_8",
+          "name": "Norovirus GII/Hu/JP/2011/GII/Yuzawa/Gira2HS",
+          "proteins": 3,
+          "tiles": 72
+        },
+        {
+          "id": "NG_9",
+          "name": "Norovirus GII/Hu/JP/2007/GII.P15_GII.15/Sapporo/HK299",
+          "proteins": 3,
+          "tiles": 65
+        },
+        {
+          "id": "SV(_3",
+          "name": "Sapporo virus (Hu/SV/Ehi643/2000/JP)",
+          "proteins": 3,
+          "tiles": 64
+        },
+        {
+          "id": "S((",
+          "name": "Sapovirus (SaV) (Sapporo virus)",
+          "proteins": 2,
+          "tiles": 28
+        }
+      ]
+    },
+    "Arteriviridae": {
+      "viruses": [
+        {
+          "id": "EAV",
+          "name": "Equine arteritis virus",
+          "proteins": 9,
+          "tiles": 181
+        }
+      ]
+    },
+    "Hepadnaviridae": {
+      "viruses": [
+        {
+          "id": "HBV",
+          "name": "Hepatitis B virus genotype D subtype ayw",
+          "proteins": 18,
+          "tiles": 1257
+        },
+        {
+          "id": "HBV_2",
+          "name": "Hepatitis B virus genotype C subtype adr",
+          "proteins": 15,
+          "tiles": 149
+        },
+        {
+          "id": "HBV_3",
+          "name": "Hepatitis B virus genotype B2",
+          "proteins": 10,
+          "tiles": 105
+        },
+        {
+          "id": "HBV_6",
+          "name": "Hepatitis B virus genotype C subtype ayw",
+          "proteins": 8,
+          "tiles": 94
+        },
+        {
+          "id": "HBV_4",
+          "name": "Hepatitis B virus genotype A2 subtype adw2",
+          "proteins": 8,
+          "tiles": 88
+        },
+        {
+          "id": "HBV_7",
+          "name": "Hepatitis B virus genotype A3",
+          "proteins": 8,
+          "tiles": 87
+        },
+        {
+          "id": "HBV_9",
+          "name": "Hepatitis B virus genotype D",
+          "proteins": 7,
+          "tiles": 84
+        },
+        {
+          "id": "HBV_5",
+          "name": "Hepatitis B virus genotype E",
+          "proteins": 8,
+          "tiles": 82
+        },
+        {
+          "id": "HBV_12",
+          "name": "Hepatitis B virus genotype F2",
+          "proteins": 6,
+          "tiles": 81
+        },
+        {
+          "id": "HBV_8",
+          "name": "Hepatitis B virus genotype H subtype adw4",
+          "proteins": 7,
+          "tiles": 68
+        },
+        {
+          "id": "HBV_13",
+          "name": "Hepatitis B virus genotype A1 subtype adw2",
+          "proteins": 5,
+          "tiles": 62
+        },
+        {
+          "id": "HBV_10",
+          "name": "Hepatitis B virus genotype B1",
+          "proteins": 6,
+          "tiles": 61
+        },
+        {
+          "id": "HBV_11",
+          "name": "Hepatitis B virus genotype G",
+          "proteins": 6,
+          "tiles": 60
+        },
+        {
+          "id": "HBV_14",
+          "name": "Hepatitis B virus genotype A2",
+          "proteins": 4,
+          "tiles": 60
+        },
+        {
+          "id": "HBV_15",
+          "name": "Hepatitis B virus genotype B/C subtype adw",
+          "proteins": 4,
+          "tiles": 56
+        },
+        {
+          "id": "HBV_18",
+          "name": "Hepatitis B virus genotype B1 subtype adw",
+          "proteins": 4,
+          "tiles": 56
+        },
+        {
+          "id": "HBV_19",
+          "name": "Hepatitis B virus genotype A2 subtype adw",
+          "proteins": 4,
+          "tiles": 56
+        },
+        {
+          "id": "HBV_23",
+          "name": "Hepatitis B virus genotype C subtype ar",
+          "proteins": 3,
+          "tiles": 54
+        },
+        {
+          "id": "HBV_16",
+          "name": "Hepatitis B virus genotype C",
+          "proteins": 4,
+          "tiles": 52
+        },
+        {
+          "id": "HBV_22",
+          "name": "Hepatitis B virus genotype C subtype ad",
+          "proteins": 3,
+          "tiles": 51
+        },
+        {
+          "id": "HBV_17",
+          "name": "Hepatitis B virus genotype B2 subtype adw",
+          "proteins": 4,
+          "tiles": 49
+        },
+        {
+          "id": "HBV_20",
+          "name": "Hepatitis B virus genotype F2 subtype adw4q",
+          "proteins": 4,
+          "tiles": 49
+        },
+        {
+          "id": "HBV_21",
+          "name": "Hepatitis B virus genotype C subtype ayr",
+          "proteins": 3,
+          "tiles": 48
+        },
+        {
+          "id": "HBV_24",
+          "name": "Hepatitis B virus genotype D subtype adw",
+          "proteins": 3,
+          "tiles": 45
+        },
+        {
+          "id": "HBV_27",
+          "name": "Hepatitis B virus genotype E subtype ayw4",
+          "proteins": 2,
+          "tiles": 43
+        },
+        {
+          "id": "HBV_25",
+          "name": "Hepatitis B virus genotype F1",
+          "proteins": 2,
+          "tiles": 41
+        },
+        {
+          "id": "HBV_26",
+          "name": "Hepatitis B virus genotype H",
+          "proteins": 2,
+          "tiles": 41
+        },
+        {
+          "id": "HBV_28",
+          "name": "Hepatitis B virus genotype A1 subtype adw",
+          "proteins": 2,
+          "tiles": 41
+        },
+        {
+          "id": "HBV_29",
+          "name": "Hepatitis B virus genotype F1 subtype adw4",
+          "proteins": 2,
+          "tiles": 33
+        },
+        {
+          "id": "HBV_30",
+          "name": "Hepatitis B virus genotype G subtype adw2",
+          "proteins": 1,
+          "tiles": 7
+        }
+      ]
+    },
+    "Genomoviridae": {
+      "viruses": [
+        {
+          "id": "GS_2",
+          "name": "Gemycircularvirus sp.",
+          "proteins": 9,
+          "tiles": 116
+        },
+        {
+          "id": "HAG",
+          "name": "Human associated gemyvongvirus 1",
+          "proteins": 3,
+          "tiles": 40
+        },
+        {
+          "id": "HGG",
+          "name": "Human gemycircularvirus GeTz1",
+          "proteins": 3,
+          "tiles": 32
+        },
+        {
+          "id": "GH",
+          "name": "Gemycircularvirus HV-GcV2",
+          "proteins": 3,
+          "tiles": 29
+        },
+        {
+          "id": "HGC",
+          "name": "Human genital-associated circular DNA virus-1",
+          "proteins": 3,
+          "tiles": 24
+        },
+        {
+          "id": "MV_12",
+          "name": "MSSI2.225 virus",
+          "proteins": 3,
+          "tiles": 21
+        },
+        {
+          "id": "GH_2",
+          "name": "Gemycircularvirus HV-GcV1",
+          "proteins": 3,
+          "tiles": 21
+        },
+        {
+          "id": "GC",
+          "name": "Gemycircularvirus C1c",
+          "proteins": 1,
+          "tiles": 14
+        }
+      ]
+    },
+    "Pecoviridae": {
+      "viruses": [
+        {
+          "id": "HCV_4",
+          "name": "Human circovirus VS6600022",
+          "proteins": 4,
+          "tiles": 55
+        }
+      ]
+    },
+    "Tobaniviridae": {
+      "viruses": [
+        {
+          "id": "HT",
+          "name": "Human torovirus",
+          "proteins": 9,
+          "tiles": 49
+        }
+      ]
+    },
+    "Redondoviridae": {
+      "viruses": [
+        {
+          "id": "HLV",
+          "name": "Human lung-associated vientovirus FB",
+          "proteins": 3,
+          "tiles": 46
+        }
+      ]
+    },
+    "Oomyviridae": {
+      "viruses": [
+        {
+          "id": "PN",
+          "name": "Parvovirus NIH-CQV",
+          "proteins": 3,
+          "tiles": 44
+        }
+      ]
+    },
+    "Circoviridae": {
+      "viruses": [
+        {
+          "id": "HFV",
+          "name": "Human fecal virus Jorvi2",
+          "proteins": 5,
+          "tiles": 42
+        },
+        {
+          "id": "HFV_3",
+          "name": "Human fecal virus Jorvi4",
+          "proteins": 2,
+          "tiles": 27
+        },
+        {
+          "id": "HFV_2",
+          "name": "Human fecal virus Jorvi3",
+          "proteins": 2,
+          "tiles": 24
+        },
+        {
+          "id": "HSC",
+          "name": "Human stool-associated circular virus NG13",
+          "proteins": 2,
+          "tiles": 23
+        },
+        {
+          "id": "HAC_5",
+          "name": "Human associated cyclovirus 1 (HuCyV-1) (Cyclovirus PK5510)",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "CP",
+          "name": "Cyclovirus PK5034",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "CS",
+          "name": "Cyclovirus SL-108277",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "CP_2",
+          "name": "Cyclovirus PK5222",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "CP_3",
+          "name": "Cyclovirus PK5006",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "CN",
+          "name": "Cyclovirus NG12",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "CN_2",
+          "name": "Cyclovirus NG14",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "HCV_10",
+          "name": "Human cyclovirus VS5700009",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "CT",
+          "name": "Cyclovirus TN25",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "HAC_6",
+          "name": "Human associated cyclovirus 10",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "HPC",
+          "name": "Human PoSCV5-like circular virus",
+          "proteins": 1,
+          "tiles": 22
+        },
+        {
+          "id": "IEA",
+          "name": "Indian encephalitis associated cyclovirus",
+          "proteins": 2,
+          "tiles": 20
+        },
+        {
+          "id": "CV_9",
+          "name": "Cyclovirus VN",
+          "proteins": 2,
+          "tiles": 19
+        }
+      ]
+    },
+    "Smacoviridae": {
+      "viruses": [
+        {
+          "id": "HFS",
+          "name": "Human feces smacovirus 3",
+          "proteins": 4,
+          "tiles": 41
+        },
+        {
+          "id": "HFS_2",
+          "name": "Human feces smacovirus 2",
+          "proteins": 2,
+          "tiles": 28
+        },
+        {
+          "id": "HAP",
+          "name": "Human associated porprismacovirus 3",
+          "proteins": 2,
+          "tiles": 25
+        },
+        {
+          "id": "HAH_2",
+          "name": "Human associated huchismacovirus 3",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "HAH_3",
+          "name": "Human associated huchismacovirus 2",
+          "proteins": 2,
+          "tiles": 22
+        },
+        {
+          "id": "HAP_2",
+          "name": "Human associated porprismacovirus",
+          "proteins": 2,
+          "tiles": 21
+        },
+        {
+          "id": "HS1",
+          "name": "Human smacovirus 1",
+          "proteins": 2,
+          "tiles": 17
+        },
+        {
+          "id": "HAH",
+          "name": "Human associated huchismacovirus 1",
+          "proteins": 2,
+          "tiles": 17
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total_families": 40,
+    "total_viruses": 792
+  }
+}
