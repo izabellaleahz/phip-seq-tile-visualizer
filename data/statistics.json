@@ -1,13 +1,42 @@
 {
-  "total_unique_tiles": 404189,
-  "total_proteins_covered": 93203,
-  "unique_viruses": 330,
-  "proteins_with_gaps": 125,
-  "proteins_fully_covered": 93078,
-  "mean_coverage": 99.87,
+  "library_summary": {
+    "total_unique_tiles": 404189,
+    "total_proteins_covered": 93203,
+    "unique_viruses": 330,
+    "total_tile_protein_mappings": 2495871
+  },
+  "tile_statistics": {
+    "single_protein_tiles": 267541,
+    "shared_tiles": 136648,
+    "mean_proteins_per_shared_tile": 16.30708096715649
+  },
   "sharing_details": {
     "cross_virus_tiles": 0,
     "same_virus_tiles": 136648,
     "total_shared_tiles": 136648
+  },
+  "coverage": {
+    "proteins_with_100_pct": 93078,
+    "proteins_with_gaps": 125,
+    "mean_coverage_depth": 2.0025881215848385
+  },
+  "protein_statistics": {
+    "mean_length": 675.8082035985966,
+    "median_length": 333,
+    "min_length": 50,
+    "max_length": 7241
+  },
+  "generation_info": {
+    "pipeline": "PhIP-seq Virome Library Pipeline",
+    "tile_length": 49,
+    "tile_overlap": 25,
+    "similarity_threshold": 0.8,
+    "max_cluster_size": 500,
+    "no_gaps_mode": true,
+    "source_database": "UniProt (TrEMBL + Swiss-Prot) + RefSeq",
+    "host_filter": "Human-infecting viruses (taxid: 9606)",
+    "min_protein_length": 49,
+    "clustering": "CD-HIT at 99% identity",
+    "notes": "Full coverage tiling with sequence-matched positions for shared tiles"
   }
 }
