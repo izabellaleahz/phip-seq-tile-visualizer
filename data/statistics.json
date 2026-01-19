@@ -2,34 +2,19 @@
   "library_summary": {
     "total_unique_tiles": 577390,
     "total_proteins_covered": 91243,
-    "total_tile_protein_mappings": 1343554,
-    "unique_viruses": 1521
-  },
-  "tile_statistics": {
-    "shared_tiles": 113637,
-    "single_protein_tiles": 463753,
-    "mean_proteins_per_shared_tile": 7.74
+    "unique_viruses": 1399
   },
   "coverage": {
-    "proteins_with_full_coverage": 84532,
-    "proteins_with_partial_coverage": 6711,
+    "proteins_with_full_coverage": 84548,
+    "proteins_with_partial_coverage": 6695,
     "mean_coverage_pct": 98.5,
-    "median_coverage_pct": 100.0
-  },
-  "protein_statistics": {
-    "mean_length": 540,
-    "median_length": 248,
-    "min_length": 49,
-    "max_length": 7241
+    "pct_proteins_with_full_coverage": 92.7
   },
   "generation_info": {
-    "pipeline": "PhIP-seq Library Generator",
     "tile_length": 49,
     "tile_overlap": 25,
-    "source_database": "UniProt + VirusHostDB",
-    "host_filter": "Human (taxid 9606)",
-    "min_protein_length": 49,
     "clustering": "CD-HIT 99% identity",
-    "notes": "HIV and EBV filtered to Swiss-Prot only"
+    "source": "UniProt + VirusHostDB",
+    "host_filter": "Human (taxid 9606)"
   }
 }
