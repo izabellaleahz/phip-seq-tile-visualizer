@@ -1,52 +1,35 @@
 {
   "library_summary": {
-    "total_unique_tiles": 404189,
-    "total_proteins_covered": 94958,
-    "total_tile_protein_mappings": 404189,
-    "unique_viruses": 792
+    "total_unique_tiles": 577390,
+    "total_proteins_covered": 91243,
+    "total_tile_protein_mappings": 1343554,
+    "unique_viruses": 1521
   },
   "tile_statistics": {
-    "shared_tiles": 136648,
-    "single_protein_tiles": 267541,
-    "mean_proteins_per_shared_tile": 6.175
-  },
-  "sharing_details": {
-    "cross_virus_tiles": 31406,
-    "same_virus_tiles": 41760,
-    "total_shared_tiles": 73166
+    "shared_tiles": 113637,
+    "single_protein_tiles": 463753,
+    "mean_proteins_per_shared_tile": 7.74
   },
   "coverage": {
-    "proteins_with_100_pct": 93841,
-    "proteins_with_gaps": 1117,
-    "mean_coverage_depth": 4.26
+    "proteins_with_full_coverage": 84532,
+    "proteins_with_partial_coverage": 6711,
+    "mean_coverage_pct": 98.5,
+    "median_coverage_pct": 100.0
   },
   "protein_statistics": {
-    "mean_length": 676,
-    "median_length": 333,
-    "min_length": 50,
+    "mean_length": 540,
+    "median_length": 248,
+    "min_length": 49,
     "max_length": 7241
-  },
-  "pipeline_breakdown": {
-    "fetched": 1470025,
-    "after_filter": 735366,
-    "filtered_ambiguous": 304844,
-    "filtered_short": 23154,
-    "after_99_clustering": 456681,
-    "after_100_clustering": 94958,
-    "with_100_coverage": 93841,
-    "with_partial_coverage": 1117
   },
   "generation_info": {
     "pipeline": "PhIP-seq Library Generator",
     "tile_length": 49,
     "tile_overlap": 25,
-    "similarity_threshold": 0.8,
-    "max_cluster_size": 500,
-    "no_gaps_mode": false,
     "source_database": "UniProt + VirusHostDB",
     "host_filter": "Human (taxid 9606)",
     "min_protein_length": 49,
-    "clustering": "CD-HIT 99% \u2192 100% identity",
-    "notes": "Sequential clustering removes redundant sequences from viral isolates"
+    "clustering": "CD-HIT 99% identity",
+    "notes": "HIV and EBV filtered to Swiss-Prot only"
   }
 }
