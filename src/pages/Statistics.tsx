@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useStatistics, useViruses, useTaxonomy } from '../hooks/useData';
 import Loading from '../components/Loading';
+import HostBadge from '../components/HostBadge';
 
 type SortMetric = 'uniqueTiles' | 'tileCount';
 
@@ -28,6 +29,33 @@ export default function Statistics() {
     if (!taxonomy?.taxonomy_data) return 0;
     return Object.keys(taxonomy.taxonomy_data).length;
   }, [taxonomy]);
+
+  // Compute per-species aggregates
+  const speciesData = useMemo(() => {
+    if (!viruses.length) return null;
+    const species = (['human', 'bat', 'bird'] as const).map(host => {
+      const hostViruses = viruses.filter(v => (v.hostSpecies || ['human']).includes(host));
+      const virusCount = hostViruses.length;
+      const proteinCount = hostViruses.reduce((sum, v) => sum + v.proteinCount, 0);
+      const uniqueTiles = hostViruses.reduce((sum, v) => sum + (v.uniqueTiles || 0), 0);
+      const totalTileMappings = hostViruses.reduce((sum, v) => sum + v.tileCount, 0);
+      const topViruses = [...hostViruses]
+        .sort((a, b) => (b.uniqueTiles || 0) - (a.uniqueTiles || 0))
+        .slice(0, 5);
+      return { host, virusCount, proteinCount, uniqueTiles, totalTileMappings, topViruses };
+    });
+    return species;
+  }, [viruses]);
+
+  const allSpeciesTotals = useMemo(() => {
+    if (!viruses.length) return { virusCount: 0, uniqueTiles: 0, totalTileMappings: 0, proteinCount: 0 };
+    return {
+      virusCount: viruses.length,
+      uniqueTiles: viruses.reduce((sum, v) => sum + (v.uniqueTiles || 0), 0),
+      totalTileMappings: viruses.reduce((sum, v) => sum + v.tileCount, 0),
+      proteinCount: viruses.reduce((sum, v) => sum + v.proteinCount, 0),
+    };
+  }, [viruses]);
 
   if (loading) {
     return (
@@ -115,6 +143,180 @@ export default function Statistics() {
           <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Tile Mappings</div>
         </div>
       </div>
+
+      {/* Species Tiles */}
+      {speciesData && (
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            Species Tile Breakdown
+          </h2>
+
+          {/* All Species summary bar */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+              <div>
+                <div className="text-xl font-bold text-gray-900 dark:text-white">
+                  {allSpeciesTotals.virusCount.toLocaleString()}
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Total Viruses</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">
+                  {allSpeciesTotals.uniqueTiles.toLocaleString()}
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Unique Tiles</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-amber-600 dark:text-amber-400">
+                  {allSpeciesTotals.totalTileMappings.toLocaleString()}
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Tile Mappings</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-purple-600 dark:text-purple-400">
+                  {allSpeciesTotals.proteinCount.toLocaleString()}
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Proteins</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Species cards grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {speciesData.map(species => {
+              const colorMap = {
+                human: {
+                  border: 'border-blue-200 dark:border-blue-800',
+                  accent: 'text-blue-600 dark:text-blue-400',
+                  bg: 'bg-blue-50 dark:bg-blue-900/20',
+                  bar: 'bg-blue-500',
+                  link: 'text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300',
+                },
+                bat: {
+                  border: 'border-purple-200 dark:border-purple-800',
+                  accent: 'text-purple-600 dark:text-purple-400',
+                  bg: 'bg-purple-50 dark:bg-purple-900/20',
+                  bar: 'bg-purple-500',
+                  link: 'text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300',
+                },
+                bird: {
+                  border: 'border-green-200 dark:border-green-800',
+                  accent: 'text-green-600 dark:text-green-400',
+                  bg: 'bg-green-50 dark:bg-green-900/20',
+                  bar: 'bg-green-500',
+                  link: 'text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300',
+                },
+              };
+              const colors = colorMap[species.host];
+              const tilePct = allSpeciesTotals.uniqueTiles > 0
+                ? (species.uniqueTiles / allSpeciesTotals.uniqueTiles) * 100
+                : 0;
+
+              return (
+                <div
+                  key={species.host}
+                  className={`bg-white dark:bg-gray-800 rounded-xl border-2 ${colors.border} overflow-hidden`}
+                >
+                  {/* Header */}
+                  <div className={`${colors.bg} px-4 py-3 flex items-center justify-between`}>
+                    <div className="flex items-center gap-2">
+                      <HostBadge host={species.host} />
+                      <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {species.host.charAt(0).toUpperCase() + species.host.slice(1)}
+                      </span>
+                    </div>
+                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${colors.bg} ${colors.accent}`}>
+                      {species.virusCount.toLocaleString()} viruses
+                    </span>
+                  </div>
+
+                  <div className="p-4 space-y-4">
+                    {/* Stats */}
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600 dark:text-gray-400">Unique Tiles</span>
+                        <span className={`font-bold ${colors.accent}`}>
+                          {species.uniqueTiles.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600 dark:text-gray-400">Tile Mappings</span>
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          {species.totalTileMappings.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600 dark:text-gray-400">Proteins</span>
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          {species.proteinCount.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Percentage bar */}
+                    <div>
+                      <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
+                        <span>Library share</span>
+                        <span>{tilePct.toFixed(1)}% of unique tiles</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${colors.bar}`}
+                          style={{ width: `${tilePct}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Top 5 viruses */}
+                    <div>
+                      <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+                        Top viruses by unique tiles
+                      </div>
+                      <div className="space-y-1.5">
+                        {species.topViruses.map((virus, i) => (
+                          <Link
+                            key={virus.id}
+                            to={`/virus/${virus.id}`}
+                            className="flex items-center gap-2 text-xs hover:bg-gray-50 dark:hover:bg-gray-700/50 -mx-1 px-1 py-0.5 rounded transition-colors"
+                          >
+                            <span className="text-gray-400 dark:text-gray-500 w-4 text-right">
+                              {i + 1}.
+                            </span>
+                            <span className="text-gray-900 dark:text-white truncate flex-1">
+                              {virus.name}
+                            </span>
+                            <span className={`font-medium ${colors.accent} tabular-nums`}>
+                              {(virus.uniqueTiles || 0).toLocaleString()}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Footer link */}
+                  <div className="border-t border-gray-100 dark:border-gray-700 px-4 py-2.5">
+                    <Link
+                      to={`/?host=${species.host}`}
+                      className={`text-xs font-medium ${colors.link} flex items-center gap-1`}
+                    >
+                      Browse all {species.host} viruses
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Footnote */}
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
+            Some viruses infect multiple host species. Per-species totals may overlap and will not sum to the library total.
+          </p>
+        </div>
+      )}
 
       {/* Detailed Stats */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -421,8 +623,13 @@ export default function Statistics() {
                   {i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                    {virus.name}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      {virus.name}
+                    </span>
+                    {(virus.hostSpecies || ['human']).map(host => (
+                      <HostBadge key={host} host={host} />
+                    ))}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">
                     {virus.proteinCount.toLocaleString()} proteins

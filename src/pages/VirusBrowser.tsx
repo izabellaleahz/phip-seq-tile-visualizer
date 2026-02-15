@@ -1,22 +1,50 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useViruses } from '../hooks/useData';
 import Loading from '../components/Loading';
+import HostBadge from '../components/HostBadge';
 
 type SortKey = 'name' | 'proteinCount' | 'tileCount' | 'uniqueTiles';
 type SortOrder = 'asc' | 'desc';
+type HostFilter = 'all' | 'human' | 'bat' | 'bird';
+
+const validHosts: HostFilter[] = ['all', 'human', 'bat', 'bird'];
 
 export default function VirusBrowser() {
   const { viruses, loading, error } = useViruses();
+  const [searchParams] = useSearchParams();
+  const hostParam = searchParams.get('host') as HostFilter | null;
+  const initialHost = hostParam && validHosts.includes(hostParam) ? hostParam : 'all';
   const [filter, setFilter] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>('uniqueTiles');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
+  const [hostFilter, setHostFilter] = useState<HostFilter>(initialHost);
+
+  // Compute per-host counts
+  const hostCounts = useMemo(() => {
+    const counts = { all: viruses.length, human: 0, bat: 0, bird: 0 };
+    for (const v of viruses) {
+      const hosts = v.hostSpecies || ['human'];
+      if (hosts.includes('human')) counts.human++;
+      if (hosts.includes('bat')) counts.bat++;
+      if (hosts.includes('bird')) counts.bird++;
+    }
+    return counts;
+  }, [viruses]);
 
   // Filter and sort viruses
   const filteredViruses = useMemo(() => {
     let result = viruses;
 
-    // Filter
+    // Host filter
+    if (hostFilter !== 'all') {
+      result = result.filter(v => {
+        const hosts = v.hostSpecies || ['human'];
+        return hosts.includes(hostFilter);
+      });
+    }
+
+    // Text filter
     if (filter) {
       const lowerFilter = filter.toLowerCase();
       result = result.filter(
@@ -40,7 +68,7 @@ export default function VirusBrowser() {
     });
 
     return result;
-  }, [viruses, filter, sortKey, sortOrder]);
+  }, [viruses, filter, sortKey, sortOrder, hostFilter]);
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -83,6 +111,13 @@ export default function VirusBrowser() {
     );
   }
 
+  const hostFilterOptions: { key: HostFilter; label: string; color: string; activeColor: string }[] = [
+    { key: 'all', label: 'All', color: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300', activeColor: 'bg-gray-800 dark:bg-white text-white dark:text-gray-900' },
+    { key: 'human', label: 'Human', color: 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400', activeColor: 'bg-blue-600 dark:bg-blue-500 text-white' },
+    { key: 'bat', label: 'Bat', color: 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400', activeColor: 'bg-purple-600 dark:bg-purple-500 text-white' },
+    { key: 'bird', label: 'Bird', color: 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400', activeColor: 'bg-green-600 dark:bg-green-500 text-white' },
+  ];
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       {/* Header */}
@@ -91,6 +126,24 @@ export default function VirusBrowser() {
         <p className="text-gray-500 dark:text-gray-400 mt-1">
           {viruses.length.toLocaleString()} viruses in the PhIP-seq tile library
         </p>
+      </div>
+
+      {/* Host species filter pills */}
+      <div className="mb-4 flex flex-wrap gap-2">
+        {hostFilterOptions.map(opt => (
+          <button
+            key={opt.key}
+            onClick={() => setHostFilter(opt.key)}
+            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              hostFilter === opt.key ? opt.activeColor : opt.color + ' hover:opacity-80'
+            }`}
+          >
+            {opt.label}
+            <span className="ml-1.5 opacity-75">
+              {hostCounts[opt.key].toLocaleString()}
+            </span>
+          </button>
+        ))}
       </div>
 
       {/* Filter and sort controls */}
@@ -163,8 +216,13 @@ export default function VirusBrowser() {
                   className="flex items-center px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                      {virus.name}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                        {virus.name}
+                      </span>
+                      {(virus.hostSpecies || ['human']).map(host => (
+                        <HostBadge key={host} host={host} />
+                      ))}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400 font-mono">
                       {virus.id}
