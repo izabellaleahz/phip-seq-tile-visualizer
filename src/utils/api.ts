@@ -1,4 +1,4 @@
-import type { Virus, Protein, SharedTilesIndex, SearchIndex, LibraryStatistics, ProteinIndex, TaxonomyData } from '../types';
+import type { Virus, Protein, SharedTilesIndex, SearchIndex, LibraryStatistics, ProteinIndex } from '../types';
 
 const BASE_URL = import.meta.env.BASE_URL + 'data';
 
@@ -44,8 +44,9 @@ export async function fetchStatistics(): Promise<LibraryStatistics> {
   return fetchJson<LibraryStatistics>('statistics.json');
 }
 
-export async function fetchTaxonomy(): Promise<TaxonomyData> {
-  return fetchJson<TaxonomyData>('taxonomy.json');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function fetchTaxonomy(): Promise<any> {
+  return fetchJson<any>('taxonomy.json');
 }
 
 // Helper to find a protein by ID (needs to load the virus file)

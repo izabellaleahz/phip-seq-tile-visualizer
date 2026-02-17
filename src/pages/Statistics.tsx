@@ -1,12 +1,22 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useStatistics, useViruses, useTaxonomy } from '../hooks/useData';
+import type { FamilyStats } from '../types';
 import Loading from '../components/Loading';
 import HostBadge from '../components/HostBadge';
 
 type SortMetric = 'uniqueTiles' | 'tileCount';
 
 type FamilySortMetric = 'unique_tiles' | 'count' | 'proteins';
+
+// Extended type for taxonomy entries with family field
+interface TaxonomyEntryWithFamily {
+  name: string;
+  lineage: string;
+  rank: string;
+  family?: string;
+  division?: string;
+}
 
 export default function Statistics() {
   const { statistics, loading: statsLoading, error: statsError } = useStatistics();
@@ -17,17 +27,47 @@ export default function Statistics() {
 
   const loading = statsLoading || virusesLoading || taxonomyLoading;
 
+  // Compute family stats from taxonomy data (handles both flat and nested formats)
+  const familyStats = useMemo(() => {
+    if (!taxonomy) return {};
+
+    // Check if taxonomy has family_stats (nested format)
+    if ((taxonomy as { family_stats?: Record<string, unknown> }).family_stats) {
+      return (taxonomy as { family_stats: Record<string, FamilyStats> }).family_stats;
+    }
+
+    // Compute from flat taxonomy dict (taxid -> entry with family field)
+    const stats: Record<string, FamilyStats> = {};
+    const taxData = taxonomy as unknown as Record<string, TaxonomyEntryWithFamily>;
+
+    for (const entry of Object.values(taxData)) {
+      if (entry && typeof entry === 'object' && 'family' in entry) {
+        const family = entry.family || 'Unknown';
+        if (!stats[family]) {
+          stats[family] = { count: 0, proteins: 0, tiles: 0, unique_tiles: 0 };
+        }
+        stats[family].count++;
+      }
+    }
+    return stats;
+  }, [taxonomy]);
+
   // Sort families by selected metric
   const sortedFamilies = useMemo(() => {
-    if (!taxonomy?.family_stats) return [];
-    return Object.entries(taxonomy.family_stats)
+    if (!familyStats || Object.keys(familyStats).length === 0) return [];
+    return Object.entries(familyStats)
       .sort((a, b) => (b[1][familySortMetric] || 0) - (a[1][familySortMetric] || 0));
-  }, [taxonomy, familySortMetric]);
+  }, [familyStats, familySortMetric]);
 
-  // Count total taxon IDs
+  // Count total taxon IDs (handles both flat and nested formats)
   const totalTaxonIds = useMemo(() => {
-    if (!taxonomy?.taxonomy_data) return 0;
-    return Object.keys(taxonomy.taxonomy_data).length;
+    if (!taxonomy) return 0;
+    // Nested format with taxonomy_data
+    if ((taxonomy as { taxonomy_data?: Record<string, unknown> }).taxonomy_data) {
+      return Object.keys((taxonomy as { taxonomy_data: Record<string, unknown> }).taxonomy_data).length;
+    }
+    // Flat format: taxonomy itself is the taxid -> data mapping
+    return Object.keys(taxonomy).length;
   }, [taxonomy]);
 
   // Compute per-species aggregates
