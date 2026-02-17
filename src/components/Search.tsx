@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Fuse from 'fuse.js';
+import HostBadge from './HostBadge';
 
 interface SearchResult {
   type: 'virus' | 'protein';
@@ -8,11 +9,13 @@ interface SearchResult {
   name: string;
   virusId?: string;
   virusName?: string;
+  hostSpecies?: string[];
 }
 
 interface VirusIndex {
   id: string;
   name: string;
+  hostSpecies?: string[];
 }
 
 interface ProteinSearchItem {
@@ -50,7 +53,7 @@ export default function Search() {
   const virusFuse = useMemo(() => {
     if (!virusIndex.length) return null;
     return new Fuse(virusIndex, {
-      keys: ['name', 'id'],
+      keys: ['name', 'id', 'hostSpecies'],
       threshold: 0.3,
       includeScore: true,
     });
@@ -110,6 +113,7 @@ export default function Search() {
       type: 'virus' as const,
       id: r.item.id,
       name: r.item.name,
+      hostSpecies: r.item.hostSpecies,
     }));
 
     setResults(results);
@@ -231,8 +235,13 @@ export default function Search() {
                 {result.type === 'virus' ? 'Virus' : 'Protein'}
               </span>
               <div className="min-w-0 flex-1">
-                <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                  {result.name}
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                    {result.name}
+                  </span>
+                  {result.type === 'virus' && result.hostSpecies?.map(host => (
+                    <HostBadge key={host} host={host} />
+                  ))}
                 </div>
                 {result.type === 'protein' && result.virusName && (
                   <div className="text-xs text-gray-500 dark:text-gray-400 truncate">

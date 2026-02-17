@@ -5,6 +5,7 @@ export interface Virus {
   tileCount: number;
   uniqueTiles?: number;
   taxonIds: string[];
+  hostSpecies: string[];
 }
 
 export interface TilePosition {
@@ -56,7 +57,7 @@ export interface SharedTilesIndex {
 }
 
 export interface SearchIndex {
-  viruses: { id: string; name: string; abbrev: string }[];
+  viruses: { id: string; name: string; abbrev: string; hostSpecies?: string[] }[];
   proteins: { id: string; name: string; virusId: string; virusName: string }[];
 }
 
@@ -107,6 +108,11 @@ export interface LibraryStatistics {
     min_length: number;
     max_length: number;
   };
+  host_species_breakdown?: Record<string, {
+    viruses: number;
+    proteins: number;
+    tiles: number;
+  }>;
   generation_info?: {
     pipeline: string;
     tile_length: number;
