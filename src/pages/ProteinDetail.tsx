@@ -73,9 +73,20 @@ export default function ProteinDetail() {
 
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          {protein.nameClean}
-        </h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {protein.nameClean}
+          </h1>
+          {protein.database && (
+            <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+              protein.database === 'Swiss-Prot' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' :
+              protein.database === 'RefSeq' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300' :
+              'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+            }`}>
+              {protein.database}
+            </span>
+          )}
+        </div>
         <p className="text-gray-500 dark:text-gray-400 font-mono mt-1">{protein.id}</p>
         <p className="text-gray-500 dark:text-gray-400 mt-1">{protein.virusName}</p>
       </div>
@@ -129,6 +140,12 @@ export default function ProteinDetail() {
               <div className="w-3 h-3 rounded bg-amber-500" />
               <span className="text-gray-600 dark:text-gray-400">Shared</span>
             </div>
+            {protein.xRegions && protein.xRegions.length > 0 && (
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded bg-red-400/50" />
+                <span className="text-gray-600 dark:text-gray-400">Unknown (X)</span>
+              </div>
+            )}
           </div>
         </div>
         <TileTrack
@@ -136,6 +153,7 @@ export default function ProteinDetail() {
           proteinLength={protein.length}
           onTileClick={setSelectedTile}
           height={100}
+          xRegions={protein.xRegions}
         />
       </div>
 

@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react';
-import type { TilePosition } from '../types';
+import type { TilePosition, XRegion } from '../types';
 
 interface TileTrackProps {
   tiles: TilePosition[];
   proteinLength: number;
   onTileClick?: (tile: TilePosition) => void;
   height?: number;
+  xRegions?: XRegion[];
 }
 
 export default function TileTrack({
@@ -13,6 +14,7 @@ export default function TileTrack({
   proteinLength,
   onTileClick,
   height = 60,
+  xRegions,
 }: TileTrackProps) {
   const [hoveredTile, setHoveredTile] = useState<TilePosition | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
@@ -65,6 +67,23 @@ export default function TileTrack({
           className="fill-gray-100 dark:fill-gray-800"
           rx="4"
         />
+
+        {/* X regions (unknown residues) */}
+        {xRegions?.map((region, i) => {
+          const x = (region.start / proteinLength) * 100;
+          const width = ((region.end - region.start) / proteinLength) * 100;
+          return (
+            <rect
+              key={`x-${i}`}
+              x={`${x}%`}
+              y="0"
+              width={`${Math.max(width, 0.3)}%`}
+              height={trackHeight - 20}
+              className="fill-red-400/30"
+              rx="2"
+            />
+          );
+        })}
 
         {/* Tile rectangles */}
         {tileRows.map((row, rowIndex) =>

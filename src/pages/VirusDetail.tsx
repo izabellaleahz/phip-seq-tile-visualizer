@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useVirusProteins, useViruses } from '../hooks/useData';
 import Loading from '../components/Loading';
 import TileTrack from '../components/TileTrack';
+import HostBadge from '../components/HostBadge';
 
 type SortKey = 'name' | 'tileCount' | 'length' | 'sharedTiles';
 type SortOrder = 'asc' | 'desc';
@@ -98,9 +99,14 @@ export default function VirusDetail() {
 
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          {virus?.name || virusId}
-        </h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {virus?.name || virusId}
+          </h1>
+          {(virus?.hostSpecies || ['human']).map(host => (
+            <HostBadge key={host} host={host} />
+          ))}
+        </div>
         <p className="text-gray-500 dark:text-gray-400 font-mono mt-1">{virusId}</p>
       </div>
 
@@ -200,6 +206,15 @@ export default function VirusDetail() {
                       <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
                         {protein.nameClean}
                       </span>
+                      {protein.database && (
+                        <span className={`shrink-0 px-1.5 py-0.5 text-xs rounded ${
+                          protein.database === 'Swiss-Prot' ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' :
+                          protein.database === 'RefSeq' ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' :
+                          'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                        }`}>
+                          {protein.database}
+                        </span>
+                      )}
                       {protein.sharedTiles > 0 && (
                         <span className="shrink-0 px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs rounded">
                           {protein.sharedTiles} shared
@@ -221,6 +236,7 @@ export default function VirusDetail() {
                         tiles={protein.tiles}
                         proteinLength={protein.length}
                         height={40}
+                        xRegions={protein.xRegions}
                       />
                     </div>
                   )}

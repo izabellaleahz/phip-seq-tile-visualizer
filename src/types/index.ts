@@ -16,6 +16,11 @@ export interface TilePosition {
   seq: string;
 }
 
+export interface XRegion {
+  start: number;
+  end: number;
+}
+
 export interface Protein {
   id: string;
   virusId: string;
@@ -29,6 +34,8 @@ export interface Protein {
   coverageStart: number;
   coverageEnd: number;
   tiles: TilePosition[];
+  database?: string;
+  xRegions?: XRegion[];
 }
 
 export interface ProteinIndex {
