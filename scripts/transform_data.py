@@ -28,6 +28,8 @@ def load_host_mapping():
 
 def get_host_species(taxon_ids, host_mapping):
     """Determine host species for a virus based on its taxon IDs."""
+    if taxon_ids == ["0"]:
+        return ["control"]
     hosts = set()
     for tid in taxon_ids:
         if tid in host_mapping:

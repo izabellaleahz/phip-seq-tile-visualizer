@@ -24,11 +24,35 @@ from pathlib import Path
 from statistics import mean, median
 
 # Paths
-INPUTS_DIR = Path("/large_storage/gilbertlab/izabella/phip_seq/phip_seq_oligo_generator/outputs/inputs")
-TILES_JSON = Path("/large_storage/gilbertlab/izabella/phip_seq/phip_seq_oligo_generator/outputs/library_comparison/combined_all/tile_clusters/collapsed_tiles.json")
-COLLAPSED_FASTA = Path("/large_storage/gilbertlab/izabella/phip_seq/phip_seq_oligo_generator/outputs/library_comparison/combined_all/protein_clusters/proteins_collapsed_99.fasta")
-OUTPUT_DIR = Path("/large_storage/gilbertlab/izabella/phip_seq/phip_seq_oligo_generator/analysis_output")
+PIPELINE_DIR = Path("/large_storage/gilbertlab/izabella/phip_seq/phip_seq_oligo_generator")
+INPUTS_DIR = PIPELINE_DIR / "outputs/inputs"
+TILES_JSON = PIPELINE_DIR / "outputs/combined_library_2026/tile_clusters/collapsed_tiles.json"
+COLLAPSED_FASTA = PIPELINE_DIR / "outputs/combined_library_2026/protein_clusters/proteins_collapsed_99.fasta"
+OUTPUT_DIR = PIPELINE_DIR / "analysis_output"
 BACKUP_DIR = OUTPUT_DIR.parent / "analysis_output_human_only_backup"
+
+# Control definitions — must match scripts/add_controls.py in the pipeline repo
+CONTROL_PEPTIDES = [
+    {
+        "id": "CONTROL_GFAP_F5",
+        "gene": "GFAP",
+        "sequence": "RELRLRLDQLTANSARLEVERDNLAQDLATVRQKLQDETNLRLEAENNL",
+        "source": "NP_001229305.1 glial fibrillary acidic protein isoform 3 [Homo sapiens]",
+    },
+    {
+        "id": "CONTROL_GFAP_F11",
+        "gene": "GFAP",
+        "sequence": "TDAAARNAELLRQAKHEANDYRRQLQSLTCDLESLRGTNESLERQMREQ",
+        "source": "NP_001229305.1 glial fibrillary acidic protein isoform 3 [Homo sapiens]",
+    },
+    {
+        "id": "CONTROL_MYC_F17",
+        "gene": "MYC",
+        "sequence": "PKVVILKKATAYILSVQAEEQKLISEEDLLRKRREQLKHKLEQLRNSCA",
+        "source": "NP_002458.2 myc proto-oncogene protein [Homo sapiens]",
+    },
+]
+NUM_STOP_CODON_PHAGES = 50
 
 
 def clean_protein_name(name):
@@ -131,6 +155,82 @@ def load_protein_sequences(fasta_path, needed_pids):
         if current_id and current_id in needed_pids:
             sequences[current_id] = ''.join(current_seq)
     return sequences
+
+
+def inject_controls(virus_organisms, protein_summaries, protein_tiles, all_meta, active_proteins):
+    """Inject control entries into the data structures."""
+    control_organism = "Controls (non-viral)"
+
+    # Add peptide controls as proteins
+    gene_tiles = defaultdict(list)  # gene -> list of tiles
+    for ctrl in CONTROL_PEPTIDES:
+        tile_entry = {
+            'tile_id': ctrl['id'],
+            'tile_start': 0,
+            'tile_end': len(ctrl['sequence']),
+            'tile_sequence': ctrl['sequence'],
+            'tile_length': len(ctrl['sequence']),
+            'num_shared_proteins': 1,
+            'is_merged': False,
+        }
+        gene_tiles[ctrl['gene']].append(tile_entry)
+
+    # Add stop codon phage tiles under one "protein"
+    for i in range(1, NUM_STOP_CODON_PHAGES + 1):
+        gene_tiles["STOP_CODON"].append({
+            'tile_id': f'CONTROL_STOP_{i:03d}',
+            'tile_start': 0,
+            'tile_end': 0,
+            'tile_sequence': f'[stop codon phage #{i}]',
+            'tile_length': 49,
+            'num_shared_proteins': 1,
+            'is_merged': False,
+        })
+
+    # Register as a virus
+    virus_organisms[control_organism]['taxon_ids'].add("0")
+    control_proteins_added = 0
+
+    for gene, tiles in gene_tiles.items():
+        pid = f"CONTROL_{gene}"
+        protein_tiles[pid] = tiles
+        active_proteins.add(pid)
+        virus_organisms[control_organism]['proteins'].append(pid)
+        virus_organisms[control_organism]['protein_names'].append(gene)
+        control_proteins_added += 1
+
+        if gene == "STOP_CODON":
+            prot_length = 0
+            prot_name = "Stop codon phages (empty display)"
+        else:
+            prot_length = len(CONTROL_PEPTIDES[0]['sequence'])  # 49 AA
+            prot_name = next(c['source'] for c in CONTROL_PEPTIDES if c['gene'] == gene)
+
+        all_meta[pid] = {
+            'organism': control_organism,
+            'taxon_id': '0',
+            'protein_name': prot_name,
+            'length': prot_length,
+            'database': 'Control',
+        }
+
+        protein_summaries.append({
+            'protein_id': pid,
+            'virus_full_name': control_organism,
+            'virus_abbrev': 'CTRL',
+            'protein_name': prot_name,
+            'protein_name_clean': gene,
+            'tile_count': len(tiles),
+            'shared_tiles': 0,
+            'length': prot_length,
+            'coverage_pct': 100.0 if prot_length > 0 else 0.0,
+            'coverage_start': 0,
+            'coverage_end': prot_length,
+            'database': 'Control',
+            'x_regions': '[]',
+        })
+
+    print(f"  Injected {control_proteins_added} control proteins ({sum(len(t) for t in gene_tiles.values())} tiles)")
 
 
 def main():
@@ -309,6 +409,11 @@ def main():
         })
 
     print(f"  {len(virus_organisms):,} viruses, {len(protein_summaries):,} proteins")
+
+    # Inject controls
+    print("\nInjecting controls...")
+    inject_controls(virus_organisms, protein_summaries, protein_tiles, all_meta, active_proteins)
+    print(f"  Now: {len(virus_organisms):,} viruses, {len(protein_summaries):,} proteins")
 
     # Write virus_summary.csv
     print("\nWriting virus_summary.csv...")
