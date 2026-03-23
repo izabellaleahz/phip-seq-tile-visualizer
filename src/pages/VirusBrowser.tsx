@@ -6,9 +6,9 @@ import HostBadge from '../components/HostBadge';
 
 type SortKey = 'name' | 'proteinCount' | 'tileCount' | 'uniqueTiles';
 type SortOrder = 'asc' | 'desc';
-type HostFilter = 'all' | 'human' | 'bat' | 'bird';
+type HostFilter = 'all' | 'human' | 'bat' | 'bird' | 'control';
 
-const validHosts: HostFilter[] = ['all', 'human', 'bat', 'bird'];
+const validHosts: HostFilter[] = ['all', 'human', 'bat', 'bird', 'control'];
 
 export default function VirusBrowser() {
   const { viruses, loading, error } = useViruses();
@@ -22,12 +22,13 @@ export default function VirusBrowser() {
 
   // Compute per-host counts
   const hostCounts = useMemo(() => {
-    const counts = { all: viruses.length, human: 0, bat: 0, bird: 0 };
+    const counts = { all: viruses.length, human: 0, bat: 0, bird: 0, control: 0 };
     for (const v of viruses) {
       const hosts = v.hostSpecies || ['human'];
       if (hosts.includes('human')) counts.human++;
       if (hosts.includes('bat')) counts.bat++;
       if (hosts.includes('bird')) counts.bird++;
+      if (hosts.includes('control')) counts.control++;
     }
     return counts;
   }, [viruses]);
@@ -116,6 +117,7 @@ export default function VirusBrowser() {
     { key: 'human', label: 'Human', color: 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400', activeColor: 'bg-blue-600 dark:bg-blue-500 text-white' },
     { key: 'bat', label: 'Bat', color: 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400', activeColor: 'bg-purple-600 dark:bg-purple-500 text-white' },
     { key: 'bird', label: 'Bird', color: 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400', activeColor: 'bg-green-600 dark:bg-green-500 text-white' },
+    { key: 'control', label: 'Controls', color: 'bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400', activeColor: 'bg-amber-600 dark:bg-amber-500 text-white' },
   ];
 
   return (

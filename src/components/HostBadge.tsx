@@ -14,6 +14,11 @@ const HOST_STYLES: Record<string, { bg: string; text: string; label: string }> =
     text: 'text-green-700 dark:text-green-300',
     label: 'Bird',
   },
+  control: {
+    bg: 'bg-amber-100 dark:bg-amber-900/50',
+    text: 'text-amber-700 dark:text-amber-300',
+    label: 'Control',
+  },
 };
 
 export default function HostBadge({ host }: { host: string }) {

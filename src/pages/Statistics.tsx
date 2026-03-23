@@ -73,7 +73,7 @@ export default function Statistics() {
   // Compute per-species aggregates
   const speciesData = useMemo(() => {
     if (!viruses.length) return null;
-    const species = (['human', 'bat', 'bird'] as const).map(host => {
+    const species = (['human', 'bat', 'bird', 'control'] as const).map(host => {
       const hostViruses = viruses.filter(v => (v.hostSpecies || ['human']).includes(host));
       const virusCount = hostViruses.length;
       const proteinCount = hostViruses.reduce((sum, v) => sum + v.proteinCount, 0);
@@ -222,7 +222,7 @@ export default function Statistics() {
           </div>
 
           {/* Species cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {speciesData.map(species => {
               const colorMap = {
                 human: {
@@ -245,6 +245,13 @@ export default function Statistics() {
                   bg: 'bg-green-50 dark:bg-green-900/20',
                   bar: 'bg-green-500',
                   link: 'text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300',
+                },
+                control: {
+                  border: 'border-amber-200 dark:border-amber-800',
+                  accent: 'text-amber-600 dark:text-amber-400',
+                  bg: 'bg-amber-50 dark:bg-amber-900/20',
+                  bar: 'bg-amber-500',
+                  link: 'text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300',
                 },
               };
               const colors = colorMap[species.host];
