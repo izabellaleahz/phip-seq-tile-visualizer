@@ -48,12 +48,16 @@ def load_virus_summary():
         reader = csv.DictReader(f)
         for row in reader:
             virus_name = row["virus_name"]
-            # Generate a simple abbreviation from the virus name
-            words = virus_name.split()
-            if len(words) >= 2:
-                base_abbrev = ''.join(w[0].upper() for w in words[:3])
+            # Use fixed ID for controls
+            if virus_name == "Controls (non-viral)":
+                base_abbrev = "CTRL"
             else:
-                base_abbrev = virus_name[:5].upper()
+                # Generate a simple abbreviation from the virus name
+                words = virus_name.split()
+                if len(words) >= 2:
+                    base_abbrev = ''.join(w[0].upper() for w in words[:3])
+                else:
+                    base_abbrev = virus_name[:5].upper()
 
             # Make abbreviation unique by adding a suffix if needed
             abbrev_counts[base_abbrev] += 1

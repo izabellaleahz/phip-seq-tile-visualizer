@@ -26,10 +26,16 @@ from statistics import mean, median
 # Paths
 PIPELINE_DIR = Path("/large_storage/gilbertlab/izabella/phip_seq/phip_seq_oligo_generator")
 INPUTS_DIR = PIPELINE_DIR / "outputs/inputs"
-TILES_JSON = PIPELINE_DIR / "outputs/combined_library_2026/tile_clusters/collapsed_tiles.json"
-COLLAPSED_FASTA = PIPELINE_DIR / "outputs/combined_library_2026/protein_clusters/proteins_collapsed_99.fasta"
 OUTPUT_DIR = PIPELINE_DIR / "analysis_output"
 BACKUP_DIR = OUTPUT_DIR.parent / "analysis_output_human_only_backup"
+
+# Try new output dir first, fall back to old
+_NEW_RUN = PIPELINE_DIR / "outputs/combined_library_2026"
+_OLD_RUN = PIPELINE_DIR / "outputs/library_comparison/combined_all"
+_RUN_DIR = _NEW_RUN if (_NEW_RUN / "tile_clusters/collapsed_tiles.json").exists() else _OLD_RUN
+
+TILES_JSON = _RUN_DIR / "tile_clusters/collapsed_tiles.json"
+COLLAPSED_FASTA = _RUN_DIR / "protein_clusters/proteins_collapsed_99.fasta"
 
 # Control definitions — must match scripts/add_controls.py in the pipeline repo
 CONTROL_PEPTIDES = [
