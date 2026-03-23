@@ -59,6 +59,42 @@ CONTROL_PEPTIDES = [
     },
 ]
 NUM_STOP_CODON_PHAGES = 50
+STOP_CODONS = ["TAA", "TAG", "TGA"]
+
+
+def _generate_stop_codon_seq(index):
+    """Generate deterministic stop codon + filler DNA for a given index.
+    Must match the logic in phip_seq_oligo_generator/scripts/add_controls.py."""
+    import random as _rng
+    stop = STOP_CODONS[(index - 1) % 3]
+    r = _rng.Random(42 + index)
+    bases = "ATGC"
+    avoid = ["AAGCTT", "GAATTC", "CTCGAG", "AGGAGG"]
+    filler_len = 144  # 147 coding - 3 stop codon
+    for _ in range(1000):
+        filler = "".join(r.choice(bases) for _ in range(filler_len))
+        gc = (filler.count("G") + filler.count("C")) / len(filler)
+        if gc < 0.30 or gc > 0.70:
+            continue
+        coding = stop + filler
+        bad = False
+        for pat in avoid:
+            if pat in coding:
+                bad = True
+                break
+            rc = pat[::-1].translate(str.maketrans("ATGC", "TACG"))
+            if rc in coding:
+                bad = True
+                break
+        if bad:
+            continue
+        for base in "ATGC":
+            if base * 7 in coding:
+                bad = True
+                break
+        if not bad:
+            return coding
+    return coding
 
 
 def clean_protein_name(name):
@@ -183,12 +219,13 @@ def inject_controls(virus_organisms, protein_summaries, protein_tiles, all_meta,
 
     # Add stop codon phage tiles under one "protein"
     for i in range(1, NUM_STOP_CODON_PHAGES + 1):
+        coding_seq = _generate_stop_codon_seq(i)
         gene_tiles["STOP_CODON"].append({
             'tile_id': f'CONTROL_STOP_{i:03d}',
             'tile_start': 0,
-            'tile_end': 0,
-            'tile_sequence': f'[stop codon phage #{i}]',
-            'tile_length': 49,
+            'tile_end': len(coding_seq),
+            'tile_sequence': coding_seq,
+            'tile_length': len(coding_seq),
             'num_shared_proteins': 1,
             'is_merged': False,
         })
