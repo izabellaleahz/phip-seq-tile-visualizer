@@ -152,13 +152,17 @@ def process_tiles():
             num_sharing = int(row.get("num_shared_proteins", 1))
 
             # Add tile position to protein
-            protein_tiles[protein_id].append({
+            tile_entry = {
                 "id": tile_name,
                 "start": int(row["tile_start"]),
                 "end": int(row["tile_end"]),
                 "isShared": is_shared,
-                "seq": sequence
-            })
+                "seq": sequence,
+            }
+            dna = row.get("dna_sequence", "")
+            if dna:
+                tile_entry["dna"] = dna
+            protein_tiles[protein_id].append(tile_entry)
 
             # Track shared tile info
             if is_shared:

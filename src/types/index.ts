@@ -14,6 +14,7 @@ export interface TilePosition {
   end: number;
   isShared: boolean;
   seq: string;
+  dna?: string;
 }
 
 export interface XRegion {

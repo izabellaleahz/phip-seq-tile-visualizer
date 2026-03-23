@@ -179,11 +179,23 @@ export default function TileDetail({ tile, currentProteinId, onClose }: TileDeta
 
           {/* Sequence */}
           <div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Sequence</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
+              {tile.seq.match(/^[ATGC]+$/) ? 'DNA Sequence' : 'Peptide Sequence'}
+            </div>
             <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-3 font-mono text-sm text-gray-800 dark:text-gray-200 break-all">
               {tile.seq}
             </div>
           </div>
+
+          {/* DNA Sequence (if available and different from seq) */}
+          {tile.dna && tile.dna !== tile.seq && (
+            <div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">DNA Sequence</div>
+              <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-3 font-mono text-sm text-gray-800 dark:text-gray-200 break-all">
+                {tile.dna}
+              </div>
+            </div>
+          )}
 
           {/* Proteins sharing this tile - grouped by virus */}
           {tile.isShared && (

@@ -35,6 +35,7 @@ _OLD_RUN = PIPELINE_DIR / "outputs/library_comparison/combined_all"
 _RUN_DIR = _NEW_RUN if (_NEW_RUN / "tile_clusters/collapsed_tiles.json").exists() else _OLD_RUN
 
 TILES_JSON = _RUN_DIR / "tile_clusters/collapsed_tiles.json"
+OPTIMIZED_JSON = _RUN_DIR / "optimized/optimized_tiles.json"
 COLLAPSED_FASTA = _RUN_DIR / "protein_clusters/proteins_collapsed_99.fasta"
 
 # Control definitions — must match scripts/add_controls.py in the pipeline repo
@@ -214,6 +215,7 @@ def inject_controls(virus_organisms, protein_summaries, protein_tiles, all_meta,
             'tile_length': len(ctrl['sequence']),
             'num_shared_proteins': 1,
             'is_merged': False,
+            'dna_sequence': '',  # filled by pipeline codon optimization
         }
         gene_tiles[ctrl['gene']].append(tile_entry)
 
@@ -228,6 +230,7 @@ def inject_controls(virus_organisms, protein_summaries, protein_tiles, all_meta,
             'tile_length': len(coding_seq),
             'num_shared_proteins': 1,
             'is_merged': False,
+            'dna_sequence': coding_seq,  # DNA IS the sequence for stop codon phages
         })
 
     # Register as a virus
@@ -243,7 +246,7 @@ def inject_controls(virus_organisms, protein_summaries, protein_tiles, all_meta,
         control_proteins_added += 1
 
         if gene == "STOP_CODON":
-            prot_length = 0
+            prot_length = 147  # DNA length in bp (stop codon + filler)
             prot_name = "Stop codon phages (empty display)"
         else:
             prot_length = len(CONTROL_PEPTIDES[0]['sequence'])  # 49 AA
@@ -321,6 +324,22 @@ def main():
         tiles_data = json.load(f)
     print(f"  {len(tiles_data):,} tiles loaded")
 
+    # Step 2b: Load DNA sequences from optimized tiles (if available)
+    dna_lookup = {}
+    if OPTIMIZED_JSON.exists():
+        print("Loading DNA sequences from optimized_tiles.json...")
+        sys.stdout.flush()
+        with open(OPTIMIZED_JSON, 'r') as f:
+            opt_tiles = json.load(f)
+        for t in opt_tiles:
+            dna = t.get('dna_sequence', '')
+            if dna:
+                dna_lookup[t['id']] = dna
+        del opt_tiles
+        print(f"  {len(dna_lookup):,} DNA sequences loaded")
+    else:
+        print("  WARNING: optimized_tiles.json not found, DNA sequences will be empty")
+
     # Build per-protein tile lists and identify needed proteins
     print("Building per-protein tile data...")
     protein_tiles = defaultdict(list)
@@ -348,6 +367,7 @@ def main():
             'tile_length': len(sequence),
             'num_shared_proteins': num_proteins,
             'is_merged': is_merged,
+            'dna_sequence': dna_lookup.get(tile_id, ''),
         }
 
         # Add to primary protein with exact positions
@@ -503,7 +523,8 @@ def main():
         writer.writerow([
             'protein_id', 'protein_length', 'organism', 'protein_name',
             'tile_id', 'tile_start', 'tile_end', 'tile_sequence',
-            'tile_length', 'num_shared_proteins', 'is_merged', 'database'
+            'tile_length', 'num_shared_proteins', 'is_merged', 'database',
+            'dna_sequence'
         ])
         for pid in sorted(active_proteins):
             meta = all_meta[pid]
@@ -521,6 +542,7 @@ def main():
                     tile['num_shared_proteins'],
                     tile['is_merged'],
                     meta.get('database', 'Unknown'),
+                    tile.get('dna_sequence', ''),
                 ])
                 row_count += 1
             if row_count % 200000 == 0:
