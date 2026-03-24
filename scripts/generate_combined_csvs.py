@@ -25,18 +25,40 @@ from statistics import mean, median
 
 # Paths
 PIPELINE_DIR = Path("/large_storage/gilbertlab/izabella/phip_seq/phip_seq_oligo_generator")
-INPUTS_DIR = PIPELINE_DIR / "outputs/inputs"
 OUTPUT_DIR = PIPELINE_DIR / "analysis_output"
 BACKUP_DIR = OUTPUT_DIR.parent / "analysis_output_human_only_backup"
 
-# Try new output dir first, fall back to old
-_NEW_RUN = PIPELINE_DIR / "outputs/combined_library_2026"
-_OLD_RUN = PIPELINE_DIR / "outputs/library_comparison/combined_all"
-_RUN_DIR = _NEW_RUN if (_NEW_RUN / "tile_clusters/collapsed_tiles.json").exists() else _OLD_RUN
+# Active library — change this to switch which library the visualizer shows
+_RUN_DIR = PIPELINE_DIR / "outputs/full_99"
 
 TILES_JSON = _RUN_DIR / "tile_clusters/collapsed_tiles.json"
 OPTIMIZED_JSON = _RUN_DIR / "optimized/optimized_tiles.json"
-COLLAPSED_FASTA = _RUN_DIR / "protein_clusters/proteins_collapsed_99.fasta"
+# Support both 100% and 99% collapsed FASTA filenames
+_COLLAPSED_100 = _RUN_DIR / "protein_clusters/proteins_collapsed_100.fasta"
+_COLLAPSED_99 = _RUN_DIR / "protein_clusters/proteins_collapsed_99.fasta"
+COLLAPSED_FASTA = _COLLAPSED_100 if _COLLAPSED_100.exists() else _COLLAPSED_99
+
+# Per-host metadata — used for host classification (human/bat/bird)
+_FETCH_DIR = PIPELINE_DIR / "outputs"
+_OLD_INPUTS = PIPELINE_DIR / "outputs_old/inputs"
+def _find_meta(new_path, old_path):
+    """Return whichever metadata file exists."""
+    return new_path if new_path.exists() else old_path
+
+HUMAN_META = _find_meta(
+    _FETCH_DIR / "fetch_human/inputs/human_viral_proteins_complete_metadata.tsv",
+    _OLD_INPUTS / "human_combined_metadata.tsv",
+)
+BAT_META = _find_meta(
+    _FETCH_DIR / "fetch_bat/inputs/human_viral_proteins_complete_metadata.tsv",
+    _OLD_INPUTS / "bat_viruses_metadata.tsv",
+)
+BIRD_META = _find_meta(
+    _FETCH_DIR / "fetch_bird/inputs/human_viral_proteins_complete_metadata.tsv",
+    _OLD_INPUTS / "bird_viruses_metadata.tsv",
+)
+# Combined metadata for fallback protein lookups
+COMBINED_META = _RUN_DIR / "inputs/combined_proteins_metadata.tsv"
 
 # Control definitions — must match scripts/add_controls.py in the pipeline repo
 CONTROL_PEPTIDES = [
@@ -288,11 +310,14 @@ def main():
 
     # Step 1: Collect taxon_ids for host mapping (fast pass over all metadata)
     print("Collecting taxon IDs for host mapping...")
-    human_taxons = collect_taxon_ids(INPUTS_DIR / "human_combined_metadata.tsv")
+    print(f"  Human metadata: {HUMAN_META}")
+    human_taxons = collect_taxon_ids(HUMAN_META)
     print(f"  Human: {len(human_taxons)} taxon IDs")
-    bat_taxons = collect_taxon_ids(INPUTS_DIR / "bat_viruses_metadata.tsv")
+    print(f"  Bat metadata: {BAT_META}")
+    bat_taxons = collect_taxon_ids(BAT_META)
     print(f"  Bat: {len(bat_taxons)} taxon IDs")
-    bird_taxons = collect_taxon_ids(INPUTS_DIR / "bird_viruses_metadata.tsv")
+    print(f"  Bird metadata: {BIRD_META}")
+    bird_taxons = collect_taxon_ids(BIRD_META)
     print(f"  Bird: {len(bird_taxons)} taxon IDs")
 
     # Build host mapping
@@ -388,25 +413,39 @@ def main():
     print("\nLoading metadata for tiled proteins...")
     print("  Loading human metadata...")
     sys.stdout.flush()
-    human_meta = load_metadata_filtered(
-        INPUTS_DIR / "human_combined_metadata.tsv", needed_pids)
+    human_meta = load_metadata_filtered(HUMAN_META, needed_pids)
     print(f"    {len(human_meta):,} human proteins matched")
 
     print("  Loading bat metadata...")
-    bat_meta = load_metadata_filtered(
-        INPUTS_DIR / "bat_viruses_metadata.tsv", needed_pids)
+    bat_meta = load_metadata_filtered(BAT_META, needed_pids)
     print(f"    {len(bat_meta):,} bat proteins matched")
 
     print("  Loading bird metadata...")
-    bird_meta = load_metadata_filtered(
-        INPUTS_DIR / "bird_viruses_metadata.tsv", needed_pids)
+    bird_meta = load_metadata_filtered(BIRD_META, needed_pids)
     print(f"    {len(bird_meta):,} bird proteins matched")
 
-    # Combine metadata
+    # Combine metadata (try per-host first, then backfill from combined)
     all_meta = {}
     all_meta.update(human_meta)
     all_meta.update(bat_meta)
     all_meta.update(bird_meta)
+
+    # Backfill any missing proteins from combined metadata or library metadata
+    missing = needed_pids - set(all_meta.keys())
+    if missing and COMBINED_META.exists():
+        print(f"  Backfilling {len(missing):,} proteins from combined metadata...")
+        combined_meta = load_metadata_filtered(COMBINED_META, missing)
+        all_meta.update(combined_meta)
+        print(f"    {len(combined_meta):,} backfilled")
+        missing = needed_pids - set(all_meta.keys())
+
+    # Final backfill from library's own filtered metadata
+    LIBRARY_META = _RUN_DIR / "inputs/proteins_filtered_metadata.tsv"
+    if missing and LIBRARY_META.exists():
+        print(f"  Backfilling {len(missing):,} proteins from library filtered metadata...")
+        lib_meta = load_metadata_filtered(LIBRARY_META, missing)
+        all_meta.update(lib_meta)
+        print(f"    {len(lib_meta):,} backfilled")
 
     active_proteins = set(protein_tiles.keys()) & set(all_meta.keys())
     orphan = set(protein_tiles.keys()) - set(all_meta.keys())
@@ -630,17 +669,18 @@ def main():
                 mean(tiles_per_protein), 2) if tiles_per_protein else 0,
         },
         "generation_info": {
-            "pipeline": "phip_seq_oligo_generator combined_all",
+            "pipeline": "phip_seq_oligo_generator",
+            "library": str(_RUN_DIR.name),
             "tile_length": 49,
             "tile_overlap": 25,
             "similarity_threshold": 0.8,
-            "max_cluster_size": 100,
+            "max_cluster_size": 500,
             "no_gaps_mode": True,
-            "source_database": "UniProt (human + bat + bird viruses)",
+            "source_database": "UniProt + RefSeq + VirusHostDB (99% protein collapse)",
             "host_filter": "Human, Bat, Bird",
             "min_protein_length": 49,
-            "clustering": "CD-HIT at 80% similarity",
-            "notes": "Combined library covering human, bat, and bird host viruses",
+            "clustering": "CD-HIT at 99% identity",
+            "notes": "Full virome library, 99% protein collapse",
         },
     }
 
