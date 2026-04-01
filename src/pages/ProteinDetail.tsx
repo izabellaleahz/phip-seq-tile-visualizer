@@ -4,6 +4,7 @@ import { useProtein } from '../hooks/useData';
 import Loading from '../components/Loading';
 import TileTrack from '../components/TileTrack';
 import TileDetail from '../components/TileDetail';
+import CollapsedProteins from '../components/CollapsedProteins';
 import type { TilePosition } from '../types';
 
 export default function ProteinDetail() {
@@ -124,6 +125,9 @@ export default function ProteinDetail() {
           <div className="text-sm text-gray-500 dark:text-gray-400">Coverage</div>
         </div>
       </div>
+
+      {/* Collapsed Proteins */}
+      {proteinId && <CollapsedProteins proteinId={proteinId} />}
 
       {/* Tile Track */}
       <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 mb-6">

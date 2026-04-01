@@ -37,8 +37,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Copy data to dist
-        run: cp -r data dist/
+      - name: Copy data and WASM to dist
+        run: cp -r data dist/ && cp public/sql-wasm.wasm dist/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
