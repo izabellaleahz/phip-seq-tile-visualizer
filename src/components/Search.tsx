@@ -120,14 +120,14 @@ export default function Search() {
       label: 'Protein',
     },
     collapsed: {
-      bg: 'bg-amber-100 dark:bg-amber-900',
-      text: 'text-amber-700 dark:text-amber-300',
-      label: 'Collapsed',
+      bg: 'bg-purple-100 dark:bg-purple-900',
+      text: 'text-purple-700 dark:text-purple-300',
+      label: 'Virus',
     },
     virushostdb: {
-      bg: 'bg-red-100 dark:bg-red-900',
-      text: 'text-red-700 dark:text-red-300',
-      label: 'No proteins',
+      bg: 'bg-purple-100 dark:bg-purple-900',
+      text: 'text-purple-700 dark:text-purple-300',
+      label: 'Virus',
     },
   };
 
@@ -199,13 +199,8 @@ export default function Search() {
                     )}
                   </div>
                   {result.type === 'collapsed' && result.refId && (
-                    <div className="text-xs text-amber-600 dark:text-amber-400 mt-0.5">
-                      collapsed into {result.refId}
-                    </div>
-                  )}
-                  {result.type === 'virushostdb' && (
-                    <div className="text-xs text-red-600 dark:text-red-400 mt-0.5">
-                      Known human virus — no proteins in library
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                      via {result.refId}
                     </div>
                   )}
                 </div>

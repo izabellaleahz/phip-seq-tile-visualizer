@@ -253,12 +253,7 @@ export default function VirusBrowser() {
                       <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
                         {virus.name}
                       </span>
-                      {isCollapsed && (
-                        <span className="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs rounded shrink-0">
-                          via collapse
-                        </span>
-                      )}
-                      {!isCollapsed && (collapsedCounts.get(virus.name) ?? 0) > 0 && (
+                      {(collapsedCounts.get(virus.name) ?? 0) > 0 && (
                         <span className="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs rounded shrink-0">
                           +{collapsedCounts.get(virus.name)} org
                         </span>
@@ -268,7 +263,7 @@ export default function VirusBrowser() {
                       ))}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                      {isCollapsed ? virus.taxonIds.join(', ') : virus.id}
+                      {virus.taxonIds?.length ? virus.taxonIds.join(', ') : virus.id}
                     </div>
                   </div>
                   <div className="flex items-center gap-4 text-sm">
