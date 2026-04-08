@@ -260,6 +260,48 @@ export async function getCollapsedOrganismsForVirus(virusName: string): Promise<
 }
 
 /**
+ * Get all unique collapsed organisms with their protein counts and taxon IDs.
+ * These are organisms with NO direct virus entry — only present via collapse.
+ * Returns them as lightweight objects suitable for merging into the virus list.
+ */
+export interface CollapsedOnlyOrganism {
+  organism: string;
+  proteinCount: number;
+  taxonIds: string[];
+  representativeVirus: string;
+  representativeTileCount: number;
+}
+
+export async function getCollapsedOnlyOrganisms(): Promise<CollapsedOnlyOrganism[]> {
+  const database = await getDb();
+  try {
+    const result = database.exec(`
+      SELECT cp.member_organism,
+             COUNT(DISTINCT cp.member_accession) as prot_count,
+             GROUP_CONCAT(DISTINCT cp.member_taxon_id) as taxids,
+             p.virus_name,
+             SUM(DISTINCT p.tile_count) as tiles
+      FROM collapsed_proteins cp
+      JOIN proteins p ON cp.representative_accession = p.accession
+      WHERE cp.member_organism != ''
+        AND cp.member_organism NOT IN (SELECT DISTINCT organism FROM proteins)
+      GROUP BY cp.member_organism
+      ORDER BY prot_count DESC
+    `);
+    if (!result[0]) return [];
+    return result[0].values.map(row => ({
+      organism: (row[0] as string) || '',
+      proteinCount: (row[1] as number) || 0,
+      taxonIds: ((row[2] as string) || '').split(',').filter(Boolean),
+      representativeVirus: (row[3] as string) || '',
+      representativeTileCount: (row[4] as number) || 0,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/**
  * Get collapsed organism counts for ALL viruses (bulk, for badges).
  */
 export async function getAllCollapsedOrganismCounts(): Promise<Map<string, number>> {

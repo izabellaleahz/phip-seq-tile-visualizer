@@ -3,7 +3,8 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useViruses } from '../hooks/useData';
 import Loading from '../components/Loading';
 import HostBadge from '../components/HostBadge';
-import { getLibrarySummary, getAllCollapsedOrganismCounts } from '../utils/searchDb';
+import { getLibrarySummary, getAllCollapsedOrganismCounts, getCollapsedOnlyOrganisms } from '../utils/searchDb';
+import type { Virus } from '../types';
 
 type SortKey = 'name' | 'proteinCount' | 'tileCount' | 'uniqueTiles';
 type SortOrder = 'asc' | 'desc';
@@ -22,9 +23,21 @@ export default function VirusBrowser() {
   const [hostFilter, setHostFilter] = useState<HostFilter>(initialHost);
   const [libSummary, setLibSummary] = useState<{ totalOrganisms: number; collapsedOrganisms: number } | null>(null);
   const [collapsedCounts, setCollapsedCounts] = useState<Map<string, number>>(new Map());
+  const [collapsedViruses, setCollapsedViruses] = useState<Virus[]>([]);
   useEffect(() => {
     getLibrarySummary().then(s => setLibSummary({ totalOrganisms: s.totalOrganisms, collapsedOrganisms: s.collapsedOrganisms })).catch(console.error);
     getAllCollapsedOrganismCounts().then(setCollapsedCounts).catch(console.error);
+    getCollapsedOnlyOrganisms().then(orgs => {
+      setCollapsedViruses(orgs.map(o => ({
+        id: `collapsed:${o.organism}`,
+        name: o.organism,
+        proteinCount: o.proteinCount,
+        tileCount: o.representativeTileCount,
+        uniqueTiles: 0,
+        taxonIds: o.taxonIds,
+        hostSpecies: ['human'],
+      })));
+    }).catch(console.error);
   }, []);
 
   // Compute per-host counts
@@ -40,9 +53,14 @@ export default function VirusBrowser() {
     return counts;
   }, [viruses]);
 
+  // Merge direct + collapsed-only viruses
+  const allViruses = useMemo(() => {
+    return [...viruses, ...collapsedViruses];
+  }, [viruses, collapsedViruses]);
+
   // Filter and sort viruses
   const filteredViruses = useMemo(() => {
-    let result = viruses;
+    let result = allViruses;
 
     // Host filter
     if (hostFilter !== 'all') {
@@ -76,7 +94,7 @@ export default function VirusBrowser() {
     });
 
     return result;
-  }, [viruses, filter, sortKey, sortOrder, hostFilter]);
+  }, [allViruses, filter, sortKey, sortOrder, hostFilter]);
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -223,10 +241,11 @@ export default function VirusBrowser() {
           <div className="divide-y divide-gray-100 dark:divide-gray-700">
             {filteredViruses.map(virus => {
               const inflation = virus.uniqueTiles ? (virus.tileCount / virus.uniqueTiles) : 1;
+              const isCollapsed = virus.id.startsWith('collapsed:');
               return (
                 <Link
                   key={virus.id}
-                  to={`/virus/${virus.id}`}
+                  to={isCollapsed ? `/organism/${encodeURIComponent(virus.name)}` : `/virus/${virus.id}`}
                   className="flex items-center px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   <div className="flex-1 min-w-0">
@@ -234,7 +253,12 @@ export default function VirusBrowser() {
                       <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
                         {virus.name}
                       </span>
-                      {(collapsedCounts.get(virus.name) ?? 0) > 0 && (
+                      {isCollapsed && (
+                        <span className="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs rounded shrink-0">
+                          via collapse
+                        </span>
+                      )}
+                      {!isCollapsed && (collapsedCounts.get(virus.name) ?? 0) > 0 && (
                         <span className="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs rounded shrink-0">
                           +{collapsedCounts.get(virus.name)} org
                         </span>
@@ -244,7 +268,7 @@ export default function VirusBrowser() {
                       ))}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                      {virus.id}
+                      {isCollapsed ? virus.taxonIds.join(', ') : virus.id}
                     </div>
                   </div>
                   <div className="flex items-center gap-4 text-sm">
