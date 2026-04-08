@@ -302,6 +302,45 @@ export async function getCollapsedOnlyOrganisms(): Promise<CollapsedOnlyOrganism
 }
 
 /**
+ * Get collapsed-only organisms with their representative virus name
+ * for taxonomy tree integration.
+ */
+export interface CollapsedTreeEntry {
+  organism: string;
+  proteinCount: number;
+  taxonIds: string[];
+  representativeVirusName: string;
+  tileCount: number;
+}
+
+export async function getCollapsedOrganismsForTree(): Promise<CollapsedTreeEntry[]> {
+  const database = await getDb();
+  try {
+    const result = database.exec(`
+      SELECT vco.collapsed_organism,
+             SUM(vco.protein_count) as prot_count,
+             GROUP_CONCAT(DISTINCT vco.taxon_ids) as taxids,
+             vco.virus_name,
+             MAX(v.tile_count) as tiles
+      FROM virus_collapsed_organisms vco
+      JOIN viruses v ON vco.virus_id = v.virus_id
+      GROUP BY vco.collapsed_organism
+      ORDER BY prot_count DESC
+    `);
+    if (!result[0]) return [];
+    return result[0].values.map(row => ({
+      organism: (row[0] as string) || '',
+      proteinCount: (row[1] as number) || 0,
+      taxonIds: ((row[2] as string) || '').split(',').filter(Boolean),
+      representativeVirusName: (row[3] as string) || '',
+      tileCount: (row[4] as number) || 0,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/**
  * Get collapsed organism counts for ALL viruses (bulk, for badges).
  */
 export async function getAllCollapsedOrganismCounts(): Promise<Map<string, number>> {

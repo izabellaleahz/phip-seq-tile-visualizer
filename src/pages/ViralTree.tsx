@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { getCollapsedOrganismsForTree } from '../utils/searchDb';
+import type { CollapsedTreeEntry } from '../utils/searchDb';
 
 interface VirusEntry {
   id: string;
@@ -30,16 +32,67 @@ export default function ViralTree() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetch('data/viral_tree.json')
-      .then(res => res.json())
-      .then(data => {
-        setTreeData(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Failed to load tree data:', err);
-        setLoading(false);
-      });
+    Promise.all([
+      fetch('data/viral_tree.json').then(res => res.json()),
+      getCollapsedOrganismsForTree().catch(() => [] as CollapsedTreeEntry[]),
+    ]).then(([tree, collapsedOrgs]) => {
+      // Merge collapsed organisms into the tree by finding which family
+      // their representative virus belongs to
+      if (collapsedOrgs.length > 0) {
+        // Build virus name → family lookup
+        const virusToFamily = new Map<string, string>();
+        for (const [familyName, familyData] of Object.entries(tree.families as Record<string, FamilyData>)) {
+          for (const v of familyData.viruses) {
+            virusToFamily.set(v.name, familyName);
+          }
+        }
+
+        for (const co of collapsedOrgs) {
+          // Find the family of the representative virus
+          let family = virusToFamily.get(co.representativeVirusName);
+
+          // If not found by exact name, try partial match
+          if (!family) {
+            for (const [vname, fname] of virusToFamily) {
+              if (co.representativeVirusName.includes(vname) || vname.includes(co.representativeVirusName)) {
+                family = fname;
+                break;
+              }
+            }
+          }
+
+          if (!family) family = 'Unknown';
+
+          if (!tree.families[family]) {
+            tree.families[family] = { viruses: [] };
+          }
+
+          // Check if this organism is already in the family
+          const exists = tree.families[family].viruses.some(
+            (v: VirusEntry) => v.name === co.organism
+          );
+          if (!exists) {
+            tree.families[family].viruses.push({
+              id: `collapsed:${co.organism}`,
+              name: co.organism,
+              proteins: co.proteinCount,
+              tiles: co.tileCount,
+            });
+          }
+        }
+
+        // Update summary
+        tree.summary.total_viruses = Object.values(tree.families as Record<string, FamilyData>)
+          .reduce((sum: number, f: FamilyData) => sum + f.viruses.length, 0);
+        tree.summary.total_families = Object.keys(tree.families).length;
+      }
+
+      setTreeData(tree);
+      setLoading(false);
+    }).catch(err => {
+      console.error('Failed to load tree data:', err);
+      setLoading(false);
+    });
   }, []);
 
   const toggleFamily = (family: string) => {
@@ -224,7 +277,7 @@ export default function ViralTree() {
                       .map((virus, i) => (
                         <Link
                           key={virus.id}
-                          to={`/virus/${virus.id}`}
+                          to={virus.id.startsWith('collapsed:') ? `/organism/${encodeURIComponent(virus.name)}` : `/virus/${virus.id}`}
                           className="flex items-center gap-3 py-2 px-2 -mx-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                         >
                           {/* Tree line indicator */}
