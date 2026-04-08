@@ -98,14 +98,13 @@ export default function Search() {
     if (result.type === 'virus') {
       navigate(`/virus/${result.refId || result.id}`);
     } else if (result.type === 'collapsed') {
-      // Navigate to the representative protein
-      navigate(`/protein/${result.refId}`);
+      // Navigate to organism page to show the collapsed protein and its representative
+      navigate(`/organism/${encodeURIComponent(result.name)}`);
     } else if (result.type === 'protein') {
       navigate(`/protein/${result.id}`);
     } else if (result.type === 'virushostdb') {
-      // No direct page — search for related in virus browser
-      // For now, navigate to main page with a note
-      navigate(`/?search=${encodeURIComponent(result.name)}`);
+      // Navigate to organism page to show coverage status
+      navigate(`/organism/${encodeURIComponent(result.name)}`);
     }
   };
 

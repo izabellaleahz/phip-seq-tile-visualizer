@@ -283,6 +283,89 @@ export async function getAllCollapsedOrganismCounts(): Promise<Map<string, numbe
 }
 
 /**
+ * Get all proteins for a given organism name (both representatives and collapsed).
+ * Returns the protein info + its representative (for collapsed ones).
+ */
+export interface OrganismProtein {
+  accession: string;
+  proteinName: string;
+  length: number;
+  database: string;
+  taxonId: number | null;
+  status: 'representative' | 'collapsed';
+  representativeAccession: string;  // same as accession for reps
+  representativeOrganism: string;
+  representativeTileCount: number;
+  virusName: string;
+  virusId: number | null;
+}
+
+export async function getProteinsForOrganism(organism: string): Promise<OrganismProtein[]> {
+  const database = await getDb();
+  const results: OrganismProtein[] = [];
+
+  // 1. Direct representative proteins with this organism name
+  try {
+    const stmt = database.prepare(`
+      SELECT p.accession, p.protein_name, p.length, p.database, p.taxon_id,
+             p.accession, p.organism, p.tile_count, p.virus_name, p.virus_id
+      FROM proteins p
+      WHERE p.organism LIKE ?
+    `);
+    stmt.bind([`%${organism}%`]);
+    while (stmt.step()) {
+      const r = stmt.get();
+      results.push({
+        accession: (r[0] as string) || '',
+        proteinName: (r[1] as string) || '',
+        length: (r[2] as number) || 0,
+        database: (r[3] as string) || '',
+        taxonId: r[4] as number | null,
+        status: 'representative',
+        representativeAccession: (r[5] as string) || '',
+        representativeOrganism: (r[6] as string) || '',
+        representativeTileCount: (r[7] as number) || 0,
+        virusName: (r[8] as string) || '',
+        virusId: r[9] as number | null,
+      });
+    }
+    stmt.free();
+  } catch { /* ignore */ }
+
+  // 2. Collapsed proteins with this organism name
+  try {
+    const stmt2 = database.prepare(`
+      SELECT cp.member_accession, cp.member_protein_name, cp.member_length,
+             cp.member_database, cp.member_taxon_id,
+             cp.representative_accession, p.organism, p.tile_count, p.virus_name, p.virus_id
+      FROM collapsed_proteins cp
+      JOIN proteins p ON cp.representative_accession = p.accession
+      WHERE cp.member_organism LIKE ?
+    `);
+    stmt2.bind([`%${organism}%`]);
+    while (stmt2.step()) {
+      const r = stmt2.get();
+      results.push({
+        accession: (r[0] as string) || '',
+        proteinName: (r[1] as string) || '',
+        length: (r[2] as number) || 0,
+        database: (r[3] as string) || '',
+        taxonId: r[4] as number | null,
+        status: 'collapsed',
+        representativeAccession: (r[5] as string) || '',
+        representativeOrganism: (r[6] as string) || '',
+        representativeTileCount: (r[7] as number) || 0,
+        virusName: (r[8] as string) || '',
+        virusId: r[9] as number | null,
+      });
+    }
+    stmt2.free();
+  } catch { /* ignore */ }
+
+  return results;
+}
+
+/**
  * Get library summary stats from the search DB.
  */
 export async function getLibrarySummary(): Promise<{
