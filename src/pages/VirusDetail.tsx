@@ -1,9 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useVirusProteins, useViruses } from '../hooks/useData';
 import Loading from '../components/Loading';
 import TileTrack from '../components/TileTrack';
 import HostBadge from '../components/HostBadge';
+import { getCollapsedOrganismsForVirus } from '../utils/searchDb';
+import type { CollapsedOrganism } from '../utils/searchDb';
 
 type SortKey = 'name' | 'tileCount' | 'length' | 'sharedTiles';
 type SortOrder = 'asc' | 'desc';
@@ -22,6 +24,13 @@ export default function VirusDetail() {
     () => viruses.find(v => v.id === virusId),
     [viruses, virusId]
   );
+
+  const [collapsedOrgs, setCollapsedOrgs] = useState<CollapsedOrganism[]>([]);
+  useEffect(() => {
+    if (virus?.name) {
+      getCollapsedOrganismsForVirus(virus.name).then(setCollapsedOrgs).catch(console.error);
+    }
+  }, [virus?.name]);
 
   // Filter and sort proteins
   const filteredProteins = useMemo(() => {
@@ -136,6 +145,30 @@ export default function VirusDetail() {
               {Math.round(stats.avgLength)}
             </div>
             <div className="text-sm text-gray-500 dark:text-gray-400">Avg Length (aa)</div>
+          </div>
+        </div>
+      )}
+
+      {/* Collapsed organisms banner */}
+      {collapsedOrgs.length > 0 && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800 p-4 mb-6">
+          <div className="flex items-center gap-2 mb-2">
+            <svg className="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-300">
+              Also represents {collapsedOrgs.length} additional organism{collapsedOrgs.length !== 1 ? 's' : ''} via protein collapse
+            </h3>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {collapsedOrgs.map(org => (
+              <span key={org.collapsedOrganism}
+                className="px-2 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 text-xs rounded-md">
+                {org.collapsedOrganism}
+                <span className="ml-1 opacity-60">({org.proteinCount})</span>
+              </span>
+            ))}
           </div>
         </div>
       )}

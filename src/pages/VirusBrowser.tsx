@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useViruses } from '../hooks/useData';
 import Loading from '../components/Loading';
 import HostBadge from '../components/HostBadge';
+import { getLibrarySummary, getAllCollapsedOrganismCounts } from '../utils/searchDb';
 
 type SortKey = 'name' | 'proteinCount' | 'tileCount' | 'uniqueTiles';
 type SortOrder = 'asc' | 'desc';
@@ -19,6 +20,12 @@ export default function VirusBrowser() {
   const [sortKey, setSortKey] = useState<SortKey>('uniqueTiles');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [hostFilter, setHostFilter] = useState<HostFilter>(initialHost);
+  const [libSummary, setLibSummary] = useState<{ totalOrganisms: number; collapsedOrganisms: number } | null>(null);
+  const [collapsedCounts, setCollapsedCounts] = useState<Map<string, number>>(new Map());
+  useEffect(() => {
+    getLibrarySummary().then(s => setLibSummary({ totalOrganisms: s.totalOrganisms, collapsedOrganisms: s.collapsedOrganisms })).catch(console.error);
+    getAllCollapsedOrganismCounts().then(setCollapsedCounts).catch(console.error);
+  }, []);
 
   // Compute per-host counts
   const hostCounts = useMemo(() => {
@@ -127,6 +134,11 @@ export default function VirusBrowser() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Virus Library</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-1">
           {viruses.length.toLocaleString()} viruses in the PhIP-seq tile library
+          {libSummary && libSummary.collapsedOrganisms > 0 && (
+            <span className="text-amber-600 dark:text-amber-400 ml-1">
+              (covers {libSummary.totalOrganisms.toLocaleString()} total organisms incl. {libSummary.collapsedOrganisms} via collapse)
+            </span>
+          )}
         </p>
       </div>
 
@@ -222,6 +234,11 @@ export default function VirusBrowser() {
                       <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
                         {virus.name}
                       </span>
+                      {(collapsedCounts.get(virus.name) ?? 0) > 0 && (
+                        <span className="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs rounded shrink-0">
+                          +{collapsedCounts.get(virus.name)} org
+                        </span>
+                      )}
                       {(virus.hostSpecies || ['human']).map(host => (
                         <HostBadge key={host} host={host} />
                       ))}

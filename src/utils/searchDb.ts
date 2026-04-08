@@ -225,6 +225,64 @@ export async function getCollapsedProteins(representativeAccession: string): Pro
 }
 
 /**
+ * Get collapsed organisms for a given virus (by name).
+ */
+export interface CollapsedOrganism {
+  collapsedOrganism: string;
+  proteinCount: number;
+  taxonIds: string;
+}
+
+export async function getCollapsedOrganismsForVirus(virusName: string): Promise<CollapsedOrganism[]> {
+  const database = await getDb();
+  try {
+    const stmt = database.prepare(`
+      SELECT collapsed_organism, protein_count, taxon_ids
+      FROM virus_collapsed_organisms
+      WHERE virus_name = ?
+      ORDER BY protein_count DESC
+    `);
+    stmt.bind([virusName]);
+    const results: CollapsedOrganism[] = [];
+    while (stmt.step()) {
+      const row = stmt.get();
+      results.push({
+        collapsedOrganism: (row[0] as string) || '',
+        proteinCount: (row[1] as number) || 0,
+        taxonIds: (row[2] as string) || '',
+      });
+    }
+    stmt.free();
+    return results;
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get collapsed organism counts for ALL viruses (bulk, for badges).
+ */
+export async function getAllCollapsedOrganismCounts(): Promise<Map<string, number>> {
+  const database = await getDb();
+  try {
+    const result = database.exec(`
+      SELECT virus_name, COUNT(DISTINCT collapsed_organism) as cnt
+      FROM virus_collapsed_organisms
+      GROUP BY virus_name
+    `);
+    const map = new Map<string, number>();
+    if (result[0]) {
+      for (const row of result[0].values) {
+        map.set(row[0] as string, row[1] as number);
+      }
+    }
+    return map;
+  } catch {
+    return new Map();
+  }
+}
+
+/**
  * Get library summary stats from the search DB.
  */
 export async function getLibrarySummary(): Promise<{
@@ -232,6 +290,8 @@ export async function getLibrarySummary(): Promise<{
   totalProteins: number;
   totalCollapsed: number;
   totalRepresented: number;
+  totalOrganisms: number;
+  collapsedOrganisms: number;
 }> {
   const database = await getDb();
 
@@ -239,10 +299,19 @@ export async function getLibrarySummary(): Promise<{
   const proteins = (database.exec("SELECT COUNT(*) FROM proteins")[0]?.values[0]?.[0] as number) || 0;
   const collapsed = (database.exec("SELECT COUNT(*) FROM collapsed_proteins")[0]?.values[0]?.[0] as number) || 0;
 
+  let collapsedOrganisms = 0;
+  try {
+    collapsedOrganisms = (database.exec(
+      "SELECT COUNT(DISTINCT collapsed_organism) FROM virus_collapsed_organisms"
+    )[0]?.values[0]?.[0] as number) || 0;
+  } catch { /* table may not exist in old DBs */ }
+
   return {
     totalViruses: viruses,
     totalProteins: proteins,
     totalCollapsed: collapsed,
     totalRepresented: proteins + collapsed,
+    totalOrganisms: viruses + collapsedOrganisms,
+    collapsedOrganisms,
   };
 }
