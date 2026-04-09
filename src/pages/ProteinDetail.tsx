@@ -1,10 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProtein } from '../hooks/useData';
 import Loading from '../components/Loading';
 import TileTrack from '../components/TileTrack';
 import TileDetail from '../components/TileDetail';
 import CollapsedProteins from '../components/CollapsedProteins';
+import { getCollapsedProteins } from '../utils/searchDb';
 import type { TilePosition } from '../types';
 
 export default function ProteinDetail() {
@@ -12,15 +13,32 @@ export default function ProteinDetail() {
   const { protein, virusId, loading, error } = useProtein(proteinId);
   const [selectedTile, setSelectedTile] = useState<TilePosition | null>(null);
   const [filterShared, setFilterShared] = useState<'all' | 'shared' | 'unique'>('all');
+  const [isRepresentative, setIsRepresentative] = useState(false);
+
+  useEffect(() => {
+    if (proteinId) {
+      getCollapsedProteins(proteinId).then(results => {
+        setIsRepresentative(results.length > 0);
+      }).catch(() => setIsRepresentative(false));
+    }
+  }, [proteinId]);
+
+  // Override tiles to all-shared for representative proteins (collapsed members)
+  const effectiveTiles = useMemo(() => {
+    if (!protein) return [];
+    if (isRepresentative) {
+      return protein.tiles.map(t => ({ ...t, isShared: true }));
+    }
+    return protein.tiles;
+  }, [protein, isRepresentative]);
 
   // Filter tiles
   const filteredTiles = useMemo(() => {
-    if (!protein) return [];
-    if (filterShared === 'all') return protein.tiles;
-    return protein.tiles.filter(t =>
+    if (filterShared === 'all') return effectiveTiles;
+    return effectiveTiles.filter(t =>
       filterShared === 'shared' ? t.isShared : !t.isShared
     );
-  }, [protein, filterShared]);
+  }, [effectiveTiles, filterShared]);
 
   // Calculate coverage depth
   const coverageDepth = useMemo(() => {
@@ -54,8 +72,8 @@ export default function ProteinDetail() {
     );
   }
 
-  const sharedCount = protein.tiles.filter(t => t.isShared).length;
-  const uniqueCount = protein.tiles.filter(t => !t.isShared).length;
+  const sharedCount = effectiveTiles.filter(t => t.isShared).length;
+  const uniqueCount = effectiveTiles.filter(t => !t.isShared).length;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -153,7 +171,7 @@ export default function ProteinDetail() {
           </div>
         </div>
         <TileTrack
-          tiles={protein.tiles}
+          tiles={effectiveTiles}
           proteinLength={protein.length}
           onTileClick={setSelectedTile}
           height={100}

@@ -447,6 +447,31 @@ export async function getProteinsForOrganism(organism: string): Promise<Organism
 }
 
 /**
+ * Get the set of representative protein accessions for a given virus name.
+ * These are proteins that have collapsed members.
+ */
+export async function getRepresentativesForVirus(virusName: string): Promise<Set<string>> {
+  const database = await getDb();
+  try {
+    const stmt = database.prepare(`
+      SELECT DISTINCT cp.representative_accession
+      FROM collapsed_proteins cp
+      JOIN proteins p ON cp.representative_accession = p.accession
+      WHERE p.virus_name = ?
+    `);
+    stmt.bind([virusName]);
+    const reps = new Set<string>();
+    while (stmt.step()) {
+      reps.add(stmt.get()[0] as string);
+    }
+    stmt.free();
+    return reps;
+  } catch {
+    return new Set();
+  }
+}
+
+/**
  * Get library summary stats from the search DB.
  */
 export async function getLibrarySummary(): Promise<{

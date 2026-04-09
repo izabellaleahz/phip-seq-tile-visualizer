@@ -1,6 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Search from './Search';
 
 export default function Layout() {
   const location = useLocation();
@@ -38,11 +37,6 @@ export default function Layout() {
               </div>
             </Link>
 
-            {/* Search */}
-            <div className="flex-1 max-w-xl">
-              <Search />
-            </div>
-
             {/* Navigation & Controls */}
             <div className="flex items-center gap-3">
               <nav className="hidden md:flex items-center gap-1">
@@ -75,6 +69,16 @@ export default function Layout() {
                   }`}
                 >
                   Statistics
+                </Link>
+                <Link
+                  to="/methods"
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    location.pathname === '/methods'
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  Methods
                 </Link>
               </nav>
 

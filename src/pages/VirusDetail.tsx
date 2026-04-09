@@ -4,7 +4,7 @@ import { useVirusProteins, useViruses } from '../hooks/useData';
 import Loading from '../components/Loading';
 import TileTrack from '../components/TileTrack';
 import HostBadge from '../components/HostBadge';
-import { getCollapsedOrganismsForVirus } from '../utils/searchDb';
+import { getCollapsedOrganismsForVirus, getRepresentativesForVirus } from '../utils/searchDb';
 import type { CollapsedOrganism } from '../utils/searchDb';
 
 type SortKey = 'name' | 'tileCount' | 'length' | 'sharedTiles';
@@ -26,9 +26,11 @@ export default function VirusDetail() {
   );
 
   const [collapsedOrgs, setCollapsedOrgs] = useState<CollapsedOrganism[]>([]);
+  const [representativeIds, setRepresentativeIds] = useState<Set<string>>(new Set());
   useEffect(() => {
     if (virus?.name) {
       getCollapsedOrganismsForVirus(virus.name).then(setCollapsedOrgs).catch(console.error);
+      getRepresentativesForVirus(virus.name).then(setRepresentativeIds).catch(console.error);
     }
   }, [virus?.name]);
 
@@ -248,9 +250,9 @@ export default function VirusDetail() {
                           {protein.database}
                         </span>
                       )}
-                      {protein.sharedTiles > 0 && (
+                      {(protein.sharedTiles > 0 || representativeIds.has(protein.id)) && (
                         <span className="shrink-0 px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs rounded">
-                          {protein.sharedTiles} shared
+                          {representativeIds.has(protein.id) ? protein.tileCount : protein.sharedTiles} shared
                         </span>
                       )}
                     </div>
@@ -266,7 +268,9 @@ export default function VirusDetail() {
                   {showTrack && protein.tiles.length > 0 && (
                     <div className="w-48 shrink-0">
                       <TileTrack
-                        tiles={protein.tiles}
+                        tiles={representativeIds.has(protein.id)
+                          ? protein.tiles.map(t => ({ ...t, isShared: true }))
+                          : protein.tiles}
                         proteinLength={protein.length}
                         height={40}
                         xRegions={protein.xRegions}
