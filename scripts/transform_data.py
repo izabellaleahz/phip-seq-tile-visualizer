@@ -6,6 +6,7 @@ Transform PhIP-seq library CSV data into optimized JSON for the web visualizer.
 import json
 import csv
 import os
+import re
 from collections import defaultdict
 from pathlib import Path
 import sys
@@ -53,11 +54,17 @@ def load_virus_summary():
                 base_abbrev = "CTRL"
             else:
                 # Generate a simple abbreviation from the virus name
-                words = virus_name.split()
-                if len(words) >= 2:
-                    base_abbrev = ''.join(w[0].upper() for w in words[:3])
+                # Strip parenthetical suffixes (strain info) before abbreviating
+                clean_name = re.sub(r'\s*\(.*', '', virus_name).strip()
+                # Split on spaces AND hyphens to get meaningful initials
+                # e.g. "Epstein-Barr virus" -> ["Epstein", "Barr", "virus"] -> "EBV"
+                parts = re.split(r'[\s-]+', clean_name)
+                if len(parts) >= 2:
+                    base_abbrev = ''.join(p[0].upper() for p in parts[:4] if p)
                 else:
-                    base_abbrev = virus_name[:5].upper()
+                    base_abbrev = clean_name[:5].upper()
+                # Sanitize: only keep alphanumeric chars (parens break URL routing)
+                base_abbrev = re.sub(r'[^A-Za-z0-9]', '', base_abbrev)
 
             # Make abbreviation unique by adding a suffix if needed
             abbrev_counts[base_abbrev] += 1
@@ -196,7 +203,7 @@ def build_search_index(viruses, proteins, proteins_by_virus, output_dir):
         })
 
     with open(output_dir / "search-viruses.json", "w") as f:
-        json.dump(virus_index, f)
+        json.dump(virus_index, f, separators=(",", ":"))
 
     # Per-virus protein search indexes
     search_dir = output_dir / "search"
@@ -210,7 +217,7 @@ def build_search_index(viruses, proteins, proteins_by_virus, output_dir):
                 "name": protein["nameClean"],
             })
         with open(search_dir / f"{virus_id}.json", "w") as f:
-            json.dump(protein_index, f)
+            json.dump(protein_index, f, separators=(",", ":"))
 
     # Full search index (for deep search - loaded on demand)
     full_index = {
@@ -226,7 +233,7 @@ def build_search_index(viruses, proteins, proteins_by_virus, output_dir):
         })
 
     with open(output_dir / "search-index.json", "w") as f:
-        json.dump(full_index, f)
+        json.dump(full_index, f, separators=(",", ":"))
 
 def main():
     # Create output directories
@@ -266,7 +273,7 @@ def main():
     print("Writing viruses.json...")
     virus_list = sorted(viruses.values(), key=lambda x: x["tileCount"], reverse=True)
     with open(OUTPUT_DIR / "viruses.json", "w") as f:
-        json.dump(virus_list, f)
+        json.dump(virus_list, f, separators=(",", ":"))
 
     # Write per-virus protein files
     print("Writing per-virus protein files...")
@@ -287,7 +294,7 @@ def main():
         enriched_proteins.sort(key=lambda x: x["tileCount"], reverse=True)
 
         with open(OUTPUT_DIR / "proteins" / f"{virus_id}.json", "w") as f:
-            json.dump(enriched_proteins, f)
+            json.dump(enriched_proteins, f, separators=(",", ":"))
 
     # Write protein index (for search/lookup)
     print("Writing protein index...")
@@ -301,7 +308,7 @@ def main():
             "length": protein["length"]
         }
     with open(OUTPUT_DIR / "proteins" / "index.json", "w") as f:
-        json.dump(protein_index, f)
+        json.dump(protein_index, f, separators=(",", ":"))
 
     # Write shared tiles index with virus information
     print("Writing shared tiles index...")
@@ -331,7 +338,7 @@ def main():
             }
 
     with open(OUTPUT_DIR / "tiles" / "shared.json", "w") as f:
-        json.dump(shared_tiles, f)
+        json.dump(shared_tiles, f, separators=(",", ":"))
 
     # Write search indexes
     print("Writing search indexes...")
@@ -362,7 +369,7 @@ def main():
     stats["host_species_breakdown"] = dict(host_breakdown)
 
     with open(OUTPUT_DIR / "statistics.json", "w") as f:
-        json.dump(stats, f)
+        json.dump(stats, f, separators=(",", ":"))
 
     print("\nData transformation complete!")
     print(f"Output directory: {OUTPUT_DIR}")
