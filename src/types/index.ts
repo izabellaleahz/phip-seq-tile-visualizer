@@ -3,7 +3,10 @@ export interface Virus {
   name: string;
   proteinCount: number;
   tileCount: number;
+  /** Peptide sequences found only on this virus (not shared with other viruses). */
   uniqueTiles?: number;
+  /** Distinct peptide sequences on this virus (includes cross-virus shared). */
+  distinctSequences?: number;
   taxonIds: string[];
   hostSpecies: string[];
 }
@@ -90,12 +93,20 @@ export interface TaxonomyData {
 
 export interface LibraryStatistics {
   library_summary: {
+    /** Canonical oligo count in the synthesis library (distinct peptide sequences). */
+    library_oligo_count?: number;
+    total_tiles?: number;
     total_unique_tiles: number;
+    total_virus_exclusive_tiles?: number;
+    cross_virus_shared_sequences?: number;
     total_proteins_covered: number;
     total_tile_protein_mappings: number;
     unique_viruses: number;
   };
   tile_statistics: {
+    library_oligo_count?: number;
+    multi_protein_sequences?: number;
+    single_protein_sequences?: number;
     shared_tiles: number;
     single_protein_tiles: number;
     mean_proteins_per_shared_tile: number;
@@ -119,7 +130,10 @@ export interface LibraryStatistics {
   host_species_breakdown?: Record<string, {
     viruses: number;
     proteins: number;
-    tiles: number;
+    tile_mappings: number;
+    tiles?: number;
+    virus_exclusive_sequences?: number;
+    library_sequences?: number;
   }>;
   generation_info?: {
     pipeline: string;

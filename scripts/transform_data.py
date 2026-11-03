@@ -7,6 +7,7 @@ import json
 import csv
 import os
 import re
+import shutil
 from collections import defaultdict
 from pathlib import Path
 import sys
@@ -190,6 +191,138 @@ def process_tiles():
 
     return protein_tiles, tile_info, tile_proteins
 
+
+def apply_sequence_sharing_flags(protein_tiles, proteins):
+    """
+    Set isShared from global peptide identity (>=2 proteins), not only merge metadata.
+
+    Per-protein CSV rows often mark num_shared_proteins=1 even when the same sequence
+    appears on orthologs under another accession; that made tiles look 'unique' in the UI.
+    """
+    seq_to_proteins = defaultdict(set)
+    for pid, tiles in protein_tiles.items():
+        for tile in tiles:
+            seq_to_proteins[tile["seq"]].add(pid)
+
+    seq_to_virus_ids = defaultdict(set)
+    for pid, tiles in protein_tiles.items():
+        vid = proteins.get(pid, {}).get("virusId")
+        if not vid:
+            continue
+        for tile in tiles:
+            seq_to_virus_ids[tile["seq"]].add(vid)
+
+    for pid, tiles in protein_tiles.items():
+        for tile in tiles:
+            seq = tile["seq"]
+            multi_protein = len(seq_to_proteins[seq]) > 1
+            multi_virus = len(seq_to_virus_ids[seq]) > 1
+            tile["isShared"] = multi_protein or multi_virus
+
+    return seq_to_proteins, seq_to_virus_ids
+
+
+def recompute_library_statistics(
+    stats,
+    seq_to_proteins,
+    seq_to_virus_ids,
+    viruses,
+    total_virus_exclusive,
+    total_mappings,
+):
+    """Overwrite pipeline stats so all headline numbers match the visualizer library."""
+    n_library = len(seq_to_proteins)
+    multi_protein = sum(1 for ps in seq_to_proteins.values() if len(ps) > 1)
+    single_protein = n_library - multi_protein
+    cross_virus = sum(1 for vs in seq_to_virus_ids.values() if len(vs) > 1)
+    same_virus_only = sum(
+        1 for seq, ps in seq_to_proteins.items()
+        if len(ps) > 1 and len(seq_to_virus_ids[seq]) == 1
+    )
+
+    proteins_per_shared = [
+        len(ps) for ps in seq_to_proteins.values() if len(ps) > 1
+    ]
+    mean_shared = (
+        sum(proteins_per_shared) / len(proteins_per_shared)
+        if proteins_per_shared else 0.0
+    )
+
+    lib = stats.setdefault("library_summary", {})
+    lib["library_oligo_count"] = n_library
+    lib["total_tiles"] = n_library
+    lib["total_unique_tiles"] = n_library
+    lib["total_distinct_sequences"] = n_library
+    lib["total_virus_exclusive_tiles"] = total_virus_exclusive
+    lib["cross_virus_shared_sequences"] = cross_virus
+    lib["multi_protein_sequences"] = multi_protein
+    lib["total_tile_protein_mappings"] = total_mappings
+    lib["unique_viruses"] = len(viruses)
+
+    stats["tile_statistics"] = {
+        "total_unique_tiles": n_library,
+        "library_oligo_count": n_library,
+        "multi_protein_sequences": multi_protein,
+        "single_protein_sequences": single_protein,
+        # Legacy keys used by the React stats page
+        "shared_tiles": multi_protein,
+        "single_protein_tiles": single_protein,
+        "merged_tiles": multi_protein,
+        "multi_protein_tiles": multi_protein,
+        "mean_proteins_per_tile": round(
+            sum(len(ps) for ps in seq_to_proteins.values()) / n_library, 2
+        ) if n_library else 0,
+        "mean_proteins_per_shared_tile": round(mean_shared, 2),
+    }
+
+    stats["sharing_details"] = {
+        "cross_virus_tiles": cross_virus,
+        "same_virus_tiles": same_virus_only,
+        "total_shared_tiles": multi_protein,
+        "total_shared_sequences_multi_protein": multi_protein,
+    }
+
+    return stats
+
+
+def build_shared_tiles_index(seq_to_proteins, seq_to_virus_ids, protein_tiles, proteins, protein_index):
+    """Build shared.json from sequence-level protein/virus membership."""
+    shared_tiles = {}
+    for seq, pids in seq_to_proteins.items():
+        if len(pids) <= 1:
+            continue
+        tile_id = None
+        for pid in pids:
+            for t in protein_tiles.get(pid, []):
+                if t["seq"] == seq:
+                    tile_id = t["id"]
+                    break
+            if tile_id:
+                break
+        if not tile_id:
+            tile_id = seq[:12]
+
+        viruses_sharing = defaultdict(list)
+        for pid in pids:
+            if pid in protein_index:
+                viruses_sharing[protein_index[pid]["virusId"]].append(pid)
+
+        shared_tiles[seq] = {
+            "id": tile_id,
+            "proteins": sorted(pids),
+            "virusesSummary": {
+                vid: {
+                    "count": len(vid_pids),
+                    "virusName": proteins.get(vid_pids[0], {}).get("virusName", vid),
+                }
+                for vid, vid_pids in viruses_sharing.items()
+            },
+            "numViruses": len(viruses_sharing),
+            "isCrossVirus": len(viruses_sharing) > 1,
+        }
+    return shared_tiles
+
+
 def build_search_index(viruses, proteins, proteins_by_virus, output_dir):
     """Build search indexes - one light for viruses, per-virus for proteins."""
 
@@ -236,9 +369,15 @@ def build_search_index(viruses, proteins, proteins_by_virus, output_dir):
         json.dump(full_index, f, separators=(",", ":"))
 
 def main():
-    # Create output directories
+    # Create output directories (remove stale per-virus JSON from prior library builds)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    (OUTPUT_DIR / "proteins").mkdir(exist_ok=True)
+    proteins_dir = OUTPUT_DIR / "proteins"
+    if proteins_dir.exists():
+        shutil.rmtree(proteins_dir)
+    proteins_dir.mkdir(parents=True, exist_ok=True)
+    search_dir = OUTPUT_DIR / "search"
+    if search_dir.exists():
+        shutil.rmtree(search_dir)
     (OUTPUT_DIR / "tiles").mkdir(exist_ok=True)
 
     print("Loading virus summary...")
@@ -252,22 +391,31 @@ def main():
     # Process tiles
     protein_tiles, tile_info, tile_proteins = process_tiles()
 
-    # Calculate unique tiles per virus
+    print("Applying sequence-level shared flags...")
+    seq_to_proteins, seq_to_virus_ids = apply_sequence_sharing_flags(protein_tiles, proteins)
+
+    # Per-virus: distinctSequences = deduped peptides on this virus;
+    # uniqueTiles = peptides found ONLY on this virus (not shared with any other virus).
     print("Calculating virus statistics...")
+    total_virus_exclusive = 0
     for virus_id, virus_proteins in proteins_by_virus.items():
-        unique_tiles = set()
-        shared_count = 0
+        distinct_sequences = set()
+        virus_exclusive = set()
         for protein in virus_proteins:
             pid = protein["id"]
             if pid in protein_tiles:
                 for tile in protein_tiles[pid]:
-                    unique_tiles.add(tile["seq"])
-                    if tile["isShared"]:
-                        shared_count += 1
+                    seq = tile["seq"]
+                    distinct_sequences.add(seq)
+                    if len(seq_to_virus_ids[seq]) == 1:
+                        virus_exclusive.add(seq)
 
         if virus_id in viruses:
-            viruses[virus_id]["uniqueTiles"] = len(unique_tiles)
-            # Note: sharedTiles here is count of tile instances that are shared
+            viruses[virus_id]["distinctSequences"] = len(distinct_sequences)
+            viruses[virus_id]["uniqueTiles"] = len(virus_exclusive)
+            total_virus_exclusive += len(virus_exclusive)
+
+    print(f"  Library-wide virus-exclusive sequences: {total_virus_exclusive:,}")
 
     # Write viruses.json
     print("Writing viruses.json...")
@@ -310,33 +458,11 @@ def main():
     with open(OUTPUT_DIR / "proteins" / "index.json", "w") as f:
         json.dump(protein_index, f, separators=(",", ":"))
 
-    # Write shared tiles index with virus information
+    # Write shared tiles index (sequence-level, consistent with isShared flags)
     print("Writing shared tiles index...")
-    shared_tiles = {}
-    for tile_id, info in tile_info.items():
-        proteins_list = list(tile_proteins.get(tile_id, []))
-        if len(proteins_list) > 1:  # Only include if truly shared
-            # Group proteins by virus
-            viruses_sharing = defaultdict(list)
-            for pid in proteins_list:
-                if pid in protein_index:
-                    virus_id = protein_index[pid]["virusId"]
-                    viruses_sharing[virus_id].append(pid)
-
-            shared_tiles[info["seq"]] = {
-                "id": tile_id,
-                "proteins": proteins_list,
-                "virusesSummary": {
-                    vid: {
-                        "count": len(pids),
-                        "virusName": proteins.get(pids[0], {}).get("virusName", vid)
-                    }
-                    for vid, pids in viruses_sharing.items()
-                },
-                "numViruses": len(viruses_sharing),
-                "isCrossVirus": len(viruses_sharing) > 1
-            }
-
+    shared_tiles = build_shared_tiles_index(
+        seq_to_proteins, seq_to_virus_ids, protein_tiles, proteins, protein_index
+    )
     with open(OUTPUT_DIR / "tiles" / "shared.json", "w") as f:
         json.dump(shared_tiles, f, separators=(",", ":"))
 
@@ -344,29 +470,39 @@ def main():
     print("Writing search indexes...")
     build_search_index(viruses, proteins, proteins_by_virus, OUTPUT_DIR)
 
-    # Write library statistics with enhanced info
+    # Write library statistics aligned to visualizer sequence index
     print("Writing library statistics...")
     with open(ANALYSIS_DIR / "library_statistics.json", "r") as f:
         stats = json.load(f)
 
-    # Add cross-virus sharing statistics
-    cross_virus_tiles = sum(1 for t in shared_tiles.values() if t["isCrossVirus"])
-    same_virus_tiles = len(shared_tiles) - cross_virus_tiles
+    total_mappings = stats.get("library_summary", {}).get(
+        "total_tile_protein_mappings", 0
+    )
+    stats = recompute_library_statistics(
+        stats,
+        seq_to_proteins,
+        seq_to_virus_ids,
+        viruses,
+        total_virus_exclusive,
+        total_mappings,
+    )
 
-    stats["sharing_details"] = {
-        "cross_virus_tiles": cross_virus_tiles,
-        "same_virus_tiles": same_virus_tiles,
-        "total_shared_tiles": len(shared_tiles)
-    }
-
-    # Add host species breakdown
-    host_breakdown = defaultdict(lambda: {"viruses": 0, "proteins": 0, "tiles": 0})
+    host_breakdown = defaultdict(
+        lambda: {"viruses": 0, "proteins": 0, "tile_mappings": 0, "virus_exclusive_sequences": 0}
+    )
     for virus in viruses.values():
         for host in virus.get("hostSpecies", ["human"]):
             host_breakdown[host]["viruses"] += 1
             host_breakdown[host]["proteins"] += virus["proteinCount"]
-            host_breakdown[host]["tiles"] += virus["tileCount"]
+            host_breakdown[host]["tile_mappings"] += virus["tileCount"]
+            host_breakdown[host]["virus_exclusive_sequences"] += virus.get("uniqueTiles", 0)
     stats["host_species_breakdown"] = dict(host_breakdown)
+
+    print(
+        f"  Library oligos: {stats['library_summary']['library_oligo_count']:,} | "
+        f"virus-exclusive: {total_virus_exclusive:,} | "
+        f"multi-protein: {stats['tile_statistics']['multi_protein_sequences']:,}"
+    )
 
     with open(OUTPUT_DIR / "statistics.json", "w") as f:
         json.dump(stats, f, separators=(",", ":"))

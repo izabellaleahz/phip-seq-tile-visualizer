@@ -128,7 +128,7 @@ export default function ProteinDetail() {
           <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
             {uniqueCount}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">Unique Tiles</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">Single-Protein</div>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
           <div className="text-2xl font-bold text-amber-600 dark:text-amber-400">
@@ -226,7 +226,7 @@ export default function ProteinDetail() {
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
-                {f === 'all' ? 'All' : f === 'shared' ? `Shared (${sharedCount})` : `Unique (${uniqueCount})`}
+                {f === 'all' ? 'All' : f === 'shared' ? `Shared (${sharedCount})` : `Single-protein (${uniqueCount})`}
               </button>
             ))}
           </div>

@@ -29,7 +29,14 @@ OUTPUT_DIR = PIPELINE_DIR / "analysis_output"
 BACKUP_DIR = OUTPUT_DIR.parent / "analysis_output_human_only_backup"
 
 # Active library — change this to switch which library the visualizer shows
-_RUN_DIR = PIPELINE_DIR / "outputs/full_99"
+_RUN_DIR = PIPELINE_DIR / "outputs/full_100"
+
+# Final synthesis library with Variola-exclusive tiles removed (see
+# phip_seq_oligo_generator/scripts/exclude_variola_unique_tiles_2026-09-23.py)
+FILTERED_TILE_METADATA = (
+    _RUN_DIR / "final_library/no_variola_unique/combined_virome_library_metadata.tsv"
+)
+LIBRARY_PROTEIN_META = _RUN_DIR / "inputs/proteins_filtered_metadata.tsv"
 
 TILES_JSON = _RUN_DIR / "tile_clusters/collapsed_tiles.json"
 OPTIMIZED_JSON = _RUN_DIR / "optimized/optimized_tiles.json"
@@ -202,6 +209,52 @@ def compute_x_regions(sequence):
     return regions
 
 
+def load_variola_accessions(metadata_tsv: Path) -> set:
+    """Accessions for Variola virus (any strain/isolate taxon)."""
+    acc_taxon = {}
+    variola_taxids = {10255}
+    with open(metadata_tsv, "r") as f:
+        for row in csv.DictReader(f, delimiter="\t"):
+            acc = row.get("accession", "").strip()
+            if not acc:
+                continue
+            org = row.get("organism", "")
+            try:
+                if row.get("taxon_id"):
+                    acc_taxon[acc] = int(row["taxon_id"])
+            except ValueError:
+                pass
+            if org and "variola" in org.lower():
+                tid = acc_taxon.get(acc)
+                if tid is not None:
+                    variola_taxids.add(tid)
+    out = set()
+    with open(metadata_tsv, "r") as f:
+        for row in csv.DictReader(f, delimiter="\t"):
+            acc = row.get("accession", "").strip()
+            if not acc:
+                continue
+            org = row.get("organism", "")
+            tid = acc_taxon.get(acc)
+            if (org and "variola" in org.lower()) or (tid is not None and tid in variola_taxids):
+                out.add(acc)
+    return out
+
+
+def load_allowed_viral_tile_ids(metadata_tsv: Path) -> set:
+    """Tile IDs present in the filtered final library (viral tiles only; controls injected separately)."""
+    allowed = set()
+    with open(metadata_tsv, "r") as f:
+        reader = csv.DictReader(f, delimiter="\t")
+        for row in reader:
+            if str(row.get("is_control", "")).lower() == "true" or row.get("control_type"):
+                continue
+            tid = (row.get("tile_id") or "").strip()
+            if tid:
+                allowed.add(tid)
+    return allowed
+
+
 def load_protein_sequences(fasta_path, needed_pids):
     """Load protein sequences from a FASTA file for needed protein IDs."""
     sequences = {}
@@ -342,6 +395,19 @@ def main():
     with open(OUTPUT_DIR / "host_mapping.json", 'w') as f:
         json.dump(host_mapping, f)
 
+    variola_accessions = set()
+    if LIBRARY_PROTEIN_META.exists():
+        variola_accessions = load_variola_accessions(LIBRARY_PROTEIN_META)
+        print(f"  Variola accessions for annotation filter: {len(variola_accessions):,}")
+
+    allowed_tile_ids = None
+    if FILTERED_TILE_METADATA.exists():
+        print(f"\nLoading allowed tile IDs from {FILTERED_TILE_METADATA.name}...")
+        allowed_tile_ids = load_allowed_viral_tile_ids(FILTERED_TILE_METADATA)
+        print(f"  {len(allowed_tile_ids):,} viral tiles (Variola-unique already removed)")
+    else:
+        print(f"\n  WARNING: {FILTERED_TILE_METADATA} not found; using all collapsed tiles")
+
     # Step 2: Load tiles.json
     print("\nLoading tiles.json (345 MB, this may take a few minutes)...")
     sys.stdout.flush()
@@ -370,12 +436,16 @@ def main():
     protein_tiles = defaultdict(list)
     needed_pids = set()
 
+    skipped_variola_unique = 0
     for i, tile in enumerate(tiles_data):
         if (i + 1) % 100000 == 0:
             print(f"  Processed {i + 1:,} tiles...")
             sys.stdout.flush()
 
         tile_id = tile['id']
+        if allowed_tile_ids is not None and tile_id not in allowed_tile_ids:
+            skipped_variola_unique += 1
+            continue
         sequence = tile['sequence']
         primary_pid = tile['protein_id']
         start = tile['start_pos']
@@ -395,18 +465,19 @@ def main():
             'dna_sequence': dna_lookup.get(tile_id, ''),
         }
 
-        # Add to primary protein with exact positions
-        protein_tiles[primary_pid].append(entry)
-        needed_pids.add(primary_pid)
+        non_variola_sources = [sp for sp in source_proteins if sp not in variola_accessions]
+        if variola_accessions and not non_variola_sources:
+            continue
 
-        # Add to source proteins (approximate positions for merged tiles)
-        for sp in source_proteins:
-            if sp != primary_pid:
-                protein_tiles[sp].append(entry)
-                needed_pids.add(sp)
+        assign_to = non_variola_sources if non_variola_sources else source_proteins
+        for sp in assign_to:
+            protein_tiles[sp].append(entry)
+            needed_pids.add(sp)
 
     # Free tiles data
     del tiles_data
+    if skipped_variola_unique:
+        print(f"  Skipped {skipped_variola_unique:,} Variola-unique / out-of-library tiles")
     print(f"  Proteins with tiles: {len(protein_tiles):,}")
 
     # Step 3: Load metadata for proteins that have tiles
@@ -676,11 +747,14 @@ def main():
             "similarity_threshold": 0.8,
             "max_cluster_size": 500,
             "no_gaps_mode": True,
-            "source_database": "UniProt + RefSeq + VirusHostDB (99% protein collapse)",
+            "source_database": "UniProt + RefSeq + VirusHostDB (100% protein collapse)",
             "host_filter": "Human, Bat, Bird",
             "min_protein_length": 49,
-            "clustering": "CD-HIT at 99% identity",
-            "notes": "Full virome library, 99% protein collapse",
+            "clustering": "CD-HIT at 100% identity (no protein dedup)",
+            "notes": (
+                "Full virome library (full_100); Variola-exclusive tiles removed "
+                f"via {FILTERED_TILE_METADATA.relative_to(PIPELINE_DIR)}"
+            ),
         },
     }
 

@@ -30,30 +30,45 @@ export default function Statistics() {
 
   const loading = statsLoading || virusesLoading || taxonomyLoading;
 
-  // Compute family stats from taxonomy data (handles both flat and nested formats)
+  // Family aggregates from tiled viruses (virus-exclusive sums; mappings double-count shared tiles)
   const familyStats = useMemo(() => {
-    if (!taxonomy) return {};
+    if (!viruses.length) return {};
 
-    // Check if taxonomy has family_stats (nested format)
-    if ((taxonomy as { family_stats?: Record<string, unknown> }).family_stats) {
-      return (taxonomy as { family_stats: Record<string, FamilyStats> }).family_stats;
+    const nested = taxonomy as { family_stats?: Record<string, FamilyStats> } | null;
+    const nestedStats = nested?.family_stats;
+    const hasNestedTiles = nestedStats
+      && Object.values(nestedStats).some(s => (s.unique_tiles || 0) > 0 || (s.tiles || 0) > 0);
+    if (hasNestedTiles) {
+      return nestedStats;
     }
 
-    // Compute from flat taxonomy dict (taxid -> entry with family field)
-    const stats: Record<string, FamilyStats> = {};
-    const taxData = taxonomy as unknown as Record<string, TaxonomyEntryWithFamily>;
-
-    for (const entry of Object.values(taxData)) {
-      if (entry && typeof entry === 'object' && 'family' in entry) {
-        const family = entry.family || 'Unknown';
-        if (!stats[family]) {
-          stats[family] = { count: 0, proteins: 0, tiles: 0, unique_tiles: 0 };
-        }
-        stats[family].count++;
+    const taxData = (taxonomy || {}) as unknown as Record<string, TaxonomyEntryWithFamily>;
+    const taxidToFamily: Record<string, string> = {};
+    for (const [tid, entry] of Object.entries(taxData)) {
+      if (entry && typeof entry === 'object' && entry.family) {
+        taxidToFamily[tid] = entry.family;
       }
     }
+
+    const stats: Record<string, FamilyStats> = {};
+    for (const virus of viruses) {
+      let family = 'Unknown';
+      for (const tid of virus.taxonIds || []) {
+        if (taxidToFamily[tid]) {
+          family = taxidToFamily[tid];
+          break;
+        }
+      }
+      if (!stats[family]) {
+        stats[family] = { count: 0, proteins: 0, tiles: 0, unique_tiles: 0 };
+      }
+      stats[family].count += 1;
+      stats[family].proteins += virus.proteinCount;
+      stats[family].tiles += virus.tileCount;
+      stats[family].unique_tiles += virus.uniqueTiles || 0;
+    }
     return stats;
-  }, [taxonomy]);
+  }, [taxonomy, viruses]);
 
   // Sort families by selected metric
   const sortedFamilies = useMemo(() => {
@@ -80,21 +95,21 @@ export default function Statistics() {
       const hostViruses = viruses.filter(v => (v.hostSpecies || ['human']).includes(host));
       const virusCount = hostViruses.length;
       const proteinCount = hostViruses.reduce((sum, v) => sum + v.proteinCount, 0);
-      const uniqueTiles = hostViruses.reduce((sum, v) => sum + (v.uniqueTiles || 0), 0);
+      const exclusiveTiles = hostViruses.reduce((sum, v) => sum + (v.uniqueTiles || 0), 0);
       const totalTileMappings = hostViruses.reduce((sum, v) => sum + v.tileCount, 0);
       const topViruses = [...hostViruses]
         .sort((a, b) => (b.uniqueTiles || 0) - (a.uniqueTiles || 0))
         .slice(0, 5);
-      return { host, virusCount, proteinCount, uniqueTiles, totalTileMappings, topViruses };
+      return { host, virusCount, proteinCount, exclusiveTiles, totalTileMappings, topViruses };
     });
     return species;
   }, [viruses]);
 
   const allSpeciesTotals = useMemo(() => {
-    if (!viruses.length) return { virusCount: 0, uniqueTiles: 0, totalTileMappings: 0, proteinCount: 0 };
+    if (!viruses.length) return { virusCount: 0, exclusiveTiles: 0, totalTileMappings: 0, proteinCount: 0 };
     return {
       virusCount: viruses.length,
-      uniqueTiles: viruses.reduce((sum, v) => sum + (v.uniqueTiles || 0), 0),
+      exclusiveTiles: viruses.reduce((sum, v) => sum + (v.uniqueTiles || 0), 0),
       totalTileMappings: viruses.reduce((sum, v) => sum + v.tileCount, 0),
       proteinCount: viruses.reduce((sum, v) => sum + v.proteinCount, 0),
     };
@@ -120,6 +135,17 @@ export default function Statistics() {
 
   const { library_summary, tile_statistics, sharing_details, coverage, protein_statistics, generation_info } = statistics;
 
+  const libraryOligos =
+    library_summary.library_oligo_count ??
+    library_summary.total_unique_tiles;
+  const virusExclusive =
+    library_summary.total_virus_exclusive_tiles ??
+    allSpeciesTotals.exclusiveTiles;
+  const multiProteinSeqs =
+    tile_statistics.multi_protein_sequences ?? tile_statistics.shared_tiles;
+  const singleProteinSeqs =
+    tile_statistics.single_protein_sequences ?? tile_statistics.single_protein_tiles;
+
   // Top viruses - sortable by unique tiles or tile mappings
   const topViruses = [...viruses]
     .sort((a, b) => {
@@ -131,7 +157,9 @@ export default function Statistics() {
     .slice(0, 15);
 
   // Calculate sharing rate
-  const sharingRate = (tile_statistics.shared_tiles / library_summary.total_unique_tiles) * 100;
+  const sharingRate = libraryOligos
+    ? (multiProteinSeqs / libraryOligos) * 100
+    : 0;
 
   // Cross-virus sharing stats
   const crossVirusRate = sharing_details ?
@@ -151,9 +179,12 @@ export default function Statistics() {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
           <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-            {library_summary.total_unique_tiles.toLocaleString()}
+            {libraryOligos.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Unique Tiles</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Library Oligos</div>
+          <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+            {virusExclusive.toLocaleString()} virus-exclusive
+          </div>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
           <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
@@ -201,7 +232,13 @@ export default function Statistics() {
 
           {/* All Species summary bar */}
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 mb-4">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-center">
+              <div>
+                <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                  {libraryOligos.toLocaleString()}
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Library Oligos</div>
+              </div>
               <div>
                 <div className="text-xl font-bold text-gray-900 dark:text-white">
                   {allSpeciesTotals.virusCount.toLocaleString()}
@@ -210,9 +247,9 @@ export default function Statistics() {
               </div>
               <div>
                 <div className="text-xl font-bold text-blue-600 dark:text-blue-400">
-                  {allSpeciesTotals.uniqueTiles.toLocaleString()}
+                  {virusExclusive.toLocaleString()}
                 </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Unique Tiles</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Virus-Exclusive</div>
               </div>
               <div>
                 <div className="text-xl font-bold text-amber-600 dark:text-amber-400">
@@ -263,8 +300,8 @@ export default function Statistics() {
                 },
               };
               const colors = colorMap[species.host];
-              const tilePct = allSpeciesTotals.uniqueTiles > 0
-                ? (species.uniqueTiles / allSpeciesTotals.uniqueTiles) * 100
+              const tilePct = virusExclusive > 0
+                ? (species.exclusiveTiles / virusExclusive) * 100
                 : 0;
 
               return (
@@ -289,9 +326,9 @@ export default function Statistics() {
                     {/* Stats */}
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Unique Tiles</span>
+                        <span className="text-gray-600 dark:text-gray-400">Virus-Exclusive</span>
                         <span className={`font-bold ${colors.accent}`}>
-                          {species.uniqueTiles.toLocaleString()}
+                          {species.exclusiveTiles.toLocaleString()}
                         </span>
                       </div>
                       <div className="flex justify-between text-sm">
@@ -312,7 +349,7 @@ export default function Statistics() {
                     <div>
                       <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
                         <span>Library share</span>
-                        <span>{tilePct.toFixed(1)}% of unique tiles</span>
+                        <span>{tilePct.toFixed(1)}% of virus-exclusive</span>
                       </div>
                       <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
                         <div
@@ -325,7 +362,7 @@ export default function Statistics() {
                     {/* Top 5 viruses */}
                     <div>
                       <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
-                        Top viruses by unique tiles
+                        Top viruses by virus-exclusive tiles
                       </div>
                       <div className="space-y-1.5">
                         {species.topViruses.map((virus, i) => (
@@ -382,15 +419,21 @@ export default function Statistics() {
           </h2>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600 dark:text-gray-400">Single-Protein Tiles</span>
+              <span className="text-gray-600 dark:text-gray-400">Single-Protein Sequences</span>
               <span className="font-medium text-gray-900 dark:text-white">
-                {tile_statistics.single_protein_tiles.toLocaleString()}
+                {singleProteinSeqs.toLocaleString()}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600 dark:text-gray-400">Shared Tiles (multi-protein)</span>
+              <span className="text-gray-600 dark:text-gray-400">Multi-Protein Sequences</span>
               <span className="font-medium text-gray-900 dark:text-white">
-                {tile_statistics.shared_tiles.toLocaleString()}
+                {multiProteinSeqs.toLocaleString()}
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 pt-1">
+              <span>Check</span>
+              <span>
+                {(singleProteinSeqs + multiProteinSeqs).toLocaleString()} = {libraryOligos.toLocaleString()} oligos
               </span>
             </div>
             <div className="flex justify-between items-center">
@@ -414,12 +457,12 @@ export default function Statistics() {
               <div
                 className="bg-emerald-500 h-full"
                 style={{ width: `${100 - sharingRate}%` }}
-                title={`${tile_statistics.single_protein_tiles.toLocaleString()} single-protein tiles`}
+                title={`${singleProteinSeqs.toLocaleString()} single-protein sequences`}
               />
               <div
                 className="bg-amber-500 h-full"
                 style={{ width: `${sharingRate}%` }}
-                title={`${tile_statistics.shared_tiles.toLocaleString()} shared tiles`}
+                title={`${multiProteinSeqs.toLocaleString()} multi-protein sequences`}
               />
             </div>
             <div className="flex justify-between mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -435,7 +478,7 @@ export default function Statistics() {
                 Cross-Virus Sharing
               </h3>
               <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                Of the {sharing_details.total_shared_tiles.toLocaleString()} shared tiles:
+                Of the {multiProteinSeqs.toLocaleString()} multi-protein sequences:
               </p>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
@@ -541,7 +584,7 @@ export default function Statistics() {
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
-                Unique Tiles
+                Virus-Exclusive
               </button>
               <button
                 onClick={() => setFamilySortMetric('count')}
@@ -575,7 +618,7 @@ export default function Statistics() {
                   <th className="text-left py-2 pr-4 font-medium text-gray-500 dark:text-gray-400">Family</th>
                   <th className="text-right py-2 px-4 font-medium text-gray-500 dark:text-gray-400">Viruses</th>
                   <th className="text-right py-2 px-4 font-medium text-gray-500 dark:text-gray-400">Proteins</th>
-                  <th className="text-right py-2 px-4 font-medium text-gray-500 dark:text-gray-400">Unique Tiles</th>
+                  <th className="text-right py-2 px-4 font-medium text-gray-500 dark:text-gray-400">Virus-Exclusive</th>
                   <th className="py-2 pl-4 font-medium text-gray-500 dark:text-gray-400 w-32">Distribution</th>
                 </tr>
               </thead>
@@ -630,7 +673,7 @@ export default function Statistics() {
       <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Top 15 Viruses by {sortMetric === 'uniqueTiles' ? 'Unique Tiles' : 'Tile Mappings'}
+            Top 15 Viruses by {sortMetric === 'uniqueTiles' ? 'Virus-Exclusive Tiles' : 'Tile Mappings'}
           </h2>
           <div className="flex gap-2">
             <button
@@ -641,7 +684,7 @@ export default function Statistics() {
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
-              Unique Tiles
+              Virus-Exclusive
             </button>
             <button
               onClick={() => setSortMetric('tileCount')}
@@ -657,7 +700,7 @@ export default function Statistics() {
         </div>
         <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
           {sortMetric === 'uniqueTiles'
-            ? 'Unique tiles = distinct peptide sequences (actual library diversity)'
+            ? 'Virus-exclusive = peptide appears on this virus only (0 if all tiles are shared with other viruses)'
             : 'Tile mappings = total tile-protein relationships (inflated by isolate redundancy)'}
         </p>
         <div className="space-y-3">
@@ -666,7 +709,8 @@ export default function Statistics() {
             const maxValue = sortMetric === 'uniqueTiles'
               ? (topViruses[0].uniqueTiles || 1)
               : topViruses[0].tileCount;
-            const inflation = virus.uniqueTiles ? (virus.tileCount / virus.uniqueTiles) : 1;
+            const distinct = virus.distinctSequences || virus.uniqueTiles || 1;
+            const inflation = distinct ? (virus.tileCount / distinct) : 1;
 
             return (
               <Link
@@ -694,7 +738,7 @@ export default function Statistics() {
                   <div className="text-sm font-medium text-blue-600 dark:text-blue-400">
                     {(virus.uniqueTiles || 0).toLocaleString()}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">unique</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">exclusive</div>
                 </div>
                 <div className="text-right w-20">
                   <div className="text-sm font-medium text-gray-900 dark:text-white">
@@ -726,9 +770,11 @@ export default function Statistics() {
         {/* Explanation */}
         <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
           <div className="text-xs text-gray-500 dark:text-gray-400 space-y-1">
-            <p><strong>Unique Tiles:</strong> Distinct peptide sequences in the library</p>
+            <p><strong>Library Oligos:</strong> Distinct peptide sequences in the synthesis library (one oligo each)</p>
+            <p><strong>Virus-Exclusive:</strong> Oligos whose peptide appears on only one virus (subset of library oligos)</p>
+            <p><strong>Do not sum per-virus &quot;distinct&quot; counts</strong> — shared peptides are counted once in library oligos but once per virus in browse views.</p>
             <p><strong>Tile Mappings:</strong> How many times tiles map to proteins (inflated by similar isolates)</p>
-            <p><strong>Inflation:</strong> Mappings / Unique tiles. High values indicate many similar protein isolates</p>
+            <p><strong>Inflation:</strong> Mappings / distinct sequences on that virus</p>
           </div>
         </div>
       </div>

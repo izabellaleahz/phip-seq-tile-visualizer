@@ -214,9 +214,9 @@ export default function VirusBrowser() {
           <button
             onClick={() => handleSort('uniqueTiles')}
             className="w-24 text-right hover:text-gray-700 dark:hover:text-gray-200"
-            title="Distinct peptide sequences"
+            title="Peptide sequences not shared with any other virus"
           >
-            Unique
+            Exclusive
             <SortIcon column="uniqueTiles" />
           </button>
           <button
@@ -240,7 +240,8 @@ export default function VirusBrowser() {
         ) : (
           <div className="divide-y divide-gray-100 dark:divide-gray-700">
             {filteredViruses.map(virus => {
-              const inflation = virus.uniqueTiles ? (virus.tileCount / virus.uniqueTiles) : 1;
+              const distinct = virus.distinctSequences || virus.uniqueTiles || 1;
+              const inflation = distinct ? (virus.tileCount / distinct) : 1;
               const isCollapsed = virus.id.startsWith('collapsed:');
               return (
                 <Link
