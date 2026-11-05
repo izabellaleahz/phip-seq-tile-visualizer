@@ -48,7 +48,7 @@ export async function fetchSharedTiles(): Promise<SharedTilesIndex> {
 
 export async function fetchSearchIndex(): Promise<SearchIndex> {
   // Search index not needed with API - return empty
-  return { viruses: [] };
+  return { viruses: [], proteins: [] };
 }
 
 export async function fetchStatistics(): Promise<LibraryStatistics> {

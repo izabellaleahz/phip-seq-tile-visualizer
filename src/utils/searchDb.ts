@@ -110,11 +110,11 @@ export async function search(query: string, limit = 20): Promise<SearchResult[]>
 // All database-dependent functions return empty results for now
 // TODO: Implement these via API endpoints
 
-export async function getCollapsedProteins(representativeAccession: string): Promise<CollapsedProtein[]> {
+export async function getCollapsedProteins(_representativeAccession: string): Promise<CollapsedProtein[]> {
   return [];
 }
 
-export async function getCollapsedOrganismsForVirus(virusName: string): Promise<CollapsedOrganism[]> {
+export async function getCollapsedOrganismsForVirus(_virusName: string): Promise<CollapsedOrganism[]> {
   return [];
 }
 
@@ -130,11 +130,11 @@ export async function getAllCollapsedOrganismCounts(): Promise<Map<string, numbe
   return new Map();
 }
 
-export async function getProteinsForOrganism(organism: string): Promise<OrganismProtein[]> {
+export async function getProteinsForOrganism(_organism: string): Promise<OrganismProtein[]> {
   return [];
 }
 
-export async function getRepresentativesForVirus(virusName: string): Promise<Set<string>> {
+export async function getRepresentativesForVirus(_virusName: string): Promise<Set<string>> {
   return new Set();
 }
 
