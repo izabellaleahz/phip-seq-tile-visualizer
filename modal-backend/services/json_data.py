@@ -6,6 +6,7 @@ Simple in-memory caching for fast lookups.
 """
 
 import json
+import os
 from pathlib import Path
 from typing import List, Dict, Optional
 from functools import lru_cache
@@ -65,26 +66,40 @@ class JSONDataService:
         return proteins
 
     def get_protein_by_id(self, protein_id: str) -> Optional[Dict]:
-        """Find a protein by ID - searches through all cached protein files"""
-        # First check if we can determine virus_id from protein_id
-        # Usually protein IDs contain virus reference
-
-        # Search through all proteins we've already loaded
+        """Find a protein by ID - searches through all protein files"""
+        # First check if we've already loaded this protein (in cache)
         for virus_id, proteins in self._protein_cache.items():
             for protein in proteins:
                 if protein.get("id") == protein_id:
                     return protein
 
-        # If not found in cache, search through search index
-        # to find which virus this protein belongs to
-        for entry in self.search_index:
-            if entry.get("id") == protein_id and entry.get("type") == "protein":
-                virus_id = entry.get("virusId")
-                if virus_id:
-                    proteins = self.get_virus_proteins(virus_id)
-                    for protein in proteins:
-                        if protein.get("id") == protein_id:
-                            return protein
+        # If not in cache, search through all protein files
+        # Use os.listdir for better compatibility
+        proteins_dir = self.data_dir / "proteins"
+        if not proteins_dir.exists() or not proteins_dir.is_dir():
+            return None
+
+        try:
+            # Get all JSON files in the proteins directory
+            protein_files = [f for f in os.listdir(str(proteins_dir)) if f.endswith('.json')]
+
+            # Search through each protein file
+            for filename in protein_files:
+                virus_id = filename.replace('.json', '')
+
+                # Load proteins for this virus
+                proteins = self.get_virus_proteins(virus_id)
+
+                # Search for the protein in this virus's proteins
+                for protein in proteins:
+                    if protein.get("id") == protein_id:
+                        # Ensure virusId is set
+                        if "virusId" not in protein:
+                            protein["virusId"] = virus_id
+                        return protein
+        except Exception as e:
+            print(f"Error searching for protein {protein_id}: {e}")
+            return None
 
         return None
 
