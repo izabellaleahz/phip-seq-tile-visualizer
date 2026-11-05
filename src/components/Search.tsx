@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { search as sqlSearch, getDb } from '../utils/searchDb';
+import { search as sqlSearch } from '../utils/searchDb';
 import type { SearchResult } from '../utils/searchDb';
 
 export default function Search() {
