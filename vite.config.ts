@@ -6,6 +6,4 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: './',
-  // Disable public directory - we use Modal API for all data
-  publicDir: false,
 })
