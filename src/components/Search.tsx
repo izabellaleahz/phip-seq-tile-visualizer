@@ -15,14 +15,9 @@ export default function Search() {
   const containerRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Preload DB on mount
+  // No need to preload DB - using API only
   useEffect(() => {
-    getDb()
-      .then(() => setLoading(false))
-      .catch((err) => {
-        console.error('Failed to load search DB:', err);
-        setLoading(false);
-      });
+    setLoading(false);
   }, []);
 
   // Search when query changes (debounced)
@@ -148,7 +143,7 @@ export default function Search() {
           onChange={e => { setQuery(e.target.value); setIsOpen(true); }}
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
-          placeholder={loading ? 'Loading search...' : 'Search viruses, proteins, taxon IDs...'}
+          placeholder="Search viruses, proteins..."
           disabled={loading}
           className="w-full pl-9 pr-4 py-2 bg-gray-100 dark:bg-gray-700 border border-transparent rounded-lg text-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:opacity-50"
         />
