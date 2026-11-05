@@ -23,6 +23,7 @@ class JSONDataService:
         self._viruses_cache = None
         self._search_index_cache = None
         self._protein_cache = {}  # Cache for individual protein files
+        self._protein_to_virus_index = None  # Index: protein_id -> virus_id
 
     @property
     def viruses(self) -> List[Dict]:
@@ -32,6 +33,42 @@ class JSONDataService:
             with open(viruses_file) as f:
                 self._viruses_cache = json.load(f)
         return self._viruses_cache
+
+    def _build_protein_index(self) -> Dict[str, str]:
+        """Build index mapping protein_id -> virus_id for fast lookups"""
+        if self._protein_to_virus_index is not None:
+            return self._protein_to_virus_index
+
+        print("Building protein index...")
+        index = {}
+        proteins_dir = self.data_dir / "proteins"
+
+        if not proteins_dir.exists():
+            self._protein_to_virus_index = {}
+            return self._protein_to_virus_index
+
+        try:
+            protein_files = [f for f in os.listdir(str(proteins_dir)) if f.endswith('.json')]
+
+            for filename in protein_files:
+                virus_id = filename.replace('.json', '')
+                protein_file = proteins_dir / filename
+
+                # Read just the protein IDs from this file (don't load full data)
+                with open(protein_file) as f:
+                    proteins = json.load(f)
+                    for protein in proteins:
+                        protein_id = protein.get('id')
+                        if protein_id:
+                            index[protein_id] = virus_id
+
+            print(f"Built index for {len(index)} proteins across {len(protein_files)} viruses")
+            self._protein_to_virus_index = index
+            return index
+        except Exception as e:
+            print(f"Error building protein index: {e}")
+            self._protein_to_virus_index = {}
+            return {}
 
     @property
     def search_index(self) -> List[Dict]:
@@ -66,40 +103,30 @@ class JSONDataService:
         return proteins
 
     def get_protein_by_id(self, protein_id: str) -> Optional[Dict]:
-        """Find a protein by ID - searches through all protein files"""
+        """Find a protein by ID using index for fast O(1) lookup"""
         # First check if we've already loaded this protein (in cache)
         for virus_id, proteins in self._protein_cache.items():
             for protein in proteins:
                 if protein.get("id") == protein_id:
                     return protein
 
-        # If not in cache, search through all protein files
-        # Use os.listdir for better compatibility
-        proteins_dir = self.data_dir / "proteins"
-        if not proteins_dir.exists() or not proteins_dir.is_dir():
+        # Use index to find which virus this protein belongs to
+        index = self._build_protein_index()
+        virus_id = index.get(protein_id)
+
+        if not virus_id:
             return None
 
-        try:
-            # Get all JSON files in the proteins directory
-            protein_files = [f for f in os.listdir(str(proteins_dir)) if f.endswith('.json')]
+        # Load the virus's proteins
+        proteins = self.get_virus_proteins(virus_id)
 
-            # Search through each protein file
-            for filename in protein_files:
-                virus_id = filename.replace('.json', '')
-
-                # Load proteins for this virus
-                proteins = self.get_virus_proteins(virus_id)
-
-                # Search for the protein in this virus's proteins
-                for protein in proteins:
-                    if protein.get("id") == protein_id:
-                        # Ensure virusId is set
-                        if "virusId" not in protein:
-                            protein["virusId"] = virus_id
-                        return protein
-        except Exception as e:
-            print(f"Error searching for protein {protein_id}: {e}")
-            return None
+        # Find the specific protein
+        for protein in proteins:
+            if protein.get("id") == protein_id:
+                # Ensure virusId is set
+                if "virusId" not in protein:
+                    protein["virusId"] = virus_id
+                return protein
 
         return None
 
