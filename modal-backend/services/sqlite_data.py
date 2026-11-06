@@ -6,11 +6,16 @@ Fast data access using SQLite database with indexed queries.
 
 import sqlite3
 import json
+import os
 from pathlib import Path
 from typing import List, Dict, Optional
 
-# Database path
-DB_PATH = Path(__file__).parent.parent / "phipseq.db"
+# Database path (in Modal container it's at /phipseq.db)
+if os.path.exists("/phipseq.db"):
+    DB_PATH = Path("/phipseq.db")
+else:
+    # Local development path
+    DB_PATH = Path(__file__).parent.parent / "phipseq.db"
 
 
 class SQLiteDataService:
@@ -24,8 +29,18 @@ class SQLiteDataService:
     def conn(self) -> sqlite3.Connection:
         """Get or create database connection"""
         if self._conn is None:
-            self._conn = sqlite3.connect(str(self.db_path))
-            self._conn.row_factory = sqlite3.Row
+            try:
+                print(f"Connecting to SQLite database at: {self.db_path}")
+                print(f"Database exists: {self.db_path.exists()}")
+                if self.db_path.exists():
+                    print(f"Database size: {self.db_path.stat().st_size / (1024*1024):.1f} MB")
+
+                self._conn = sqlite3.connect(str(self.db_path))
+                self._conn.row_factory = sqlite3.Row
+                print("Database connection established successfully")
+            except Exception as e:
+                print(f"Error connecting to database: {e}")
+                raise
         return self._conn
 
     def filter_viruses(
@@ -35,43 +50,49 @@ class SQLiteDataService:
         limit: int = 1000
     ) -> List[Dict]:
         """Filter viruses with indexed query"""
-        cursor = self.conn.cursor()
+        try:
+            cursor = self.conn.cursor()
 
-        if host_species:
-            # Build query with JSON containment check
-            placeholders = ','.join('?' * len(host_species))
-            query = f"""
-                SELECT id, name, protein_count, tile_count, taxon_ids, host_species, unique_tiles
-                FROM viruses
-                WHERE EXISTS (
-                    SELECT 1 FROM json_each(host_species)
-                    WHERE value IN ({placeholders})
-                )
-                ORDER BY name
-                LIMIT ? OFFSET ?
-            """
-            cursor.execute(query, (*host_species, limit, offset))
-        else:
-            cursor.execute("""
-                SELECT id, name, protein_count, tile_count, taxon_ids, host_species, unique_tiles
-                FROM viruses
-                ORDER BY name
-                LIMIT ? OFFSET ?
-            """, (limit, offset))
+            if host_species:
+                # Build query with JSON containment check
+                placeholders = ','.join('?' * len(host_species))
+                query = f"""
+                    SELECT id, name, protein_count, tile_count, taxon_ids, host_species, unique_tiles
+                    FROM viruses
+                    WHERE EXISTS (
+                        SELECT 1 FROM json_each(host_species)
+                        WHERE value IN ({placeholders})
+                    )
+                    ORDER BY name
+                    LIMIT ? OFFSET ?
+                """
+                cursor.execute(query, (*host_species, limit, offset))
+            else:
+                cursor.execute("""
+                    SELECT id, name, protein_count, tile_count, taxon_ids, host_species, unique_tiles
+                    FROM viruses
+                    ORDER BY name
+                    LIMIT ? OFFSET ?
+                """, (limit, offset))
 
-        rows = cursor.fetchall()
-        return [
-            {
-                'id': row['id'],
-                'name': row['name'],
-                'proteinCount': row['protein_count'],
-                'tileCount': row['tile_count'],
-                'taxonIds': json.loads(row['taxon_ids']) if row['taxon_ids'] else [],
-                'hostSpecies': json.loads(row['host_species']) if row['host_species'] else [],
-                'uniqueTiles': row['unique_tiles'],
-            }
-            for row in rows
-        ]
+            rows = cursor.fetchall()
+            return [
+                {
+                    'id': row['id'],
+                    'name': row['name'],
+                    'proteinCount': row['protein_count'],
+                    'tileCount': row['tile_count'],
+                    'taxonIds': json.loads(row['taxon_ids']) if row['taxon_ids'] else [],
+                    'hostSpecies': json.loads(row['host_species']) if row['host_species'] else [],
+                    'uniqueTiles': row['unique_tiles'],
+                }
+                for row in rows
+            ]
+        except Exception as e:
+            print(f"Error in filter_viruses: {e}")
+            import traceback
+            traceback.print_exc()
+            raise
 
     def get_virus_proteins(self, virus_id: str, include_tiles: bool = True) -> List[Dict]:
         """Get all proteins for a virus"""
