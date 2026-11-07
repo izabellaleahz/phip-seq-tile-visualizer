@@ -182,14 +182,19 @@ def import_proteins(conn: sqlite3.Connection):
             """, ('protein', protein.get('id'), protein.get('name'), protein.get('virusName'), virus_id))
 
             # Insert tiles
+            # NOTE: For shared tiles, we create a composite ID (protein_id + original_tile_id)
+            # This allows the same tile to appear in multiple proteins
             tiles = protein.get('tiles', [])
             for tile in tiles:
+                # Create unique tile ID per protein
+                composite_tile_id = f"{protein.get('id')}_{tile.get('id')}"
+
                 cursor.execute("""
                     INSERT OR REPLACE INTO tiles
                     (id, protein_id, start, end, is_shared, seq)
                     VALUES (?, ?, ?, ?, ?, ?)
                 """, (
-                    tile.get('id'),
+                    composite_tile_id,
                     protein.get('id'),
                     tile.get('start'),
                     tile.get('end'),
