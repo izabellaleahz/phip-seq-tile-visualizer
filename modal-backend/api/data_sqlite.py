@@ -104,8 +104,61 @@ async def get_statistics():
 @router.get("/taxonomy")
 async def get_taxonomy():
     """
-    Get taxonomy tree data.
-
-    TODO: Implement taxonomy data in SQLite
+    Get taxonomy tree data with family statistics.
+    Returns taxonomy mappings and computed family stats.
     """
-    return {"message": "Taxonomy data not yet implemented in SQLite backend"}
+    import json
+    from pathlib import Path
+    import os
+
+    # Load taxonomy.json - check Modal container path first, then local
+    if os.path.exists("/taxonomy.json"):
+        taxonomy_file = Path("/taxonomy.json")
+    else:
+        taxonomy_file = Path(__file__).parent.parent.parent / "public" / "data" / "taxonomy.json"
+
+    if not taxonomy_file.exists():
+        raise HTTPException(404, "Taxonomy data file not found")
+
+    with open(taxonomy_file) as f:
+        taxonomy_data = json.load(f)
+
+    # Compute family_stats from taxonomy data
+    data_service = get_data_service()
+
+    # Get all viruses to compute stats
+    all_viruses = data_service.filter_viruses(limit=10000)
+
+    # Build family stats
+    family_stats = {}
+    for virus in all_viruses:
+        # Get taxon IDs for this virus
+        taxon_ids = virus.get('taxonIds', [])
+
+        # Find families from taxonomy
+        families = set()
+        for taxon_id in taxon_ids:
+            taxon_str = str(taxon_id)
+            if taxon_str in taxonomy_data:
+                family = taxonomy_data[taxon_str].get('family', 'Unknown')
+                families.add(family)
+
+        # Update stats for each family
+        for family in families:
+            if family not in family_stats:
+                family_stats[family] = {
+                    'count': 0,
+                    'proteins': 0,
+                    'tiles': 0,
+                    'unique_tiles': 0
+                }
+            family_stats[family]['count'] += 1
+            family_stats[family]['proteins'] += virus.get('proteinCount', 0)
+            family_stats[family]['tiles'] += virus.get('tileCount', 0)
+            family_stats[family]['unique_tiles'] += virus.get('uniqueTiles', 0)
+
+    # Return both taxonomy data and computed family stats
+    return {
+        'taxonomy_data': taxonomy_data,
+        'family_stats': family_stats
+    }

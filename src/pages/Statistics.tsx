@@ -149,46 +149,46 @@ export default function Statistics() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-          <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400 break-words">
             {library_summary.total_unique_tiles.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Unique Tiles</div>
+          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Unique Tiles</div>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-          <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400 break-words">
             {library_summary.total_proteins_covered.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Proteins Covered</div>
+          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Proteins Covered</div>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-          <div className="text-3xl font-bold text-green-600 dark:text-green-400">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 break-words">
             {libSummary ? libSummary.totalOrganisms.toLocaleString() : viruses.length.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Total Organisms</div>
+          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Total Organisms</div>
           {libSummary && libSummary.collapsedOrganisms > 0 && (
             <div className="text-xs text-amber-600 dark:text-amber-400 mt-0.5">
               {viruses.length.toLocaleString()} tiled + {libSummary.collapsedOrganisms} via collapse
             </div>
           )}
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-          <div className="text-3xl font-bold text-teal-600 dark:text-teal-400">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-2xl sm:text-3xl font-bold text-teal-600 dark:text-teal-400 break-words">
             {totalTaxonIds.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Taxon IDs</div>
+          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Taxon IDs</div>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-          <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 break-words">
             {sortedFamilies.length}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Virus Families</div>
+          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Virus Families</div>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-          <div className="text-3xl font-bold text-amber-600 dark:text-amber-400">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 break-words">
             {library_summary.total_tile_protein_mappings.toLocaleString()}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Tile Mappings</div>
+          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Tile Mappings</div>
         </div>
       </div>
 

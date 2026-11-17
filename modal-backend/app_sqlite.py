@@ -24,6 +24,11 @@ image = (
         local_path="phipseq.db",
         remote_path="/phipseq.db",
     )
+    # Add taxonomy.json for taxonomy endpoint
+    .add_local_file(
+        local_path="../public/data/taxonomy.json",
+        remote_path="/taxonomy.json",
+    )
 )
 
 
