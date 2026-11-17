@@ -1,10 +1,9 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useStatistics, useViruses, useTaxonomy } from '../hooks/useData';
 import type { FamilyStats } from '../types';
 import Loading from '../components/Loading';
 import HostBadge from '../components/HostBadge';
-import { getLibrarySummary } from '../utils/searchDb';
 
 type SortMetric = 'uniqueTiles' | 'tileCount';
 
@@ -25,8 +24,6 @@ export default function Statistics() {
   const { taxonomy, loading: taxonomyLoading } = useTaxonomy();
   const [sortMetric, setSortMetric] = useState<SortMetric>('uniqueTiles');
   const [familySortMetric, setFamilySortMetric] = useState<FamilySortMetric>('unique_tiles');
-  const [libSummary, setLibSummary] = useState<Awaited<ReturnType<typeof getLibrarySummary>> | null>(null);
-  useEffect(() => { getLibrarySummary().then(setLibSummary).catch(console.error); }, []);
 
   const loading = statsLoading || virusesLoading || taxonomyLoading;
 
@@ -163,14 +160,9 @@ export default function Statistics() {
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
           <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 break-words">
-            {libSummary ? libSummary.totalOrganisms.toLocaleString() : viruses.length.toLocaleString()}
+            {viruses.length.toLocaleString()}
           </div>
-          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Total Organisms</div>
-          {libSummary && libSummary.collapsedOrganisms > 0 && (
-            <div className="text-xs text-amber-600 dark:text-amber-400 mt-0.5">
-              {viruses.length.toLocaleString()} tiled + {libSummary.collapsedOrganisms} via collapse
-            </div>
-          )}
+          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Total Viruses</div>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
           <div className="text-2xl sm:text-3xl font-bold text-teal-600 dark:text-teal-400 break-words">
